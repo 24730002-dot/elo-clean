@@ -417,40 +417,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 </script>
-
 <script>
-// Check English login status
+// ================================
+// English login check
+// ================================
 const userEN = sessionStorage.getItem("currentUser_EN");
 
+// ❗ Not logged in → Block access
+if (!userEN) {
+  alert("My Classroom is available after login.");
+  window.location.href = "login_EN.html";
+}
+
+// ================================
+// Logged in → Change header
+// ================================
 if (userEN) {
-  // Hide Login / Sign Up buttons
+  // Hide Login / Sign Up
   document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
     a.style.display = "none";
   });
 
-  // Get nav-right container
-  const navRightEN = document.querySelector(".nav-right");
+  const navRight = document.querySelector(".nav-right");
 
-  // Create MY PAGE button
-  const myPageENBtn = document.createElement("a");
-  myPageENBtn.href = "Mypage_EN.html"; 
-  myPageENBtn.textContent = "MY PAGE";
+  // MY PAGE button
+  const myPageBtn = document.createElement("a");
+  myPageBtn.href = "Mypage_EN.html";
+  myPageBtn.textContent = "MY PAGE";
 
-  // Create LOGOUT button
-  const logoutENBtn = document.createElement("a");
-  logoutENBtn.href = "#";
-  logoutENBtn.textContent = "LOGOUT";
-  logoutENBtn.onclick = function() {
+  // LOGOUT button
+  const logoutBtn = document.createElement("a");
+  logoutBtn.href = "#";
+  logoutBtn.textContent = "LOGOUT";
+  logoutBtn.onclick = function () {
     sessionStorage.removeItem("currentUser_EN");
     alert("LOGOUT COMPLETE.");
-    window.location.href = "index_EN.html";
+    location.href = "index_EN.html";
   };
 
-  // Append to header
-  navRightEN.appendChild(myPageENBtn);
-  navRightEN.appendChild(logoutENBtn);
+  navRight.appendChild(myPageBtn);
+  navRight.appendChild(logoutBtn);
 }
 </script>
+
 
 
 </body>
