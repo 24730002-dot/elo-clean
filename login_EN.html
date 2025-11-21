@@ -241,6 +241,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const togglePasswordEN = document.getElementById("togglePassword");
+  const passwordFieldEN = document.getElementById("password");
+
+  if (togglePasswordEN && passwordFieldEN) {
+    togglePasswordEN.addEventListener("click", () => {
+      const type = passwordFieldEN.type === "password" ? "text" : "password";
+      passwordFieldEN.type = type;
+
+      togglePasswordEN.textContent =
+        type === "password" ? "🔒" : "🔓";
+    });
+  }
+});
+</script>
+
+
 
 
 </body>

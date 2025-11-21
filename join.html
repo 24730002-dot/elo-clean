@@ -304,27 +304,5 @@ function register() {
 }
 </script>
 
-<script>
-function register() {
-  const id = document.getElementById("userid").value.trim();
-  const pw = document.getElementById("password").value.trim();
-
-  if (!id || !pw) {
-    alert("아이디와 비밀번호를 입력해주세요.");
-    return;
-  }
-
-  // 저장
-  localStorage.setItem("user_id", id);
-  localStorage.setItem("user_pw", pw);
-
-  alert("회원가입 완료!");
-  
-  // *** 여기 중요 ***
-  window.location.href = "login.html";
-}
-</script>
-
-
 </body>
 </html>

@@ -455,10 +455,7 @@
 
   <div class="small-banners">
     <a href="course_application_EN.html">Training Application</a>
-<a href="my_classroom_EN.html"
-   onclick="return checkLogin_EN();">
-  My Classroom
-</a>
+    <a href="my_classroom_EN.html" onclick="return checkLogin_EN();">My Classroom</a>
     <a href="print_EN.html">Download Certificate</a>
   </div>
 </section>
@@ -480,22 +477,9 @@
 </footer>
 
 <script>
-// ================================
-// English login check
-// ================================
 const userEN = localStorage.getItem("currentUser_EN");
 
-// ❗ Block access if not logged in
-if (!userEN) {
-  alert("My Classroom is available after login.");
-  window.location.href = "login_EN.html";
-}
-
-// ================================
-// Header change when logged in
-// ================================
 if (userEN) {
-  // Hide Login / Sign Up buttons
   document.querySelectorAll(
     'a[href="login_EN.html"], a[href="join_EN.html"]'
   ).forEach(a => {
@@ -504,12 +488,10 @@ if (userEN) {
 
   const navRight = document.querySelector(".nav-right");
 
-  // Create MY PAGE button
   const myPageBtn = document.createElement("a");
   myPageBtn.href = "Mypage_EN.html";
   myPageBtn.textContent = "MY PAGE";
 
-  // Create LOGOUT button
   const logoutBtn = document.createElement("a");
   logoutBtn.href = "#";
   logoutBtn.textContent = "LOGOUT";
@@ -522,6 +504,7 @@ if (userEN) {
   navRight.appendChild(myPageBtn);
   navRight.appendChild(logoutBtn);
 }
+
 </script>
 
 

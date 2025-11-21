@@ -244,6 +244,22 @@
   </div>
 </footer>
 
+<!-- 🔐 비밀번호 토글 -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const togglePassword = document.getElementById("togglePassword");
+  const passwordField = document.getElementById("password");
+
+  togglePassword.addEventListener("click", () => {
+    const type = passwordField.type === "password" ? "text" : "password";
+    passwordField.type = type;
+
+    togglePassword.textContent = type === "password" ? "🔒" : "🔓";
+  });
+});
+</script>
+
+<!-- 🔑 로그인 기능 -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.querySelector("#loginForm");
@@ -263,9 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (id === savedId && pw === savedPw) {
-      // 🔥 로그인 성공 → currentUser 저장 (중요!!)
       localStorage.setItem("currentUser", id);
-
       alert("로그인 성공!");
       window.location.href = "index.html";
     } else {
@@ -274,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
 
 </body>
