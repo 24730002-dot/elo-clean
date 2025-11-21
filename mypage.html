@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>마이 페이지 - ELO 안전교육 플랫폼</title>
+<style>
+  /* === [1] 다른 페이지에서 가져온 공통 스타일 === */
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#fafafa; color:#333; }
+
+  /* 상단 전체 래퍼(header+nav를 하나처럼) */
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+
+  /* 헤더 */
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  /* 네비 (gap: 100px) */
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+  
+  /* footer */
+  footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; padding: 35px 20px; color: #444; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); margin-top: 60px; }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+  .footer-info a:hover { text-decoration: underline; }
+  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+
+  /* 페이지 전체 래퍼 */
+  .page-wrapper {
+    padding-top: 100px; /* .top-bar 높이만큼 여백 */
+    min-height: 100vh;
+  }
+
+  /* 콘텐츠 컨테이너 (공통) */
+  .content-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+
+  /* 페이지 제목 (공통) */
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  /* === [2] ✨ 마이페이지 '탭' 전용 스타일 === */
+
+  /* 2-1. 탭 네비게이션 (버튼) */
+  .tab-nav {
+    display: flex;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 30px;
+  }
+  .tab-nav-item {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #777;
+    cursor: pointer;
+    border: none;
+    background: none;
+    position: relative;
+    bottom: -2px; /* 하단 보더와 겹치게 */
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+  .tab-nav-item:hover {
+    color: #333;
+  }
+  .tab-nav-item.active {
+    /* '나의 강의실' 버튼, '페이지네이션' 활성 색상 재사용 */
+    color: #2d3b6b; 
+    border-bottom-color: #2d3b6b;
+  }
+  .tab-nav-item.danger {
+    color: #aaa;
+  }
+  .tab-nav-item.danger:hover {
+    color: #c90000;
+  }
+  .tab-nav-item.danger.active {
+    color: #c90000;
+    border-bottom-color: #c90000;
+  }
+
+  /* 2-2. 탭 콘텐츠 영역 */
+  .tab-content-area {
+    /* 폼 영역을 보기 좋게 중앙 정렬 */
+    max-width: 700px; 
+    margin: 0 auto; 
+    padding: 20px 0;
+  }
+  .tab-pane {
+    display: none; /* 기본적으로 모든 폼 숨김 */
+  }
+  .tab-pane.active {
+    display: block; /* 활성화된 폼만 표시 */
+  }
+  
+  /* 섹션 제목 (폼 내부 제목) */
+  .form-section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+
+  /* === [3] ✨ 폼 스타일 (공통) === */
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+  .form-group .label {
+    width: 140px; /* 라벨 너비 고정 */
+    font-weight: 500;
+    color: #555;
+    flex-shrink: 0;
+  }
+  .form-group .value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  .form-group input[type="text"],
+  .form-group input[type="password"] {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    font-family: "Pretendard", sans-serif;
+  }
+  .form-group input[disabled] {
+    background: #f0f0f0;
+    color: #777;
+    cursor: not-allowed;
+  }
+
+  /* 폼 하단 버튼 영역 */
+  .form-actions {
+    text-align: right;
+    margin-top: 30px;
+    padding-top: 20px;
+  }
+  /* '비밀번호 변경' 폼은 위아래 구분을 위해 선 추가 */
+  #password-form .form-actions {
+     border-top: 1px solid #eee;
+  }
+
+  /* 공통 버튼 스타일 (기존 스타일 재사용) */
+  .btn {
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .btn-primary {
+    background: #2d3b6b;
+    color: white;
+  }
+  .btn-primary:hover { background: #1b2541; }
+
+  .btn-danger {
+    background: #c90000;
+    color: white;
+  }
+  .btn-danger:hover { background: #a10000; }
+
+  /* 탈퇴 경고 문구 */
+  .withdrawal-notice {
+    padding: 20px;
+    background: #fff8f8;
+    border: 1px solid #f0c0c0;
+    border-radius: 5px;
+    color: #721c24;
+    line-height: 1.6;
+    text-align: left;
+  }
+  .withdrawal-actions {
+    text-align: right;
+    margin-top: 20px;
+  }
+
+
+  /* 반응형 (공통) */
+  @media (max-width:768px){
+    nav { flex-direction:column; gap:8px; }
+    .nav-center { position:static; transform:none; justify-content:center; margin-bottom:5px; }
+    .nav-right { justify-content:center; margin-left:0; gap:10px; }
+    .page-wrapper { padding-top: 150px; }
+    .content-container { width: 95%; padding: 20px 15px; }
+    .page-title { font-size: 1.8rem; }
+
+    /* 이 페이지 전용 반응형 */
+    .tab-nav {
+      /* 탭이 많아지면 가로 스크롤 */
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .tab-nav-item {
+      padding: 10px 15px;
+      font-size: 1rem;
+    }
+    .tab-content-area {
+      padding: 10px 0;
+    }
+    .form-section-title {
+      font-size: 1.3rem;
+    }
+    .form-group { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .form-group .label { width: auto; }
+    .form-group .value { width: 100%; }
+    .form-actions, .withdrawal-actions { text-align: center; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <header id="top"><a href="home.html">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="intro.html">소개</a>
+      <a href="course_application.html">인터넷교육</a>
+      <a href="my_classroom.html">나의 강의실</a>
+      <a href="notice.html">교육지원</a>
+    </div>
+    <div class="nav-right">
+      <a href="login.html">로그인</a>
+      <a href="join.html">회원가입</a>
+    </div>
+  </nav>
+</div>
+
+<div class="page-wrapper">
+  <div class="content-container">
+    
+    <h1 class="page-title">마이 페이지</h1>
+
+    <nav class="tab-nav">
+      <button class="tab-nav-item active" data-tab="info">내 정보 수정</button>
+      <button class="tab-nav-item" data-tab="password">비밀번호 변경</button>
+      <button class="tab-nav-item danger" data-tab="withdrawal">회원탈퇴</button>
+    </nav>
+
+    <div class="tab-content-area">
+
+      <div class="tab-pane active" id="info-pane">
+        <h2 class="form-section-title">내 정보 수정</h2>
+        <form id="info-form">
+          <div class="form-group">
+            <label class="label" for="userId">아이디</label>
+            <div class="value">
+              <input type="text" id="userId" value="honggildong" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="userName">이름</label>
+            <div class="value">
+              <input type="text" id="userName" value="홍길동" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="userEmail">이메일</label>
+            <div class="value">
+              <input type="text" id="userEmail" value="hong@email.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="userPhone">휴대폰 번호</label>
+            <div class="value">
+              <input type="text" id="userPhone" value="010-1234-5678">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">정보 수정</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="tab-pane" id="password-pane">
+        <h2 class="form-section-title">비밀번호 변경</h2>
+        <form id="password-form">
+          <div class="form-group">
+            <label class="label" for="currentPassword">현재 비밀번호</label>
+            <div class="value">
+              <input type="password" id="currentPassword" placeholder="현재 비밀번호 입력">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="newPassword">새 비밀번호</label>
+            <div class="value">
+              <input type="password" id="newPassword" placeholder="새 비밀번호 입력">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="label" for="confirmPassword">새 비밀번호 확인</label>
+            <div class="value">
+              <input type="password" id="confirmPassword" placeholder="새 비밀번호 다시 입력">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">비밀번호 변경</button>
+          </div>
+        </form>
+      </div>
+      
+      <div class="tab-pane" id="withdrawal-pane">
+        <h2 class="form-section-title">회원탈퇴</h2>
+        <div class="withdrawal-notice">
+          <strong>회원탈퇴 시 유의사항</strong>
+          <p>
+            회원탈퇴를 신청하시면 현재 수강 중인 과정을 포함한 모든 학습 이력이 즉시 삭제되며, 삭제된 데이터는 복구할 수 없습니다.
+            정말로 탈퇴하시겠습니까?
+          </p>
+        </div>
+        <div class="withdrawal-actions">
+          <button type="button" class="btn btn-danger" id="withdrawal-button">회원탈퇴</button>
+        </div>
+      </div>
+    
+    </div> </div> </div> <footer class="footer">
+  <div class="footer-links">
+    <a href="#">개인정보처리방침</a>
+    <span>|</span>
+    <a href="#">관련사이트 바로가기</a>
+  </div>
+  <div class="footer-info">
+    <p>주소: 서울특별시 중구 소파로2길 10</p>
+    <p>전화: 02-1234-5678</p>
+    <p>고객지원: <a href="#">담당자 연락처 바로가기</a> (평일 09:00~18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  /* --- 1. 탭 기능 로직 --- */
+  const tabButtons = document.querySelectorAll('.tab-nav-item');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // 클릭한 탭의 data-tab 속성값 (예: "info")
+      const targetTab = button.getAttribute('data-tab'); 
+
+      // 1. 모든 탭 버튼에서 active 클래스 제거
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      // 2. 클릭한 탭 버튼에 active 클래스 추가
+      button.classList.add('active');
+
+      // 3. 모든 탭 콘텐츠에서 active 클래스 제거 (숨기기)
+      tabPanes.forEach(pane => pane.classList.remove('active'));
+      // 4. 타겟 탭 콘텐츠에 active 클래스 추가 (보여주기)
+      document.getElementById(targetTab + '-pane').classList.add('active');
+    });
+  });
+
+  /* --- 2. ✨ 회원탈퇴 확인창 로직 추가 --- */
+  const withdrawalButton = document.getElementById('withdrawal-button');
+
+  withdrawalButton.addEventListener('click', function() {
+    // 사용자에게 확인창을 띄웁니다.
+    const confirmed = window.confirm("정말 탈퇴하시겠습니까?");
+
+    // '확인'을 눌렀을 경우 (confirmed 변수가 true가 됨)
+    if (confirmed) {
+      // 실제로는 여기서 fetch() 등을 이용해 백엔드 API를 호출합니다.
+      alert("탈퇴 처리를 진행합니다. (백엔드 API 호출)");
+      
+      // (예시) 탈퇴 성공 후 홈으로 이동
+      // window.location.href = "플랫폼 홈.html"; 
+    } 
+    // '취소'를 눌렀을 경우 (confirmed 변수가 false가 됨)
+    else {
+      console.log("회원탈퇴가 취소되었습니다.");
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>

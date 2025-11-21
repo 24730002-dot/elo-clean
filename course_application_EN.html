@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Worker Education - ELO Safety Education Platform</title>
+<style>
+  /* === [1] 메인 홈(플랫폼 홈.html)에서 가져온 공통 스타일 === */
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#fafafa; color:#333; }
+
+  /* 상단 전체 래퍼(header+nav를 하나처럼) */
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+
+  /* 헤더 */
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  /* 네비 */
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+
+  
+  /* footer */
+  footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; padding: 35px 20px; color: #444; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); margin-top: 60px; }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+  .footer-info a:hover { text-decoration: underline; }
+  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+
+  /* === [2] 이 페이지(수강신청) 전용 스타일 === */
+
+  /* 페이지 전체 래퍼 (고정 헤더 높이만큼 패딩) */
+  .page-wrapper {
+    padding-top: 100px; /* .top-bar 높이만큼 여백 */
+    min-height: 100vh;
+  }
+
+  /* 콘텐츠 컨테이너 */
+  .content-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+
+  /* 페이지 제목 */
+  .page-title {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  /* ✨ 상단 간단 검색창 (수정됨) */
+  .simple-search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 10px; /* ✨ 버튼과 분리하기 위해 gap 추가 */
+  }
+  .simple-search-bar input {
+    flex: 1;
+    max-width: 600px;
+    padding: 14px 22px;
+    font-size: 1.1rem;
+    /* 요청하신 #b9b9b9 색상을 테두리로 사용 */
+    border: 3px solid #b9b9b9; 
+    border-radius: 30px; /* ✨ 사각 30px 둥글게 수정 */
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .simple-search-bar input:focus {
+    border-color: #5e5e5e;
+  }
+  .simple-search-bar button {
+    padding: 14px 30px;
+    border: none;
+    /* ✨ 메인 홈의 메인 검색 버튼 색상(#5e5e5e)으로 변경 */
+    background: #5e5e5e;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px; /* ✨ 사각 30px 둥글게 수정 */
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .simple-search-bar button:hover {
+    background: #444; /* ✨ hover 색상도 회색 계열로 변경 */
+  }
+
+  /* 상세 선택 박스 */
+  .detailed-search-box {
+    background: #f9f9f9;
+    border: 1px solid #e9e9e9;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 40px;
+  }
+  .detailed-search-box h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+  }
+  .filter-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 1rem;
+  }
+  .filter-row .filter-label {
+    width: 100px;
+    font-weight: 500;
+    color: #333;
+  }
+  .filter-row .radio-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  /* 라디오 버튼 + 라벨 동시 클릭 */
+  .radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .filter-row input[type="text"] {
+    flex: 1;
+    max-width: 400px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .detailed-search-box .search-button {
+    display: block;
+    width: 150px;
+    margin: 20px auto 0;
+    padding: 12px;
+    /* 메인 홈의 검색 버튼 색상(#5e5e5e) */
+    background: #5e5e5e;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .detailed-search-box .search-button:hover {
+    background: #444;
+  }
+
+  /* 결과 섹션 */
+  .results-section {
+    width: 100%;
+  }
+  .results-count {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .results-count span {
+    color: #2d3b6b;
+    font-weight: bold;
+  }
+
+  /* 교육 과정 테이블 */
+  .course-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-top: 2px solid #555;
+  }
+  .course-table th, 
+  .course-table td {
+    padding: 15px 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+  }
+  .course-table th {
+    background: #fdfdfd;
+    font-weight: 600;
+    color: #333;
+  }
+  .course-table td {
+    font-size: 0.95rem;
+    color: #555;
+  }
+  .course-table .course-title {
+    text-align: left;
+    padding-left: 15px;
+  }
+  
+  /* 테이블 내 버튼 */
+  .course-table .btn-apply,
+  .course-table .btn-closed {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .course-table .btn-apply {
+    background: #c90000; /* 신청마감 버튼 색상 (참고 이미지) */
+  }
+  .course-table .btn-apply:hover {
+    background: #a10000;
+  }
+  .course-table .btn-closed {
+    background: #888;
+    cursor: not-allowed;
+  }
+
+  /* 페이지네이션 */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 30px;
+  }
+  .pagination a,
+  .pagination span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 34px;
+    height: 34px;
+    text-decoration: none;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background 0.2s;
+  }
+  .pagination a:hover {
+    background: #f0f0f0;
+  }
+  .pagination span.active {
+    /* 메인 홈의 공지사항 버튼 색상(#2d3b6b) */
+    background: #2d3b6b;
+    color: white;
+    border-color: #2d3b6b;
+    font-weight: bold;
+  }
+
+  /* 반응형 (메인 홈과 동일) */
+  @media (max-width:768px){
+    nav { flex-direction:column; gap:8px; }
+    .nav-center { position:static; transform:none; justify-content:center; margin-bottom:5px; }
+    .nav-right { justify-content:center; margin-left:0; gap:10px; }
+    .page-wrapper { padding-top: 150px; } /* 네비 높이 증가로 패딩 증가 */
+    .content-container { width: 95%; padding: 20px 15px; }
+    .page-title { font-size: 1.8rem; }
+    .simple-search-bar input { padding: 12px 18px; font-size: 1rem; }
+    .simple-search-bar button { padding: 12px 20px; font-size: 1rem; }
+    .filter-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .filter-row .filter-label { width: auto; }
+    .filter-row input[type="text"] { width: 100%; }
+    .course-table { font-size: 0.9rem; } /* 테이블 내용이 많아 축소 */
+    .course-table th, .course-table td { padding: 12px 5px; }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <header id="top"><a href="플랫폼 홈.html">Elo</a></header> <nav>
+    <div class="nav-center">
+      <a href="플랫폼 홈(수정ver).html">Introduction</a>
+      <a href="#online">Online Education</a>
+      <a href="myclass.html">My Classroom</a> <a href="#support">Support</a>
+    </div>
+    <div class="nav-right"> <a href="로그인(수정ver).html">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </nav>
+</div>
+
+<div class="page-wrapper">
+  <div class="content-container">
+    
+    <h1 class="page-title">Worker Education</h1>
+
+    <div class="simple-search-bar">
+      <input type="text" placeholder="Enter video title.">
+      <button>Search</button>
+    </div>
+
+    <div class="detailed-search-box">
+      <h2>Detailed Search</h2>
+      
+      <div class="filter-row">
+        <label class="filter-label">Course Type</label>
+        <div class="radio-group">
+          <label><input type="radio" name="courseType" value="all" checked> All</label>
+          <label><input type="radio" name="courseType" value="general"> General Course</label>
+          <label><input type="radio" name="courseType" value="select"> Elective Course</label>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <label class="filter-label">Video Title</label>
+        <input type="text" placeholder="Enter video title.">
+      </div>
+      
+      <button class="search-button">Search</button>
+    </div>
+
+    <div class="results-section">
+      <p class="results-count">Total <span>2</span> results</p>
+
+      <table class="course-table">
+        <thead>
+          <tr>
+            <th>NO</th>
+            <th>Title</th>
+            <th>Target Audience</th>
+            <th>Application Period</th>
+            <th>Learning Period</th>
+            <th>Fee</th>
+            <th>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="course-title">2024 5th Term Worker Safety Education (Elective)</td>
+            <td>Worker</td>
+            <td>2024.10.13<br>~2025.1.10</td>
+            <td>2024.10.13<br>~2025.2.10</td>
+            <td>₩0</td>
+            <td><button class="btn-apply">Closed</button></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="course-title">2025 5th Term Understanding Safety & Health Management Systems and Safety Culture</td>
+            <td>Worker</td>
+            <td>2025.10.13<br>~2025.11.10</td>
+            <td>2025.10.13<br>~2025.12.10</td>
+            <td>₩0</td>
+            <td><button class="btn-closed" disabled>Available</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <a href="#">&lt;&lt;</a>
+        <a href="#">&lt;</a>
+        <span class="active">1</span>
+        <a href="#">&gt;</a>
+        <a href="#">&gt;&gt;</a>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <span>|</span>
+    <a href="#">Related Sites</a>
+  </div>
+  <div class="footer-info">
+    <p>Address: 10, Sopa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Phone: 02-1234-5678</p>
+    <p>Customer Support: <a href="#">Contact Us</a> (Weekdays 09:00~18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
+  </div>
+</footer>
+
+</body>
+</html>

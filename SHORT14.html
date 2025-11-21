@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ELO - Shorts</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#ffffff; color:#333; min-height:100vh; display:flex; flex-direction:column; }
+
+  /* 상단 전체 래퍼(header+nav) */
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+  @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+
+  /* 메인 */
+  main {
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding-top:180px; /* 헤더 높이만큼 여유 확보 */
+    padding-bottom:80px;
+  }
+
+  /* 쇼츠 컨테이너 */
+  .shorts-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+  }
+
+  .shorts-video {
+    width:100%;
+    aspect-ratio:9/16;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 4px 25px rgba(0,0,0,0.2);
+  }
+
+  .shorts-video video {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:20px;
+  }
+
+  .shorts-caption {
+    text-align:center;
+    font-size:1rem;
+    color:#555;
+  }
+/* 이수율 영역 */
+  .progress-area {
+    text-align:center;
+    margin-top:10px;
+  }
+  .progress-area p {
+    margin:6px 0;
+    font-size:1rem;
+    color:#333;
+  }
+  .progress-area button {
+    padding:10px 18px;
+    font-size:0.95rem;
+    border:none;
+    border-radius:6px;
+    background:#0078d4;
+    color:white;
+    cursor:pointer;
+    transition:background 0.2s;
+  }
+  .progress-area button:disabled {
+    background:#ccc;
+    cursor:not-allowed;
+  }
+  .progress-area button:hover:not(:disabled) {
+    background:#005fa3;
+  }
+
+
+
+
+  /* footer */
+  footer.footer {
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 35px 20px;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+  .footer-info a:hover { text-decoration: underline; }
+  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+
+  @media(max-width:480px){
+    .shorts-container { max-width: 90%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ✅ 헤더 고정 -->
+<div class="top-bar">
+  <header id="top"><a href="home.html">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="intro.html">소개</a>
+      <a href="course_application.html">인터넷교육</a>
+      <a href="my_classroom.html">나의 강의실</a>
+      <a href="notice.html">교육지원</a>
+    </div>
+    <div class="nav-right">
+      <a href="login.html">로그인</a>
+      <a href="join.html">회원가입</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ✅ 메인 (쇼츠 영상) -->
+<main>
+  <div class="shorts-container">
+    <div class="shorts-video">
+      <!-- autoplay 제거 → 수동 재생 -->
+      <video controls muted playsinline>
+        <source src="안전교육-지게차 근처 보행 금지 구역 준수.mp4" type="video/mp4">
+        브라우저가 동영상을 지원하지 않습니다.
+      </video>
+    </div>
+    <div class="shorts-caption">
+      <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
+    </div>
+    <div class="progress-area">
+  <p id="status">이수율: 0%</p>
+  <button id="completeBtn" disabled>이수 완료</button>
+</div>
+
+  </div>
+</main>
+
+<!-- ✅ 푸터 고정 -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">개인정보처리방침</a>
+    <span>|</span>
+    <a href="#">관련사이트 바로가기</a>
+  </div>
+  <div class="footer-info">
+    <p>주소: 서울특별시 중구 소파로2길 10</p>
+    <p>전화: 02-1234-5678</p>
+    <p>고객지원: <a href="#">담당자 연락처 바로가기</a> (평일 09:00~18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
+  </div>
+</footer>
+<!-- ✅ JS 스크립트 -->
+<script>
+  const video = document.getElementById('lectureVideo');
+  const status = document.getElementById('status');
+  const completeBtn = document.getElementById('completeBtn');
+
+  // 건너뛰기 방지용 변수
+  let lastTime = 0;
+
+  // 시청률 계산
+  video.addEventListener('timeupdate', () => {
+    const percent = (video.currentTime / video.duration) * 100;
+    status.textContent = `이수율: ${percent.toFixed(1)}%`;
+
+    // 건너뛰기 방지 (5초 이상 앞으로 이동 금지)
+    if (video.currentTime - lastTime > 5) {
+      video.currentTime = lastTime;
+    } else {
+      lastTime = video.currentTime;
+    }
+  });
+
+  // 영상 끝까지 시청 시
+  video.addEventListener('ended', () => {
+    completeBtn.disabled = false;
+    completeBtn.textContent = "이수 완료 처리 가능";
+    status.textContent = "이수율: 100% (완료)";
+  });
+
+  // 이수 완료 버튼 클릭
+completeBtn.addEventListener('click', () => {
+  alert("이수 완료로 기록되었습니다!");
+
+  // ▶ 기존 저장 목록 불러오기 (없으면 빈 배열)
+  const completedList = JSON.parse(localStorage.getItem("completedLectures")) || [];
+
+  // ▶ 현재 강의 정보 추가 (ID, 제목, 날짜 등 원하는 대로)
+  completedList.push({
+    title: "[ELO Shorts] 안전사고 - 개구부와 맨홀",
+    date: new Date().toLocaleString()
+  });
+
+  // ▶ 다시 저장
+  localStorage.setItem("completedLectures", JSON.stringify(completedList));
+});
+
+  
+</script>
+
+</body>
+</html>

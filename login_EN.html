@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ELO - Login</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#ffffff; color:#333; min-height:100vh; display:flex; flex-direction:column; }
+
+  /* Top bar (header + nav) */
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+  @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+
+  /* Main container */
+  main { flex:1; display:flex; justify-content:center; align-items:center; padding-top:140px; padding-bottom:80px; }
+
+  /* Login box */
+  .login-container {
+    background:white;
+    padding:60px 15px;
+    border-radius:15px;
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    border:none;
+    box-shadow:none;
+  }
+
+  .login-container h1 {
+    font-size:1.6rem;
+    margin-bottom:15px;
+  }
+  .login-container p { font-size:1rem; color:#555; margin-bottom:35px; line-height:1.4; }
+
+  .login-container label { display:block; text-align:left; font-weight:500; margin-bottom:5px; margin-top:20px; }
+  .login-container input[type="text"],
+  .login-container input[type="password"] {
+    width:100%;
+    padding:12px 15px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:1rem;
+    margin-bottom:15px;
+    outline:none;
+  }
+
+  /* Password icon */
+  .password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .password-wrapper input {
+    flex: 1;
+    padding-right: 40px;
+  }
+
+ .password-wrapper span {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-80%);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.login-container .checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+  font-size: 0.85rem;
+}
+
+.login-container .checkbox-wrapper input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+  .login-container button {
+    width:100%;
+    padding:12px 0;
+    background:#3b3b3bcc;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-weight:bold;
+    font-size:1rem;
+    cursor:pointer;
+    transition: background 0.3s;
+  }
+  .login-container button:hover { background:#2a2a2a99; }
+
+  .login-links {
+    margin-top:25px;
+    font-size:0.85rem;
+    display:flex;
+    justify-content: center;
+    gap:15px;
+    color:#555;
+  }
+  .login-links a { text-decoration:none; color:#555; }
+  .login-links a:hover { text-decoration:underline; }
+
+  /* Footer */
+  footer.footer {
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 35px 20px;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+  .footer-info a:hover { text-decoration: underline; }
+  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+
+  @media(max-width:480px){
+    .login-container { padding:35px 20px; }
+    .login-links { flex-direction:column; gap:10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <header id="top"><a href="#top">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="platform_home_en.html">About</a>
+      <a href="#online">Online Courses</a>
+      <a href="#myclass">My Classroom</a>
+      <a href="#support">Support</a>
+    </div>
+    <div class="nav-right">
+      <a href="#login">Login</a>
+      <a href="#signup">Sign Up</a>
+    </div>
+  </nav>
+</div>
+
+<main>
+  <div class="login-container">
+    <h1>Login</h1>
+    <p><b>Thank you for visiting Elo.</b><br>
+    You can access all services by logging into the integrated site.</p>
+    
+    <form id="loginForm">
+      <label for="userid">Username</label>
+      <input type="text" id="userid" placeholder="Enter your username">
+
+      <label for="password">Password</label>
+      <div class="password-wrapper">
+        <input type="password" id="password" placeholder="Enter your password">
+        <span id="togglePassword">🔒</span>
+      </div>
+
+      <div class="checkbox-wrapper">
+        <label for="remember">　</label>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="login-links">
+      <a href="#">Find ID / Reset Password</a>
+      <a href="#">Sign Up</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <span>|</span>
+    <a href="#">Related Sites</a>
+  </div>
+  <div class="footer-info">
+    <p>Address: 10, Sofa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Tel: +82-2-1234-5678</p>
+    <p>Customer Support: <a href="#">Contact Support</a> (Weekdays 09:00–18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHTS RESERVED.
+  </div>
+</footer>
+
+<script>
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password');
+  const loginForm = document.querySelector('#loginForm');
+
+  // Password visibility toggle
+  togglePassword.addEventListener('click', () => {
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    togglePassword.textContent = type === 'password' ? '🔒' : '🔓';
+  });
+
+  // Prevent refresh on form submit (for testing)
+  loginForm.addEventListener('submit', e => e.preventDefault());
+</script>
+
+</body>
+</html>

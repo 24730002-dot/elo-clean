@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELO - Shorts</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard",sans-serif; background:#ffffff; color:#333; min-height:100vh; display:flex; flex-direction:column; }
+
+  /* HEADER */
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background:rgba(0,0,0,0.35);
+    backdrop-filter:blur(4px);
+    color:white; z-index:1000;
+  }
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  nav { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:12px 40px; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { display:flex; justify-content:center; gap:100px; grid-column:2; }
+  .nav-right { display:flex; justify-content:flex-end; gap:20px; grid-column:3; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color:#b9b9b9; }
+
+  /* MAIN */
+  main { flex:1; display:flex; justify-content:center; align-items:center; padding-top:180px; padding-bottom:80px; }
+  .shorts-container { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; width:100%; max-width:600px; margin:0 auto; }
+  .shorts-video { width:100%; aspect-ratio:9/16; border-radius:20px; overflow:hidden; box-shadow:0 4px 25px rgba(0,0,0,0.2); }
+  .shorts-video video { width:100%; height:100%; object-fit:cover; border-radius:20px; }
+  .shorts-caption { text-align:center; font-size:1rem; color:#555; }
+/* 이수율 영역 */
+  .progress-area {
+    text-align:center;
+    margin-top:10px;
+  }
+  .progress-area p {
+    margin:6px 0;
+    font-size:1rem;
+    color:#333;
+  }
+  .progress-area button {
+    padding:10px 18px;
+    font-size:0.95rem;
+    border:none;
+    border-radius:6px;
+    background:#0078d4;
+    color:white;
+    cursor:pointer;
+    transition:background 0.2s;
+  }
+  .progress-area button:disabled {
+    background:#ccc;
+    cursor:not-allowed;
+  }
+  .progress-area button:hover:not(:disabled) {
+    background:#005fa3;
+  }
+
+
+
+
+  /* FOOTER */
+  footer.footer {
+    background-color:rgba(255,255,255,0.7);
+    text-align:center; padding:35px 20px; color:#444;
+    font-size:14px; line-height:1.6; border-top:1px solid rgba(0,0,0,0.1);
+    backdrop-filter:blur(8px);
+  }
+</style>
+</head>
+<body>
+
+<!-- ✅ HEADER -->
+<div class="top-bar">
+  <header id="top"><a href="home_en.html">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="intro_en.html">About</a>
+      <a href="course_application_en.html">Online Courses</a>
+      <a href="my_classroom_en.html">My Classroom</a>
+      <a href="notice_en.html">Support</a>
+    </div>
+    <div class="nav-right">
+      <a href="login_en.html">Login</a>
+      <a href="join_en.html">Sign Up</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ✅ MAIN -->
+<main>
+  <div class="shorts-container">
+    <div class="shorts-video">
+      <video controls playsinline>
+        <source src="Preventing Collapse Accidents During Demolition Work.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="shorts-caption">
+      <b>[ELO Shorts]</b><br><br>
+      Learn how to stay safe at work — one clip at a time 🎥
+    </div>
+    <div class="progress-area">
+  <p id="status">Completion Rate: 0%</p>
+  <button id="completeBtn" disabled>Mark as Completed</button>
+</div>
+  </div>
+</main>
+
+<!-- ✅ FOOTER -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <span>|</span>
+    <a href="#">Related Sites</a>
+  </div>
+  <div class="footer-info">
+    <p>Address: 10 Sopa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Phone: +82-2-1234-5678</p>
+    <p>Customer Support: <a href="#">Contact Our Team</a> (Mon–Fri 09:00–18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHTS RESERVED.
+  </div>
+</footer>
+<script>
+  const video = document.querySelector("video");
+  const status = document.getElementById("status");
+  const completeBtn = document.getElementById("completeBtn");
+
+  let lastTime = 0;
+
+  // Update completion percentage + prevent skipping
+  video.addEventListener("timeupdate", () => {
+    const percent = (video.currentTime / video.duration) * 100;
+    status.textContent = `Completion Rate: ${percent.toFixed(1)}%`;
+
+    // Prevent skipping more than 5 seconds
+    if (video.currentTime - lastTime > 5) {
+      video.currentTime = lastTime;
+    } else {
+      lastTime = video.currentTime;
+    }
+  });
+
+  // When video ends → allow completion
+  video.addEventListener("ended", () => {
+    completeBtn.disabled = false;
+    completeBtn.textContent = "Completion Available";
+    status.textContent = "Completion Rate: 100% (Completed)";
+  });
+
+  // Save completion to localStorage
+  completeBtn.addEventListener("click", () => {
+    alert("This course has been marked as completed!");
+
+    const completedList = JSON.parse(localStorage.getItem("completedLectures_en")) || [];
+
+    completedList.push({
+      title: document.title || "ELO Shorts Course",
+      date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("completedLectures_en", JSON.stringify(completedList));
+  });
+</script>
+
+
+</body>
+</html>

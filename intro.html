@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ELO - 소개</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard",sans-serif; background:#ffffff; color:#333; min-height:100vh; display:flex; flex-direction:column; }
+
+  /* ===== Header ===== */
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background:rgba(0,0,0,0.35);
+    backdrop-filter:blur(4px);
+    color:white;
+    z-index:1000;
+  }
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation:blink 1s ease-in-out infinite alternate; }
+  @keyframes blink { 0%{opacity:1;}50%{opacity:0.3;}100%{opacity:1;} }
+
+  nav { position:relative; width:100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15);}
+  .nav-center { position:absolute; left:50%; transform:translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color:#b9b9b9; }
+
+  /* ===== Main ===== */
+  main { flex:1; padding-top:180px; padding-bottom:100px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+
+  /* Hero Section */
+  .hero {
+    max-width:900px;
+    margin-bottom:80px;
+    padding:0 20px;
+  }
+  .hero h1 {
+    font-size:2.2rem;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .hero p {
+    font-size:1.1rem;
+    line-height:1.6;
+    color:#555;
+  }
+  .hero img, .hero video {
+    margin-top:40px;
+    width:100%;
+    max-width:520px;
+    border-radius:20px;
+    box-shadow:0 4px 25px rgba(0,0,0,0.15);
+  }
+
+  /* Features Section */
+  .features {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:40px;
+    margin-bottom:100px;
+    padding:0 20px;
+  }
+  .feature-box {
+    flex:1 1 280px;
+    max-width:300px;
+    background:#fafafa;
+    border-radius:15px;
+    padding:25px 20px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    transition:transform 0.3s;
+  }
+  .feature-box:hover { transform:translateY(-6px); }
+  .feature-box h3 {
+    font-size:1.2rem;
+    margin-bottom:12px;
+  }
+  .feature-box p {
+    font-size:0.95rem;
+    color:#555;
+    line-height:1.5;
+  }
+
+  /* CTA Section */
+  .cta {
+    margin-top:40px;
+  }
+  .cta button {
+    background:#3b3b3bcc;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-size:1rem;
+    font-weight:bold;
+    padding:14px 30px;
+    cursor:pointer;
+    transition:background 0.3s;
+  }
+  .cta button:hover { background:#2a2a2a99; }
+
+  /* ===== Footer ===== */
+  footer.footer {
+    background-color:rgba(255,255,255,0.7);
+    text-align:center;
+    padding:35px 20px;
+    color:#444;
+    font-size:14px;
+    line-height:1.6;
+    border-top:1px solid rgba(0,0,0,0.1);
+    backdrop-filter:blur(8px);
+  }
+  .footer-links { margin-bottom:12px; }
+  .footer-links a { color:#222; text-decoration:none; font-weight:500; transition:color 0.2s; }
+  .footer-links a:hover { color:#0078d4; }
+  .footer-links span { margin:0 8px; color:#aaa; }
+  .footer-info p { margin:4px 0; }
+  .footer-info a { color:#0078d4; text-decoration:none; }
+  .footer-info a:hover { text-decoration:underline; }
+  .footer-copy { margin-top:14px; font-size:13px; color:#666; }
+
+  @media(max-width:600px){
+    .hero h1{ font-size:1.8rem; }
+    .features{ flex-direction:column; align-items:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ✅ 헤더 고정 -->
+<div class="top-bar">
+  <header id="top"><a href="home.html">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="intro.html">소개</a>
+      <a href="course_application.html">인터넷교육</a>
+      <a href="my_classroom.html">나의 강의실</a>
+      <a href="notice.html">교육지원</a>
+    </div>
+    <div class="nav-right">
+      <a href="login.html">로그인</a>
+      <a href="join.html">회원가입</a>
+    </div>
+  </nav>
+</div>
+
+<!-- ✅ 메인 콘텐츠 -->
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>쉽고 빠른 제조안전교육, <span style="color:#e6d815;">ELO</span> 와 함께</h1>
+    <p>
+      복잡하고 긴 안전교육은 이제 그만!  
+      ELO는 사용자가 **짧은 영상(숏폼)** 을 통해  
+      핵심 안전지식을 빠르게 습득할 수 있도록 만든  
+      **스마트 제조안전교육 플랫폼**입니다.
+    </p>
+    <img src="safty.jpg" alt="ELO 플랫폼 소개 이미지">
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="feature-box">
+      <h3>🎬 짧지만 강력한 학습</h3>
+      <p>3분 이내의 숏폼 콘텐츠로 핵심만 빠르게 학습하세요.  
+      집중력은 높이고, 부담은 낮췄습니다.</p>
+    </div>
+    <div class="feature-box">
+      <h3>📱 언제 어디서나</h3>
+      <p>PC와 모바일 모두에서 접근 가능!  
+      출근 전, 쉬는 시간에도 바로 학습할 수 있습니다.</p>
+    </div>
+    <div class="feature-box">
+      <h3>🧠 실무 중심 콘텐츠</h3>
+      <p>
+      실제 제조 현장에서 일어날 수 있는 안전사례 중심 교육으로  
+      실질적인 안전 인식을 높입니다.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta">
+    <button onclick="window.location.href='course_application.html'">지금 바로 학습 시작하기</button>
+  </div>
+</main>
+
+<!-- ✅ 푸터 고정 -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">개인정보처리방침</a>
+    <span>|</span>
+    <a href="#">관련사이트 바로가기</a>
+  </div>
+  <div class="footer-info">
+    <p>주소: 서울특별시 중구 소파로2길 10</p>
+    <p>전화: 02-1234-5678</p>
+    <p>고객지원: <a href="#">담당자 연락처 바로가기</a> (평일 09:00~18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
+  </div>
+</footer>
+
+</body>
+</html>

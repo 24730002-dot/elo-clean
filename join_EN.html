@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ELO - Sign Up</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#ffffff; color:#333; min-height:100vh; display:flex; flex-direction:column; }
+
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+  @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+
+  main { flex:1; display:flex; justify-content:center; align-items:center; padding-top:140px; padding-bottom:80px; }
+
+  .signup-container {
+    background:white;
+    padding:60px 15px;
+    border-radius:15px;
+    width:100%;
+    max-width:480px;
+    text-align:center;
+  }
+
+  .signup-container h1 { font-size:1.6rem; margin-bottom:15px; }
+  .signup-container p { font-size:1rem; color:#555; margin-bottom:35px; }
+
+  label { display:block; text-align:left; font-weight:500; margin-bottom:5px; margin-top:20px; }
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="tel"] {
+    width:100%;
+    padding:12px 15px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:1rem;
+    outline:none;
+  }
+
+  .check-message {
+    text-align:left;
+    font-size:0.85rem;
+    margin-top:6px;
+    height:18px;
+  }
+  .valid { color:green; }
+  .invalid { color:red; }
+
+  .checkbox-wrapper {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:25px;
+    margin-bottom:25px;
+    font-size:0.85rem;
+  }
+  .checkbox-wrapper input { width:18px; height:18px; }
+
+  button {
+    width:100%;
+    padding:12px 0;
+    background:#3b3b3bcc;
+    border:none;
+    border-radius:10px;
+    color:white;
+    font-weight:bold;
+    font-size:1rem;
+    cursor:pointer;
+    transition: background 0.3s;
+  }
+  button:hover { background:#2a2a2a99; }
+
+  .login-links {
+    margin-top:25px;
+    font-size:0.85rem;
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    color:#555;
+  }
+  .login-links a { text-decoration:none; color:#555; }
+  .login-links a:hover { text-decoration:underline; }
+
+  footer.footer {
+    background-color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 35px 20px;
+    color: #444;
+    font-size: 14px;
+    line-height: 1.6;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+  }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+  .footer-info a:hover { text-decoration: underline; }
+  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+
+  @media(max-width:480px){
+    .signup-container { padding:35px 20px; }
+    .login-links { flex-direction:column; gap:10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <header id="top"><a href="#top">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="platform_home_en.html">About</a>
+      <a href="#online">Online Courses</a>
+      <a href="#myclass">My Classroom</a>
+      <a href="#support">Support</a>
+    </div>
+    <div class="nav-right">
+      <a href="login_en.html">Login</a>
+      <a href="signup_en.html">Sign Up</a>
+    </div>
+  </nav>
+</div>
+
+<main>
+  <div class="signup-container">
+    <h1>Sign Up</h1>
+    <p>Please sign up to use the various services of <b>Elo</b>.</p>
+
+    <form id="signupForm">
+      <label for="name">Name</label>
+      <input type="text" id="name" placeholder="Enter your name" required>
+
+      <label for="userid">Username</label>
+      <input type="text" id="userid" placeholder="Enter your username" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+      <div id="passwordStrength" class="check-message"></div>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+      <div id="passwordCheck" class="check-message"></div>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="example@domain.com" required>
+      <div id="emailCheck" class="check-message"></div>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" placeholder="010-0000-0000" required>
+
+      <div class="checkbox-wrapper">
+        <input type="checkbox" id="agree" required>
+        <label for="agree">I agree to the Terms of Service and Privacy Policy.</label>
+      </div>
+
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="login-links">
+      <a href="login_en.html">Already have an account? Log In</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <span>|</span>
+    <a href="#">Related Sites</a>
+  </div>
+  <div class="footer-info">
+    <p>Address: 10, Sofa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Tel: +82-2-1234-5678</p>
+    <p>Customer Support: <a href="#">Contact Support</a> (Weekdays 09:00–18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHTS RESERVED.
+  </div>
+</footer>
+
+<script>
+  const password = document.querySelector('#password');
+  const confirmPassword = document.querySelector('#confirmPassword');
+  const passwordCheck = document.querySelector('#passwordCheck');
+  const passwordStrength = document.querySelector('#passwordStrength');
+  const email = document.querySelector('#email');
+  const emailCheck = document.querySelector('#emailCheck');
+  const phone = document.querySelector('#phone');
+  const signupForm = document.querySelector('#signupForm');
+
+  // Password strength check
+  function checkPasswordStrength() {
+    const val = password.value;
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+    if (val === "") {
+      passwordStrength.textContent = "";
+      return false;
+    }
+    if (regex.test(val)) {
+      passwordStrength.textContent = "Strong password.";
+      passwordStrength.className = "check-message valid";
+      return true;
+    } else {
+      passwordStrength.textContent = "Must be at least 8 characters and include letters, numbers, and special characters.";
+      passwordStrength.className = "check-message invalid";
+      return false;
+    }
+  }
+
+  // Password match check
+  function checkPasswordMatch() {
+    if (password.value === "" && confirmPassword.value === "") {
+      passwordCheck.textContent = "";
+      return;
+    }
+    if (password.value === confirmPassword.value) {
+      passwordCheck.textContent = "Passwords match.";
+      passwordCheck.className = "check-message valid";
+    } else {
+      passwordCheck.textContent = "Passwords do not match.";
+      passwordCheck.className = "check-message invalid";
+    }
+  }
+
+ // Email format check
+function checkEmailFormat() {
+  const val = email.value.trim();
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // ✅ ← 수정됨 (\\ → \)
+  if (val === "") {
+    emailCheck.textContent = "";
+    return false;
+  }
+  if (regex.test(val)) {
+    emailCheck.textContent = "Valid email format.";
+    emailCheck.className = "check-message valid";
+    return true;
+  } else {
+    emailCheck.textContent = "Invalid email format.";
+    emailCheck.className = "check-message invalid";
+    return false;
+  }
+}
+
+
+  // Auto-format phone number
+  function formatPhoneNumber() {
+    let val = phone.value.replace(/[^0-9]/g, '');
+    if (val.length > 11) val = val.slice(0, 11);
+
+    if (val.length < 4) phone.value = val;
+    else if (val.length < 8) phone.value = val.replace(/(\\d{3})(\\d+)/, '$1-$2');
+    else phone.value = val.replace(/(\\d{3})(\\d{4})(\\d+)/, '$1-$2-$3');
+  }
+
+  password.addEventListener('input', () => { checkPasswordStrength(); checkPasswordMatch(); });
+  confirmPassword.addEventListener('input', checkPasswordMatch);
+  email.addEventListener('input', checkEmailFormat);
+  phone.addEventListener('input', formatPhoneNumber);
+
+  signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!checkPasswordStrength()) return alert('Your password does not meet the required conditions.');
+    if (password.value !== confirmPassword.value) return alert('Passwords do not match.');
+    if (!checkEmailFormat()) return alert('Invalid email format.');
+    alert('Sign-up completed successfully!');
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FAQ - ELO Safety Education Platform</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#fafafa; color:#333; }
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+  @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+  footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; padding: 35px 20px; color: #444; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); margin-top: 60px; }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+  .footer-info a:hover { text-decoration: underline; }
+  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+
+  .page-wrapper { padding-top: 100px; min-height: 100vh; }
+  .content-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto; /* 중앙 정렬로 수정 */
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+  .page-title { font-size: 2.2rem; font-weight: bold; margin-bottom: 30px; }
+  .faq-list { list-style: none; padding: 0; margin: 0; border-top: 2px solid #333; }
+  .faq-item { border-bottom: 1px solid #eee; }
+  .faq-question { display: flex; align-items: center; padding: 30px 15px; font-size: 1.1rem; font-weight: 600; color: #333; cursor: pointer; background-color: #fff; transition: background-color 0.2s; }
+  .faq-question:hover { background-color: #f0f0f0; }
+  .faq-question::before { content: "Q."; color: #007bff; font-weight: bold; margin-right: 15px; font-size: 1.2rem; }
+  .faq-question .arrow-icon { margin-left: auto; font-size: 1.2rem; color: #777; transform: rotate(0deg); transition: transform 0.3s ease; }
+  .faq-question.active .arrow-icon { transform: rotate(180deg); }
+  .faq-answer { padding: 0 15px 0 50px; font-size: 0.95rem; color: #555; background-color: #fcfcfc; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease-out; }
+  .faq-answer.active { max-height: 200px; padding: 15px 15px 20px 50px; overflow: auto; }
+  .faq-answer p { margin: 0; }
+  @media (max-width:768px){ nav { flex-direction:column; gap:8px; } .nav-center { position:static; transform:none; justify-content:center; margin-bottom:5px; } .nav-right { justify-content:center; margin-left:0; gap:10px; } .page-wrapper { padding-top: 150px; } .content-container { width: 95%; padding: 20px 15px; } .faq-question { padding: 20px 10px; font-size: 1rem; } .faq-question::before { margin-right: 10px; font-size: 1.1rem; } .faq-answer { padding: 0 10px 0 40px; font-size: 0.9rem; } .faq-answer.active { padding: 10px 10px 15px 40px; } }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <header id="top"><a href="플랫폼 홈.html">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="#intro">Introduction</a>
+      <a href="course_list.html">Online Education</a>
+      <a href="myclass.html">My Classroom</a>
+      <a href="#support">Support</a>
+    </div>
+    <div class="nav-right">
+      <a href="login.html">Login</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </nav>
+</div>
+
+<div class="page-wrapper">
+  <div class="content-container">
+    <h1 class="page-title">Frequently Asked Questions (FAQ)</h1>
+    <ul class="faq-list">
+      <li class="faq-item">
+        <div class="faq-question">How do I cancel my membership?<span class="arrow-icon">▼</span></div>
+        <div class="faq-answer"><p>After logging in, click the "Cancel Membership" button at the bottom of the "My Classroom > Edit My Info" page. Please note that all learning history will be deleted upon withdrawal.</p></div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-question">I forgot my ID or password. How can I find it?<span class="arrow-icon">▼</span></div>
+        <div class="faq-answer"><p>On the login page, click the "Find ID/Password" link and follow the identity verification process.</p></div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-question">Where do I apply for courses?<span class="arrow-icon">▼</span></div>
+        <div class="faq-answer"><p>In the "Online Education" menu, select the desired course, and then click the "Apply for Course" button on the course page.</p></div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-question">How do I get my certificate?<span class="arrow-icon">▼</span></div>
+        <div class="faq-answer"><p>After completing the course, you can receive it via the "Issue Certificate" button next to the course on the "My Classroom" page.</p></div>
+      </li>
+      <li class="faq-item">
+        <div class="faq-question">What is the refund policy?<span class="arrow-icon">▼</span></div>
+        <div class="faq-answer"><p>A full refund is available within 7 days of payment, provided you have not started the course. For details, please refer to "Support > Terms of Use".</p></div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a><span>|</span><a href="#">Related Sites</a>
+  </div>
+  <div class="footer-info">
+    <p>Address: 10, Sopa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Phone: 02-1234-5678</p>
+    <p>Customer Support: <a href="#">Contact Us</a> (Weekdays 09:00~18:00)</p>
+  </div>
+  <div class="footer-copy">COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const faqQuestions = document.querySelectorAll('.faq-question');
+  faqQuestions.forEach(question => {
+    question.addEventListener('click', function() {
+      const answer = this.nextElementSibling;
+      const isActive = this.classList.contains('active');
+      faqQuestions.forEach(q => {
+        q.classList.remove('active');
+        q.nextElementSibling.classList.remove('active');
+      });
+      if (!isActive) {
+        this.classList.add('active');
+        answer.classList.add('active');
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

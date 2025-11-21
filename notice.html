@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>공지사항 - ELO 안전교육 플랫폼</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#fafafa; color:#333; }
+
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+  }
+
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+  
+  footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; padding: 35px 20px; color: #444; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); margin-top: 60px; }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+  .footer-info a:hover { text-decoration: underline; }
+  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+
+  .page-wrapper { padding-top: 100px; min-height: 100vh; }
+  .content-container { width: 90%; max-width: 1200px; margin: 60px auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+  .page-title { font-size: 2.2rem; font-weight: bold; margin-bottom: 30px; }
+
+  .notice-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #333; }
+  .total-count { font-size: 1rem; font-weight: 500; }
+  .notice-search-bar { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 5px; overflow: hidden; }
+  .notice-search-bar select { padding: 8px 10px; border: none; border-right: 1px solid #eee; font-size: 0.95rem; height: 38px; outline: none; }
+  .notice-search-bar input { padding: 8px 12px; border: none; font-size: 0.95rem; width: 250px; height: 38px; outline: none; }
+  .notice-search-bar button { padding: 0 12px; border: none; background: none; font-size: 1.2rem; color: #555; cursor: pointer; height: 38px; }
+
+  .notice-list { list-style: none; }
+  .notice-item { display: flex; align-items: center; padding: 30px 10px; border-bottom: 1px solid #eee; }
+  .notice-item a { text-decoration: none; color: #333; display: contents; }
+
+  .notice-num { flex-basis: 50px; text-align: center; font-weight: 500; color: #555; }
+  .notice-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 15px; }
+  .notice-title:hover { text-decoration: underline; }
+  .notice-title .icon-speaker { font-size: 0.9rem; margin-right: 8px; }
+  .notice-title .tag-important { color: #c90000; font-weight: bold; margin-right: 5px; }
+
+  .notice-meta { display: flex; flex-basis: 240px; font-size: 0.9rem; color: #777; text-align: left; }
+  .notice-date { flex-basis: 150px; white-space: nowrap; }
+  .notice-views { flex: 1; white-space: nowrap; }
+
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 30px; }
+  .pagination a, .pagination span { display: flex; justify-content: center; align-items: center; width: 34px; height: 34px; text-decoration: none; color: #555; border: 1px solid #ddd; border-radius: 50%; transition: background 0.2s; }
+  .pagination a:hover { background: #f0f0f0; }
+  .pagination span.active { background: #2d3b6b; color: white; border-color: #2d3b6b; font-weight: bold; }
+
+  @media (max-width:768px){
+    nav { flex-direction:column; gap:8px; }
+    .nav-center { position:static; transform:none; justify-content:center; margin-bottom:5px; }
+    .nav-right { justify-content:center; margin-left:0; gap:10px; }
+    .page-wrapper { padding-top: 150px; }
+    .content-container { width: 95%; padding: 20px 15px; }
+    .notice-controls { flex-direction: column; align-items: stretch; gap: 15px; }
+    .notice-search-bar input { width: 150px; }
+    .notice-meta { display: none; }
+    .notice-num { flex-basis: 30px; }
+    .notice-title { padding: 0 5px; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <header id="top"><a href="home.html">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="intro.html">소개</a>
+      <a href="course_application.html">인터넷교육</a>
+      <a href="my_classroom.html">나의 강의실</a>
+      <a href="notice.html">교육지원</a>
+    </div>
+    <div class="nav-right">
+      <a href="login.html">로그인</a>
+      <a href="join.html">회원가입</a>
+    </div>
+  </nav>
+</div>
+<div class="page-wrapper">
+  <div class="content-container">
+    <h1 class="page-title">공지사항</h1>
+    <div class="notice-controls">
+      <div class="total-count">총 12건</div>
+      <div class="notice-search-bar">
+        <select><option>전체</option><option>제목</option><option>내용</option></select>
+        <input type="text" placeholder="검색어를 입력해주세요.">
+        <button title="검색">🔍</button>
+      </div>
+    </div>
+    <ul class="notice-list">
+      <li class="notice-item">
+        <a href="notice_detail.html">
+          <div class="notice-num">1</div>
+          <div class="notice-title"><span class="icon-speaker">🔊</span>안전보건공단, 교육기관 사칭 주의 안내</div>
+          <div class="notice-meta"><span class="notice-date">등록일자: 2025.10.02</span><span class="notice-views">조회: 91</span></div>
+        </a>
+      </li>
+      <li class="notice-item">
+        <a href="notice_detail.html">
+          <div class="notice-num">2</div>
+          <div class="notice-title"><span class="icon-speaker">🔊</span><span class="tag-important">[중요]</span>2025년 안전보건교육기관(직무, 근로자) 평가등급 공표 전 기관정보 확인 요청...</div>
+          <div class="notice-meta"><span class="notice-date">등록일자: 2025.09.23</span><span class="notice-views">조회: 184</span></div>
+        </a>
+      </li>
+      <li class="notice-item">
+        <a href="notice_detail.html">
+          <div class="notice-num">3</div>
+          <div class="notice-title"><span class="icon-speaker">🔊</span>2025년 안전보건교육기관(직무, 근로자) 잠정결과 공개 및 이의신청 방법 안내</div>
+          <div class="notice-meta"><span class="notice-date">등록일자: 2025.08.11</span><span class="notice-views">조회: 493</span></div>
+        </a>
+      </li>
+      <li class="notice-item">
+        <a href="notice_detail.html">
+          <div class="notice-num">4</div>
+          <div class="notice-title"><span class="icon-speaker">🔊</span>안전보건교육기관 사칭 피해사례 및 대처법 안내</div>
+          <div class="notice-meta"><span class="notice-date">등록일자: 2025.07.31</span><span class="notice-views">조회: 410</span></div>
+        </a>
+      </li>
+      <li class="notice-item">
+        <a href="notice_detail.html">
+          <div class="notice-num">5</div>
+          <div class="notice-title"><span class="icon-speaker">🔊</span>안전체험교육 SNS 후기 이벤트 안내</div>
+          <div class="notice-meta"><span class="notice-date">등록일자: 2025.07.17</span><span class="notice-views">조회: 113</span></div>
+        </a>
+      </li>
+    </ul>
+    <div class="pagination"><a href="#">&lt;</a><span class="active">1</span><a href="#">2</a><a href="#">3</a><a href="#">&gt;</a></div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="footer-links"><a href="#">개인정보처리방침</a><span>|</span><a href="#">관련사이트 바로가기</a></div>
+  <div class="footer-info">
+    <p>주소: 서울특별시 중구 소파로2길 10</p>
+    <p>전화: 02-1234-5678</p>
+    <p>고객지원: <a href="#">담당자 연락처 바로가기</a> (평일 09:00~18:00)</p>
+  </div>
+  <div class="footer-copy">COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.</div>
+</footer>
+</body>
+</html>
