@@ -396,8 +396,8 @@ nav a:hover {
 
 <section class="search-section">
   <div class="search-box">
-    <input type="text" id="search-input" placeholder="검색">
-    <button onclick="search()">검색</button>
+<input type="text" id="main-search" placeholder="검색어를 입력하세요">
+<button onclick="goSearch()">검색</button>
   </div>
 </section>
 
@@ -554,6 +554,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setInterval(nextSlide, 3500);
 </script>
+
+<script>
+function goSearch() {
+  const keyword = document.getElementById("main-search").value.trim();
+  if (!keyword) return; // 빈 검색 막기
+  window.location.href = `search.html?q=${encodeURIComponent(keyword)}`;
+}
+</script>
+
 
 </body>
 </html>

@@ -114,6 +114,25 @@
   }
 
   /*
+   이동버튼
+  */
+  .go-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  background: #5e5e5e;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.go-btn:hover {
+  background: #333;
+}
+
+
+  /*
    * 주제별 박스 스타일
   */
   .topic-grid-wrapper {
@@ -383,10 +402,11 @@
 
     <h1 class="page-title">근로자 교육</h1>
 
-    <div class="simple-search-bar">
-      <input type="text" placeholder="영상명을 입력하세요.">
-      <button>검색</button>
-    </div>
+<div class="simple-search-bar">
+  <input id="course-search-input" type="text" placeholder="영상명을 입력하세요.">
+  <button onclick="filterCourses()">검색</button>
+</div>
+
 
     <div class="topic-grid-wrapper">
       <h2>주제별 교육</h2>
@@ -435,62 +455,155 @@
       </div>
     </div>
 
+    <hr>
+    <br>
+    <br>
 
-    <div class="detailed-search-box">
-      <h2>상세 선택</h2>
-
-      <div class="filter-row">
-        <label class="filter-label">교육과정</label>
-        <div class="radio-group">
-          <label><input type="radio" name="courseType" value="all" checked> 전체</label>
-          <label><input type="radio" name="courseType" value="general"> 일반 과정</label>
-          <label><input type="radio" name="courseType" value="select"> 선택 과정</label>
-        </div>
-      </div>
-
-      <div class="filter-row">
-        <label class="filter-label">영상명</label>
-        <input type="text" placeholder="영상명을 입력하세요.">
-      </div>
-
-      <button class="search-button">검색</button>
-    </div>
 
     <div class="results-section">
-      <p class="results-count">총 <span>2</span>건</p>
+      <p class="results-count"> <span></span></p>
 
       <table class="course-table">
         <thead>
           <tr>
             <th>NO</th>
             <th>영상명</th>
-            <th>교육대상</th>
-            <th>신청기간</th>
-            <th>학습기간</th>
-            <th>수강료</th>
-            <th>선택</th>
+            <th>이동하기</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td class="course-title">2024년 5기 근로자 안전교육(과목 선택형)</td>
-            <td>근로자</td>
-            <td>2024.10.13<br>~2025.1.10</td>
-            <td>2024.10.13<br>~2025.2.10</td>
-            <td>0원</td>
-            <td><button class="btn-closed">신청마감</button></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td class="course-title">2025년 5기 안전보건관리체제 및 안전문화의 이해</td>
-            <td>근로자</td>
-            <td>2025.10.13<br>~2025.11.10</td>
-            <td>2025.10.13<br>~2025.12.10</td>
-            <td>0원</td>
-            <td><button class="btn-apply" disabled>신청가능</button></td>
-          </tr>
-        </tbody>
+        
+<tbody>
+<tbody id="course-table-body">
+
+  <tr>
+    <td>1</td>
+    <td class="course-title" style="text-align:center;">개구부와 맨홀</td>
+    <td><a href="SHORT1.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>2</td>
+    <td class="course-title" style="text-align:center;">안전수칙_추락</td>
+    <td><a href="SHORT2.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>3</td>
+    <td class="course-title" style="text-align:center;">가스누출</td>
+    <td><a href="SHORT3.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>4</td>
+    <td class="course-title" style="text-align:center;">끼임사고 예방 옷차림</td>
+    <td><a href="SHORT4.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>5</td>
+    <td class="course-title" style="text-align:center;">보호구</td>
+    <td><a href="SHORT5.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>6</td>
+    <td class="course-title" style="text-align:center;">불꽃작업 전</td>
+    <td><a href="SHORT6.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>7</td>
+    <td class="course-title" style="text-align:center;">소화기 중요성</td>
+    <td><a href="SHORT7.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>8</td>
+    <td class="course-title" style="text-align:center;">옷차림 방지</td>
+    <td><a href="SHORT8.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>9</td>
+    <td class="course-title" style="text-align:center;">귀마개 착용 중요성</td>
+    <td><a href="SHORT10.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>10</td>
+    <td class="course-title" style="text-align:center;">미끄럼 방지 예방 및 즉시 조치</td>
+    <td><a href="SHORT11.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>11</td>
+    <td class="course-title" style="text-align:center;">손가락 절단</td>
+    <td><a href="SHORT12.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>12</td>
+    <td class="course-title" style="text-align:center;">용접 시 눈 보호의 중요성</td>
+    <td><a href="SHORT13.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>13</td>
+    <td class="course-title" style="text-align:center;">지게차 근처 보행 금지 구역 준수</td>
+    <td><a href="SHORT14.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>14</td>
+    <td class="course-title" style="text-align:center;">안전모를 써도 다치는 이유</td>
+    <td><a href="SHORT15.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>15</td>
+    <td class="course-title" style="text-align:center;">비상대피</td>
+    <td><a href="SHORT16.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>16</td>
+    <td class="course-title" style="text-align:center;">기계작동</td>
+    <td><a href="SHORT17.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>17</td>
+    <td class="course-title" style="text-align:center;">안전화 착용</td>
+    <td><a href="SHORT18.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>18</td>
+    <td class="course-title" style="text-align:center;">작동 중 점검</td>
+    <td><a href="SHORT19.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>19</td>
+    <td class="course-title" style="text-align:center;">장갑의 중요성</td>
+    <td><a href="SHORT20.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>20</td>
+    <td class="course-title" style="text-align:center;">AI가 위험을 피하는 방법</td>
+    <td><a href="SHORT22.html" class="go-btn">이동</a></td>
+  </tr>
+
+  <tr>
+    <td>21</td>
+    <td class="course-title" style="text-align:center;">PPE 착용 강조</td>
+    <td><a href="SHORT23.html" class="go-btn">이동</a></td>
+  </tr>
+
+</tbody>
+
+
       </table>
 
       <div class="pagination">
@@ -521,6 +634,47 @@
     COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
   </div>
 </footer>
+
+<script>
+function filterCourses() {
+  const keyword = document.getElementById("course-search-input").value.trim();
+  const rows = document.querySelectorAll("#course-table-body tr");
+
+  rows.forEach(row => {
+    const title = row.querySelector(".course-title").innerText;
+
+    if (title.includes(keyword)) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+
+  // 결과 개수 업데이트
+  const count = [...rows].filter(r => r.style.display !== "none").length;
+  document.querySelector(".results-count span").innerText = count;
+
+ 
+// ⬇️ 엔터키로 검색 되게 하기
+document.getElementById("course-search-input").addEventListener("keyup", function(e) {
+  if (e.key === "Enter") {
+    filterCourses();
+  }
+});
+}
+</script>
+
+<script>
+document.getElementById("course-search-input")
+  .addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); 
+      filterCourses();
+    }
+  });
+</script>
+
+
 
 </body>
 </html>
