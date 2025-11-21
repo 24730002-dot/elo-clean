@@ -146,7 +146,7 @@
     <h1>회원가입</h1>
     <p><b>Elo</b>의 다양한 서비스를 이용하기 위해 회원가입을 진행해 주세요.</p>
 
-    <form id="signupForm">
+    <form id="signupForm" onsubmit="event.preventDefault(); register();">
       <label for="name">이름</label>
       <input type="text" id="name" placeholder="이름을 입력해 주세요" required>
 
@@ -303,6 +303,28 @@ function register() {
   window.location.href = "login.html";
 }
 </script>
+
+<script>
+function register() {
+  const id = document.getElementById("userid").value.trim();
+  const pw = document.getElementById("password").value.trim();
+
+  if (!id || !pw) {
+    alert("아이디와 비밀번호를 입력해주세요.");
+    return;
+  }
+
+  // 저장
+  localStorage.setItem("user_id", id);
+  localStorage.setItem("user_pw", pw);
+
+  alert("회원가입 완료!");
+  
+  // *** 여기 중요 ***
+  window.location.href = "login.html";
+}
+</script>
+
 
 </body>
 </html>

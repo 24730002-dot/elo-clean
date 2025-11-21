@@ -418,5 +418,40 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<script>
+// Check English login status
+const userEN = sessionStorage.getItem("currentUser_EN");
+
+if (userEN) {
+  // Hide Login / Sign Up buttons
+  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
+    a.style.display = "none";
+  });
+
+  // Get nav-right container
+  const navRightEN = document.querySelector(".nav-right");
+
+  // Create MY PAGE button
+  const myPageENBtn = document.createElement("a");
+  myPageENBtn.href = "Mypage_EN.html"; 
+  myPageENBtn.textContent = "MY PAGE";
+
+  // Create LOGOUT button
+  const logoutENBtn = document.createElement("a");
+  logoutENBtn.href = "#";
+  logoutENBtn.textContent = "LOGOUT";
+  logoutENBtn.onclick = function() {
+    sessionStorage.removeItem("currentUser_EN");
+    alert("LOGOUT COMPLETE.");
+    window.location.href = "index_EN.html";
+  };
+
+  // Append to header
+  navRightEN.appendChild(myPageENBtn);
+  navRightEN.appendChild(logoutENBtn);
+}
+</script>
+
+
 </body>
 </html>
