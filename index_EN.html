@@ -358,10 +358,7 @@
     <div class="nav-center">
       <a href="intro_EN.html">Introduction</a>
       <a href="course_application_EN.html">Online Courses</a>
-<a href="#" onclick="alert('Login is required.'); window.location.href='login_EN.html'; return false;">
-  My Courses
-</a>
-
+<a href="login_EN.html">My Classroom</a>
       <a href="notice_EN.html">Support</a>
     </div>
     <div class="nav-right">
@@ -476,36 +473,6 @@
   </div>
 </footer>
 
-<script>
-const userEN = localStorage.getItem("currentUser_EN");
-
-if (userEN) {
-  document.querySelectorAll(
-    'a[href="login_EN.html"], a[href="join_EN.html"]'
-  ).forEach(a => {
-    a.style.display = "none";
-  });
-
-  const navRight = document.querySelector(".nav-right");
-
-  const myPageBtn = document.createElement("a");
-  myPageBtn.href = "Mypage_EN.html";
-  myPageBtn.textContent = "MY PAGE";
-
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.textContent = "LOGOUT";
-  logoutBtn.onclick = function () {
-    localStorage.removeItem("currentUser_EN");
-    alert("LOGOUT COMPLETE.");
-    location.href = "index_EN.html";
-  };
-
-  navRight.appendChild(myPageBtn);
-  navRight.appendChild(logoutBtn);
-}
-
-</script>
 
 
 

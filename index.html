@@ -368,10 +368,7 @@ nav a:hover {
     <div class="nav-center">
       <a href="intro.html">소개</a>
       <a href="course_application.html">인터넷 교육</a>
-      <a href="#" onclick="alert('로그인이 필요합니다.'); window.location.href='login.html'; return false;">
-  나의 강의실
-</a>
-
+      <a href="my_classroom.html">나의 강의실</a>
       <a href="notice.html">교육지원</a>
     </div>
     <div class="nav-right">
@@ -503,39 +500,6 @@ nav a:hover {
     COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
   </div>
 </footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const user = localStorage.getItem("currentUser");
-
-  if (user) {
-    // 로그인/회원가입 숨기기
-    document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
-      a.style.display = "none";
-    });
-
-    const navRight = document.querySelector(".nav-right");
-
-    if (navRight) {
-      const myPageBtn = document.createElement("a");
-      myPageBtn.href = "mypage.html";
-      myPageBtn.textContent = "마이페이지";
-
-      const logoutBtn = document.createElement("a");
-      logoutBtn.href = "#";
-      logoutBtn.textContent = "로그아웃";
-      logoutBtn.onclick = () => {
-        localStorage.removeItem("currentUser");
-        alert("로그아웃되었습니다.");
-        location.reload();
-      };
-
-      navRight.appendChild(myPageBtn);
-      navRight.appendChild(logoutBtn);
-    }
-  }
-});
-</script>
 
 
 </body>

@@ -490,37 +490,8 @@
 </footer>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const user = localStorage.getItem("currentUser");
-
-  if (!user) {
-    alert("로그인 후 이용해주세요.");
-    window.location.href = "login.html";
-    return;
-  }
-
-  // 로그인 상태 UI 업데이트
-  document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
-    a.style.display = "none";
-  });
-
-  const navRight = document.querySelector(".nav-right");
-
-  const myPageBtn = document.createElement("a");
-  myPageBtn.href = "mypage.html";
-  myPageBtn.textContent = "내 정보";
-
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.textContent = "로그아웃";
-  logoutBtn.onclick = function () {
-    localStorage.removeItem("currentUser");
-    alert("로그아웃 되었습니다.");
-    location.href = "index.html";
-  };
-
-  navRight.appendChild(myPageBtn);
-  navRight.appendChild(logoutBtn);
+  document.addEventListener("DOMContentLoaded", () => {
+  // 더 이상 로그인 체크 없음
 });
 
 </script>

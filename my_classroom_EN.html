@@ -489,40 +489,6 @@
   </div>
 </footer>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const userEN = localStorage.getItem("currentUser_EN");
-
-  if (!userEN) {
-    alert("My Classroom is available after login.");
-    window.location.href = "login_EN.html";
-    return;
-  }
-
-  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
-    a.style.display = "none";
-  });
-
-  const navRight = document.querySelector(".nav-right");
-
-  const myPageBtn = document.createElement("a");
-  myPageBtn.href = "Mypage_EN.html";
-  myPageBtn.textContent = "MY PAGE";
-
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.textContent = "LOGOUT";
-  logoutBtn.onclick = function () {
-    localStorage.removeItem("currentUser_EN");
-    alert("LOGOUT COMPLETE.");
-    location.href = "index_EN.html";
-  };
-
-  navRight.appendChild(myPageBtn);
-  navRight.appendChild(logoutBtn);
-});
-</script>
 
 
 
