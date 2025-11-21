@@ -189,7 +189,7 @@
 
     <div class="login-links">
       <a href="#">Find ID / Reset Password</a>
-      <a href="#">Sign Up</a>
+      <a href="join_EN.html">Sign Up</a>
     </div>
   </div>
 </main>
@@ -223,8 +223,48 @@
   });
 
   // Prevent refresh on form submit (for testing)
-  loginForm.addEventListener('submit', e => e.preventDefault());
+  loginForm.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const id = document.getElementById("userid").value.trim();
+  const pw = document.getElementById("password").value.trim();
+
+  if (!id || !pw) {
+    alert("Please enter both username and password.");
+    return;
+  }
+
+  // 임시 로그인 저장
+  sessionStorage.setItem("currentUser", id);
+
+  alert("Login successful!");
+  window.location.href = "index.html"; // 또는 index_EN.html
+});
+
 </script>
+
+<script>
+  const user = sessionStorage.getItem("currentUser");
+
+  if (user) {
+    // 로그인 상태
+    document.querySelectorAll('a[href="login.html"], a[href="login_EN.html"]').forEach(el => {
+      el.style.display = "none";
+    });
+
+    const logoutBtn = document.createElement("a");
+    logoutBtn.href = "#";
+    logoutBtn.textContent = "Logout";
+    logoutBtn.onclick = () => {
+      sessionStorage.removeItem("currentUser");
+      alert("Logged out!");
+      location.reload();
+    };
+
+    document.querySelector(".nav-right").appendChild(logoutBtn);
+  }
+</script>
+
 
 </body>
 </html>
