@@ -490,42 +490,40 @@
 </footer>
 
 <script>
-// localStorage 기반 로그인 체크
 document.addEventListener("DOMContentLoaded", () => {
+  const userEN = localStorage.getItem("currentUser_EN");
 
-  const user = localStorage.getItem("currentUser");
-
-  // 로그인 안 했으면 접근 불가
-  if (!user) {
-    alert("나의 강의실은 로그인 후 이용 가능합니다.");
-    window.location.href = "login.html";
+  if (!userEN) {
+    alert("My Classroom is available after login.");
+    window.location.href = "login_EN.html";
     return;
   }
 
-  // 로그인 됐으면 헤더 수정
-  document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
+  // 헤더 바꾸기
+  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
     a.style.display = "none";
   });
 
   const navRight = document.querySelector(".nav-right");
 
   const myPageBtn = document.createElement("a");
-  myPageBtn.href = "mypage.html";
-  myPageBtn.textContent = "마이페이지";
+  myPageBtn.href = "Mypage_EN.html";
+  myPageBtn.textContent = "MY PAGE";
 
   const logoutBtn = document.createElement("a");
   logoutBtn.href = "#";
-  logoutBtn.textContent = "로그아웃";
+  logoutBtn.textContent = "LOGOUT";
   logoutBtn.onclick = function () {
-    localStorage.removeItem("currentUser");
-    alert("로그아웃되었습니다.");
-    location.href = "index.html";
+    localStorage.removeItem("currentUser_EN");
+    alert("LOGOUT COMPLETE.");
+    location.href = "index_EN.html";
   };
 
   navRight.appendChild(myPageBtn);
   navRight.appendChild(logoutBtn);
 });
 </script>
+
 
 
 

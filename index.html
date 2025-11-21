@@ -508,117 +508,36 @@ nav a:hover {
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('shorts-container');
-  const scrollLeftBtn = document.getElementById('scroll-left');
-  const scrollRightBtn = document.getElementById('scroll-right');
+document.addEventListener("DOMContentLoaded", () => {
+  const user = localStorage.getItem("currentUser");
 
-  if(container && scrollLeftBtn && scrollRightBtn) {
-    // 한 번에 스크롤할 양 (아이템 1개 너비 220px + 갭 20px = 240px. 3개씩 이동)
-    const scrollAmount = 240 * 3; 
-    // 모바일일 경우 스크롤 양 조절 (180px + 15px = 195px. 2개씩 이동)
-    const mobileScrollAmount = 195 * 2;
-    
-    const getScrollAmount = () => {
-      return window.innerWidth <= 768 ? mobileScrollAmount : scrollAmount;
+  if (user) {
+    // 로그인/회원가입 숨기기
+    document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
+      a.style.display = "none";
+    });
+
+    const navRight = document.querySelector(".nav-right");
+
+    if (navRight) {
+      const myPageBtn = document.createElement("a");
+      myPageBtn.href = "mypage.html";
+      myPageBtn.textContent = "마이페이지";
+
+      const logoutBtn = document.createElement("a");
+      logoutBtn.href = "#";
+      logoutBtn.textContent = "로그아웃";
+      logoutBtn.onclick = () => {
+        localStorage.removeItem("currentUser");
+        alert("로그아웃되었습니다.");
+        location.reload();
+      };
+
+      navRight.appendChild(myPageBtn);
+      navRight.appendChild(logoutBtn);
     }
-
-    scrollLeftBtn.addEventListener('click', () => {
-      container.scrollBy({
-        left: -getScrollAmount(),
-        behavior: 'smooth'
-      });
-    });
-
-    scrollRightBtn.addEventListener('click', () => {
-      container.scrollBy({
-        left: getScrollAmount(),
-        behavior: 'smooth'
-      });
-    });
   }
 });
-</script>
-
-<script>
-  const slides = document.getElementById('slides').children;
-  let currentIndex = 0;
-
-  function nextSlide() {
-    slides[currentIndex].classList.remove('active');
-
-    // 텍스트 애니메이션 리셋
-    const span = slides[currentIndex].querySelector('span');
-    if(span) { span.style.animation = 'none'; }
-
-    currentIndex = (currentIndex + 1) % slides.length;
-    slides[currentIndex].classList.add('active');
-
-    const nextSpan = slides[currentIndex].querySelector('span');
-    if(nextSpan) { void nextSpan.offsetWidth; nextSpan.style.animation = 'textUp 1.5s ease forwards'; }
-  }
-
-  setInterval(nextSlide, 3500);
-</script>
-
-<script>
-function goSearch() {
-  const keyword = document.getElementById("main-search").value.trim();
-  if (!keyword) return; // 빈 검색 막기
-  window.location.href = `search.html?q=${encodeURIComponent(keyword)}`;
-}
-</script>
-<script>
-function checkLogin() {
-  if (!localStorage.getItem("currentUser")) {
-    alert("로그인이 필요한 서비스입니다.");
-    window.location.href = "login.html";
-    return false; // 링크 이동 막기
-  }
-  return true; // 로그인 OK → 정상 이동
-}
-</script>
-
-<script>
-const user = localStorage.getItem("currentUser");
-
-if (user) {
-  // 로그인/회원가입 버튼 숨기기
-  document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
-    a.style.display = "none";
-  });
-
-  // 로그아웃 버튼 만들기
-  const navRight = document.querySelector(".nav-right");
-
-  const myPageBtn = document.createElement("a");
-  myPageBtn.href = "mypage.html";
-  myPageBtn.textContent = "마이페이지";
-
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.textContent = "로그아웃";
-  logoutBtn.onclick = function() {
-    localStorage.removeItem("currentUser");
-    alert("로그아웃되었습니다.");
-    location.reload();
-  };
-
-  navRight.appendChild(myPageBtn);
-  navRight.appendChild(logoutBtn);
-}
-</script>
-
-<script>
-function requireLoginForCertificateKR() {
-  const user = localStorage.getItem("currentUser");
-  if (!user) {
-    alert("이수증을 확인하려면 로그인이 필요합니다.");
-    window.location.href = "login.html";
-    return false;
-  }
-  return true;
-}
 </script>
 
 

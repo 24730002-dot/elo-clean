@@ -480,109 +480,35 @@
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const container = document.getElementById('shorts-container');
-  const scrollLeftBtn = document.getElementById('scroll-left');
-  const scrollRightBtn = document.getElementById('scroll-right');
+document.addEventListener("DOMContentLoaded", () => {
+  const userEN = localStorage.getItem("currentUser_EN");
 
-  if(container && scrollLeftBtn && scrollRightBtn) {
-    // 한 번에 스크롤할 양 (아이템 1개 너비 220px + 갭 20px = 240px. 3개씩 이동)
-    const scrollAmount = 240 * 3; 
-    // 모바일일 경우 스크롤 양 조절 (180px + 15px = 195px. 2개씩 이동)
-    const mobileScrollAmount = 195 * 2;
-    
-    const getScrollAmount = () => {
-      return window.innerWidth <= 768 ? mobileScrollAmount : scrollAmount;
-    }
-
-    scrollLeftBtn.addEventListener('click', () => {
-      container.scrollBy({
-        left: -getScrollAmount(),
-        behavior: 'smooth'
-      });
+  if (userEN) {
+    document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
+      a.style.display = "none";
     });
 
-    scrollRightBtn.addEventListener('click', () => {
-      container.scrollBy({
-        left: getScrollAmount(),
-        behavior: 'smooth'
-      });
-    });
+    const navRight = document.querySelector(".nav-right");
+
+    const myPageBtn = document.createElement("a");
+    myPageBtn.href = "Mypage_EN.html";
+    myPageBtn.textContent = "MY PAGE";
+
+    const logoutBtn = document.createElement("a");
+    logoutBtn.href = "#";
+    logoutBtn.textContent = "LOGOUT";
+    logoutBtn.onclick = function () {
+      localStorage.removeItem("currentUser_EN");
+      alert("LOGOUT COMPLETE.");
+      location.reload();
+    };
+
+    navRight.appendChild(myPageBtn);
+    navRight.appendChild(logoutBtn);
   }
 });
 </script>
 
-<script>
-  const slides = document.getElementById('slides').children;
-  let currentIndex = 0;
-
-  function nextSlide() {
-    slides[currentIndex].classList.remove('active');
-    const span = slides[currentIndex].querySelector('span');
-    if(span) { span.style.animation = 'none'; }
-
-    currentIndex = (currentIndex + 1) % slides.length;
-    slides[currentIndex].classList.add('active');
-
-    const nextSpan = slides[currentIndex].querySelector('span');
-    if(nextSpan) { void nextSpan.offsetWidth; nextSpan.style.animation = 'textUp 1.5s ease forwards'; }
-  }
-
-  setInterval(nextSlide, 3500);
-</script>
-
-<script>
-function checkLogin_EN() {
-  if (!localStorage.getItem("currentUser_EN")) {
-    alert("You need to log in to access this service.");
-    window.location.href = "login_EN.html";
-    return false;
-  }
-  return true;
-}
-</script>
-
-<script>
-const user = localStorage.getItem("currentUser");
-
-if (user) {
-  // 로그인/회원가입 버튼 숨기기
-  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
-    a.style.display = "none";
-  });
-
-  // 로그아웃 버튼 만들기
-  const navRight = document.querySelector(".nav-right");
-
-  const myPageBtn = document.createElement("a");
-  myPageBtn.href = "Mypage_EN.html";
-  myPageBtn.textContent = "MY PAGE";
-
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.textContent = "LOGOUT";
-  logoutBtn.onclick = function() {
-    localStorage.removeItem("currentUser");
-    alert("LOGOUT COMPLETE.");
-    location.reload();
-  };
-
-  navRight.appendChild(myPageBtn);
-  navRight.appendChild(logoutBtn);
-}
-</script>
-
-<script>
-function requireLoginForCertificate() {
-  const userEN = localStorage.getItem("currentUser_EN");
-  if (!userEN) {
-    alert("Please log in to access your completion certificate.");
-    window.location.href = "login_EN.html";
-    return false;
-  }
-  return true;
-}
-</script>
 
 
 </body>
