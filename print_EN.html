@@ -198,5 +198,45 @@
   </div>
 </footer>
 
+// 로그인 여부 확인 (영문 버전)
+<script>
+// Check English login session
+const userEN = sessionStorage.getItem("currentUser_EN");
+
+// If not logged in → block access
+if (!userEN) {
+  alert("Completion Record is available after logging in.");
+  window.location.href = "login_EN.html";
+} else {
+  // If logged in → change header items
+
+  // Hide Login / Sign Up buttons
+  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
+    a.style.display = "none";
+  });
+
+  const navRight = document.querySelector(".nav-right");
+
+  // Add MY PAGE button
+  const myPageBtn = document.createElement("a");
+  myPageBtn.href = "Mypage_EN.html";
+  myPageBtn.textContent = "MY PAGE";
+
+  // Add LOGOUT button
+  const logoutBtn = document.createElement("a");
+  logoutBtn.href = "#";
+  logoutBtn.textContent = "LOGOUT";
+  logoutBtn.onclick = function () {
+    sessionStorage.removeItem("currentUser_EN");
+    alert("Logged out successfully.");
+    location.href = "index_EN.html";
+  };
+
+  navRight.appendChild(myPageBtn);
+  navRight.appendChild(logoutBtn);
+}
+</script>
+
+
 </body>
 </html>

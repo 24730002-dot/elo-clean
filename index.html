@@ -609,5 +609,18 @@ if (user) {
 }
 </script>
 
+<script>
+function requireLoginForCertificateKR() {
+  const user = sessionStorage.getItem("currentUser");
+  if (!user) {
+    alert("이수증을 확인하려면 로그인이 필요합니다.");
+    window.location.href = "login.html";
+    return false;
+  }
+  return true;
+}
+</script>
+
+
 </body>
 </html>

@@ -572,5 +572,18 @@ if (user) {
 }
 </script>
 
+<script>
+function requireLoginForCertificate() {
+  const userEN = sessionStorage.getItem("currentUser_EN");
+  if (!userEN) {
+    alert("Please log in to access your completion certificate.");
+    window.location.href = "login_EN.html";
+    return false;
+  }
+  return true;
+}
+</script>
+
+
 </body>
 </html>
