@@ -262,6 +262,7 @@
   }
 
   // 휴대폰 번호 자동 하이픈 + 11자리 제한
+  
   function formatPhoneNumber() {
     let val = phone.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
     if (val.length > 11) val = val.slice(0, 11); // 11자리 제한
@@ -283,6 +284,24 @@
     if (!checkEmailFormat()) return alert('이메일 형식이 올바르지 않습니다.');
     alert('회원가입이 완료되었습니다!');
   });
+</script>
+
+<script>
+function register() {
+  const id = document.getElementById("userid").value;
+  const pw = document.getElementById("password").value;
+
+  if (!id || !pw) {
+    alert("아이디와 비밀번호를 입력해주세요.");
+    return;
+  }
+
+  localStorage.setItem("user_id", id);
+  localStorage.setItem("user_pw", pw);
+
+  alert("회원가입 완료! 이제 로그인해주세요.");
+  window.location.href = "login.html";
+}
 </script>
 
 </body>

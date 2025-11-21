@@ -297,7 +297,22 @@
     document.querySelector(".nav-right").appendChild(logoutBtn);
   }
 </script>
+<script>
+function login() {
+  const id = document.getElementById("userid").value;
+  const pw = document.getElementById("password").value;
 
+  const savedId = localStorage.getItem("user_id");
+  const savedPw = localStorage.getItem("user_pw");
 
+  if (id === savedId && pw === savedPw) {
+    sessionStorage.setItem("currentUser", id);
+    alert("로그인 성공!");
+    window.location.href = "index.html";
+  } else {
+    alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+  }
+}
+</script>
 </body>
 </html>

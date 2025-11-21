@@ -265,6 +265,24 @@
   }
 </script>
 
+<script>
+function login_EN() {
+  const id = document.getElementById("userid").value.trim();
+  const pw = document.getElementById("password").value.trim();
+
+  const savedId = localStorage.getItem("user_id_en");
+  const savedPw = localStorage.getItem("user_pw_en");
+
+  if (id === savedId && pw === savedPw) {
+    sessionStorage.setItem("currentUser_EN", id);
+    alert("Login successful!");
+    window.location.href = "index_EN.html";
+  } else {
+    alert("Incorrect ID or Password.");
+  }
+}
+</script>
+
 
 </body>
 </html>
