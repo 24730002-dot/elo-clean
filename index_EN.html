@@ -455,7 +455,10 @@
 
   <div class="small-banners">
     <a href="course_application_EN.html">Training Application</a>
-    <a href="my_classroom_EN.html">My Courses</a>
+<a href="my_classroom_EN.html"
+   onclick="return checkLogin_EN();">
+  My Classroom
+</a>
     <a href="print_EN.html">Download Certificate</a>
   </div>
 </section>
@@ -527,6 +530,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setInterval(nextSlide, 3500);
 </script>
+
+<script>
+function checkLogin_EN() {
+  if (!sessionStorage.getItem("currentUser_EN")) {
+    alert("You need to log in to access this service.");
+    window.location.href = "login_EN.html";
+    return false;
+  }
+  return true;
+}
+</script>
+
 
 </body>
 </html>

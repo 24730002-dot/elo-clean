@@ -458,7 +458,7 @@ nav a:hover {
         <span class="year">2025</span>
         <span class="day">10.18</span>
       </div>
-      <div class="notice-title">사이트 오픈 안내</div>
+      <div class="notice-title">안전보건공단, 교육기관 사칭 주의 안내</div>
       <a href="notice.html" class="notice-more">+</a>
     </div>
     <div class="notice-item">
@@ -466,7 +466,7 @@ nav a:hover {
         <span class="year">2025</span>
         <span class="day">10.15</span>
       </div>
-      <div class="notice-title">업데이트 안내</div>
+      <div class="notice-title">안전보건교육기관 사칭 피해사례 및 대처법 안내</div>
       <a href="notice.html" class="notice-more">+</a>
     </div>
     <div class="notice-item">
@@ -483,7 +483,10 @@ nav a:hover {
 
   <div class="small-banners">
     <a href="course_application.html">교육신청</a>
-    <a href="mylist.html">나의 강의실</a>
+<a href="my_classroom.html"
+   onclick="return checkLogin();">
+  나의 강의실
+</a>
     <a href="print.html">이수내역 확인서</a>
   </div>
 </section>
@@ -563,6 +566,16 @@ function goSearch() {
   const keyword = document.getElementById("main-search").value.trim();
   if (!keyword) return; // 빈 검색 막기
   window.location.href = `search.html?q=${encodeURIComponent(keyword)}`;
+}
+</script>
+<script>
+function checkLogin() {
+  if (!sessionStorage.getItem("currentUser")) {
+    alert("로그인이 필요한 서비스입니다.");
+    window.location.href = "login.html";
+    return false; // 링크 이동 막기
+  }
+  return true; // 로그인 OK → 정상 이동
 }
 </script>
 
