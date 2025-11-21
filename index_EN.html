@@ -480,34 +480,50 @@
 </footer>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const userEN = localStorage.getItem("currentUser_EN");
+// ================================
+// English login check
+// ================================
+const userEN = localStorage.getItem("currentUser_EN");
 
-  if (userEN) {
-    document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
-      a.style.display = "none";
-    });
+// ❗ Block access if not logged in
+if (!userEN) {
+  alert("My Classroom is available after login.");
+  window.location.href = "login_EN.html";
+}
 
-    const navRight = document.querySelector(".nav-right");
+// ================================
+// Header change when logged in
+// ================================
+if (userEN) {
+  // Hide Login / Sign Up buttons
+  document.querySelectorAll(
+    'a[href="login_EN.html"], a[href="join_EN.html"]'
+  ).forEach(a => {
+    a.style.display = "none";
+  });
 
-    const myPageBtn = document.createElement("a");
-    myPageBtn.href = "Mypage_EN.html";
-    myPageBtn.textContent = "MY PAGE";
+  const navRight = document.querySelector(".nav-right");
 
-    const logoutBtn = document.createElement("a");
-    logoutBtn.href = "#";
-    logoutBtn.textContent = "LOGOUT";
-    logoutBtn.onclick = function () {
-      localStorage.removeItem("currentUser_EN");
-      alert("LOGOUT COMPLETE.");
-      location.reload();
-    };
+  // Create MY PAGE button
+  const myPageBtn = document.createElement("a");
+  myPageBtn.href = "Mypage_EN.html";
+  myPageBtn.textContent = "MY PAGE";
 
-    navRight.appendChild(myPageBtn);
-    navRight.appendChild(logoutBtn);
-  }
-});
+  // Create LOGOUT button
+  const logoutBtn = document.createElement("a");
+  logoutBtn.href = "#";
+  logoutBtn.textContent = "LOGOUT";
+  logoutBtn.onclick = function () {
+    localStorage.removeItem("currentUser_EN");
+    alert("LOGOUT COMPLETE.");
+    location.href = "index_EN.html";
+  };
+
+  navRight.appendChild(myPageBtn);
+  navRight.appendChild(logoutBtn);
+}
 </script>
+
 
 
 
