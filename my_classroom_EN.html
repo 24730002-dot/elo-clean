@@ -493,7 +493,7 @@
 // ================================
 // English login check
 // ================================
-const userEN = sessionStorage.getItem("currentUser_EN");
+const userEN = ㅣlocalStorage.getItem("currentUser_EN");
 
 // ❗ Block access if not logged in
 if (!userEN) {
@@ -525,7 +525,7 @@ if (userEN) {
   logoutBtn.href = "#";
   logoutBtn.textContent = "LOGOUT";
   logoutBtn.onclick = function () {
-    sessionStorage.removeItem("currentUser_EN");
+    localStorage.removeItem("currentUser_EN");
     alert("LOGOUT COMPLETE.");
     location.href = "index_EN.html";
   };
