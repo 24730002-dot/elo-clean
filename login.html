@@ -218,7 +218,8 @@
         <label for="remember">　</label>
       </div>
 
-      <button type="submit">로그인</button>
+      <button type="button" onclick="login()">로그인</button>
+
     </form>
 
     <div class="login-links">
@@ -244,50 +245,39 @@
   </div>
 </footer>
 
-<!-- 🔐 비밀번호 토글 -->
+<!-- 로그인 함수 -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
+  // 비밀번호 토글
   const togglePassword = document.getElementById("togglePassword");
   const passwordField = document.getElementById("password");
 
-  togglePassword.addEventListener("click", () => {
-    const type = passwordField.type === "password" ? "text" : "password";
-    passwordField.type = type;
+  if (togglePassword && passwordField) {
+    togglePassword.addEventListener("click", () => {
+      const type = passwordField.type === "password" ? "text" : "password";
+      passwordField.type = type;
+      togglePassword.textContent = type === "password" ? "🔒" : "🔓";
+    });
+  }
 
-    togglePassword.textContent = type === "password" ? "🔒" : "🔓";
-  });
+  // 로그인 함수 (DOM 로드 후 안전하게 정의)
+window.login = function () {
+  const id = document.getElementById("userid").value;  // ← 수정
+  const password = document.getElementById("password").value;
+
+  if (id === "user" && password === "1234") {
+    localStorage.setItem("currentUser", id);
+    alert("로그인 성공!");
+    location.href = "index.html";
+  } else {
+    alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+  }
+};
+
 });
 </script>
 
-<!-- 🔑 로그인 기능 -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.querySelector("#loginForm");
-
-  loginForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const id = document.getElementById("userid").value.trim();
-    const pw = document.getElementById("password").value.trim();
-
-    const savedId = localStorage.getItem("user_id");
-    const savedPw = localStorage.getItem("user_pw");
-
-    if (!id || !pw) {
-      alert("아이디와 비밀번호를 모두 입력해주세요.");
-      return;
-    }
-
-    if (id === savedId && pw === savedPw) {
-      localStorage.setItem("currentUser", id);
-      alert("로그인 성공!");
-      window.location.href = "index.html";
-    } else {
-      alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-    }
-  });
-});
-</script>
 
 
 

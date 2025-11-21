@@ -211,34 +211,21 @@
 </footer>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.querySelector("#loginForm");
+  function login() {
+    var id = document.getElementById("id").value;
+    var password = document.getElementById("password").value;
 
-  loginForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const id = document.getElementById("userid").value.trim();
-    const pw = document.getElementById("password").value.trim();
-
-    const savedId = localStorage.getItem("user_id_en");
-    const savedPw = localStorage.getItem("user_pw_en");
-
-    if (!id || !pw) {
-      alert("Please enter both username and password.");
-      return;
-    }
-
-    if (id === savedId && pw === savedPw) {
-      // 로그인 성공 → currentUser_EN 저장!
-      localStorage.setItem("currentUser_EN", id);
-
-      alert("Login successful!");
-      window.location.href = "index_EN.html";
+    // Example User: id='user', password='1234'
+    if (id === "user" && password === "1234") {
+      // ✅ [추가] 영어 키로 사용자 ID 저장
+      localStorage.setItem("currentUser_EN", id); 
+      
+      alert("Login successful");
+      location.href = "index_EN.html";
     } else {
-      alert("Incorrect username or password.");
+      alert("Invalid ID or Password.");
     }
-  });
-});
+  }
 </script>
 
 <script>
