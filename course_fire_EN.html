@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fire & Explosion Safety - ELO Safety Education Platform</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+<style>
+  /* === [1] 공통 스타일 === */
+  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+  body { font-family:"Pretendard", sans-serif; background:#fafafa; color:#333; }
+
+  /* 상단바 */
+  .top-bar {
+    position:fixed;
+    top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    color:white;
+    z-index:1000;
+  }
+  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+  header a { text-decoration:none; color:white; font-weight:bold; }
+  
+  /* 네비게이션 */
+  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+  .nav-right { margin-left:auto; display:flex; gap:15px; }
+  nav a { text-decoration:none; color:white; font-weight:500; }
+  nav a:hover { color: #b9b9b9; }
+
+  /* Footer */
+  footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; padding: 35px 20px; color: #444; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); margin-top: 60px; }
+  .footer-links { margin-bottom: 12px; }
+  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .footer-links a:hover { color: #0078d4; }
+  .footer-links span { margin: 0 8px; color: #aaa; }
+  .footer-info p { margin: 4px 0; }
+  .footer-info a { color: #0078d4; text-decoration: none; }
+
+  /* === [2] 쇼츠 리스트 페이지 전용 스타일 === */
+  .page-wrapper { padding-top: 100px; min-height: 100vh; }
+  
+  .content-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+
+  /* 헤더 영역: 심플하게 (아이콘만) */
+  .category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+  }
+  .back-btn {
+    text-decoration: none;
+    color: #5e5e5e;
+    font-size: 1.5rem;
+    margin-right: 20px;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+  }
+  .back-btn:hover { color: #2d3b6b; }
+  
+  .page-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* 쇼츠 그리드 레이아웃 */
+  .shorts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 25px;
+  }
+
+  /* 개별 쇼츠 카드 (a태그) */
+  .shorts-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+  .shorts-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-color: #ccc;
+  }
+
+  /* 비디오 영역 */
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 177.77%; /* 9:16 비율 */
+    background: #000;
+  }
+  .video-wrapper video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    pointer-events: none; /* 클릭 이벤트 통과 */
+  }
+
+  /* 카드 텍스트 정보 */
+  .card-info {
+    padding: 15px;
+    background: white;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    word-break: keep-all;
+  }
+  .card-meta {
+    font-size: 0.85rem;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .play-icon {
+    color: #17a2b8; /* 화학물질(청색/하늘색 계열) 느낌 포인트 */
+    font-size: 0.9rem;
+  }
+
+  /* 반응형 스타일 */
+  @media (max-width:768px){
+    nav { flex-direction:column; gap:8px; }
+    .nav-center { position:static; transform:none; justify-content:center; margin-bottom:5px; }
+    .nav-right { justify-content:center; margin-left:0; gap:10px; }
+    
+    .page-wrapper { padding-top: 150px; } 
+    .content-container { width: 95%; padding: 20px; }
+    
+    .shorts-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+    .card-title { font-size: 1rem; }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="top-bar">
+  <header id="top"><a href="index.html">Elo</a></header>
+  <nav>
+    <div class="nav-center">
+      <a href="intro.html">Introduction</a>
+      <a href="course_application.html">Online Courses</a>
+      <a href="my_classroom.html">My Classroom</a>
+      <a href="notice.html">Support</a>
+    </div>
+    <div class="nav-right">
+      <a href="login.html">Login</a>
+      <a href="join.html">Sign Up</a>
+    </div>
+  </nav>
+</div>
+
+<div class="page-wrapper">
+  <div class="content-container">
+
+    <div class="category-header">
+      <a href="course_application.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+      <h1 class="page-title">Fire & Explosion</h1>
+    </div>
+
+    <div class="shorts-grid">
+
+      <!-- Spark -->
+      <a href="SHORT3_EN.html" class="shorts-card">
+        <div class="video-wrapper">
+          <video autoplay muted loop playsinline>
+            <!-- video link here -->
+            <source src="" type="video/mp4">
+          </video>
+        </div>
+        <div class="card-info">
+          <div class="card-title">A Spark Lasts Longer</div>
+          <div class="card-meta">
+            <span><i class="fa-regular fa-clock"></i> 1 min</span>
+            <i class="fa-solid fa-circle-play play-icon"></i>
+          </div>
+        </div>
+      </a>
+
+      <!-- Cutting & Welding -->
+      <a href="SHORT7_EN.html" class="shorts-card">
+        <div class="video-wrapper">
+          <video autoplay muted loop playsinline>
+            <!-- video link here -->
+            <source src="" type="video/mp4">
+          </video>
+        </div>
+        <div class="card-info">
+          <div class="card-title">Cutting and Welding Operations</div>
+          <div class="card-meta">
+            <span><i class="fa-regular fa-clock"></i> 1 min</span>
+            <i class="fa-solid fa-circle-play play-icon"></i>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <span>|</span>
+    <a href="#">Related Sites</a>
+  </div>
+  <div class="footer-info">
+    <p>Address: 10 Sopa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Tel: 02-1234-5678</p>
+    <p>Customer Support: <a href="#">Contact Support</a> (Mon–Fri 09:00–18:00)</p>
+  </div>
+  <div class="footer-copy">
+    COPYRIGHT 2025 © KOSHA ALL RIGHTS RESERVED.
+  </div>
+</footer>
+
+</body>
+</html>
