@@ -490,29 +490,35 @@
 </footer>
 
 <script>
-if (!sessionStorage.getItem("currentUser")) {
-  alert("로그인이 필요한 서비스입니다.");
-  window.location.href = "login.html"; // 영어면 login_EN.html
-}
-</script>
-<script>
-// 한국어 로그인 여부 확인
+// ================================
+// 한국어 로그인 여부 체크
+// ================================
 const userKR = sessionStorage.getItem("currentUser");
 
+// ❗ 로그인 안 한 상태면 접근 차단
+if (!userKR) {
+  alert("나의 강의실은 로그인 후 이용 가능합니다.");
+  window.location.href = "login.html";
+}
+
+
+// ================================
+// 헤더: 로그인 상태라면 버튼 교체
+// ================================
 if (userKR) {
-  // 로그인/회원가입 숨기기
+  // 로그인, 회원가입 숨기기
   document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
     a.style.display = "none";
   });
 
   const navRight = document.querySelector(".nav-right");
 
-  // 마이페이지
+  // 마이페이지 버튼
   const myPageBtn = document.createElement("a");
-  myPageBtn.href = "Mypage.html";
+  myPageBtn.href = "mypage.html";   // ✔ 파일명 정확
   myPageBtn.textContent = "마이페이지";
 
-  // 로그아웃
+  // 로그아웃 버튼
   const logoutBtn = document.createElement("a");
   logoutBtn.href = "#";
   logoutBtn.textContent = "로그아웃";
@@ -524,13 +530,9 @@ if (userKR) {
 
   navRight.appendChild(myPageBtn);
   navRight.appendChild(logoutBtn);
-
-} else {
-  // 비로그인 접근 차단
-  alert("로그인 후 이용 가능합니다.");
-  window.location.href = "login.html";
 }
 </script>
+
 
 
 </body>

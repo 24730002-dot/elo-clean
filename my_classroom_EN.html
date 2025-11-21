@@ -490,47 +490,52 @@
 </footer>
 
 <script>
-if (!sessionStorage.getItem("currentUser")) {
-  alert("This service requires login.");
-  window.location.href = "login_EN.html"; // 영어면 login_EN.html
-}
-</script>
-<script>
+// ================================
 // English login check
+// ================================
 const userEN = sessionStorage.getItem("currentUser_EN");
 
+// ❗ Block access if not logged in
+if (!userEN) {
+  alert("My Classroom is available after login.");
+  window.location.href = "login_EN.html";
+}
+
+
+// ================================
+// Header change when logged in
+// ================================
 if (userEN) {
-  // Hide Login / Sign Up
-  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
+  // Hide Login / Sign Up buttons
+  document.querySelectorAll(
+    'a[href="login_EN.html"], a[href="join_EN.html"]'
+  ).forEach(a => {
     a.style.display = "none";
   });
 
   const navRight = document.querySelector(".nav-right");
 
-  // MY PAGE
+  // Create MY PAGE button
   const myPageBtn = document.createElement("a");
-  myPageBtn.href = "Mypage_EN.html";
+  myPageBtn.href = "Mypage_EN.html";  // ✔ 영어 마이페이지 파일명
   myPageBtn.textContent = "MY PAGE";
 
-  // LOGOUT
+  // Create LOGOUT button
   const logoutBtn = document.createElement("a");
   logoutBtn.href = "#";
   logoutBtn.textContent = "LOGOUT";
   logoutBtn.onclick = function () {
     sessionStorage.removeItem("currentUser_EN");
-    alert("Logged out successfully.");
+    alert("LOGOUT COMPLETE.");
     location.href = "index_EN.html";
   };
 
+  // Append
   navRight.appendChild(myPageBtn);
   navRight.appendChild(logoutBtn);
-
-} else {
-  // Block unauthenticated access
-  alert("Please log in to access your classroom.");
-  window.location.href = "login_EN.html";
 }
 </script>
+
 
 
 </body>

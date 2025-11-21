@@ -423,6 +423,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 </script>
+
 <script>
 // ================================
 // 한국어 로그인 여부 체크
@@ -434,6 +435,7 @@ if (!userKR) {
   alert("나의 강의실은 로그인 후 이용 가능합니다.");
   window.location.href = "login.html";
 }
+
 
 // ================================
 // 헤더: 로그인 상태라면 버튼 교체
@@ -448,7 +450,7 @@ if (userKR) {
 
   // 마이페이지 버튼
   const myPageBtn = document.createElement("a");
-  myPageBtn.href = "mypage.html";  
+  myPageBtn.href = "mypage.html";   // ✔ 파일명 정확
   myPageBtn.textContent = "마이페이지";
 
   // 로그아웃 버튼
@@ -465,6 +467,7 @@ if (userKR) {
   navRight.appendChild(logoutBtn);
 }
 </script>
+
 
 
 
