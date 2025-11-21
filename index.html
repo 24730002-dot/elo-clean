@@ -570,7 +570,7 @@ function goSearch() {
 </script>
 <script>
 function checkLogin() {
-  if (!sessionStorage.getItem("currentUser")) {
+  if (!localStorage.getItem("currentUser")) {
     alert("로그인이 필요한 서비스입니다.");
     window.location.href = "login.html";
     return false; // 링크 이동 막기
@@ -580,7 +580,7 @@ function checkLogin() {
 </script>
 
 <script>
-const user = sessionStorage.getItem("currentUser");
+const user = localStorage.getItem("currentUser");
 
 if (user) {
   // 로그인/회원가입 버튼 숨기기
@@ -599,7 +599,7 @@ if (user) {
   logoutBtn.href = "#";
   logoutBtn.textContent = "로그아웃";
   logoutBtn.onclick = function() {
-    sessionStorage.removeItem("currentUser");
+    localStorage.removeItem("currentUser");
     alert("로그아웃되었습니다.");
     location.reload();
   };
@@ -611,7 +611,7 @@ if (user) {
 
 <script>
 function requireLoginForCertificateKR() {
-  const user = sessionStorage.getItem("currentUser");
+  const user = localStorage.getItem("currentUser");
   if (!user) {
     alert("이수증을 확인하려면 로그인이 필요합니다.");
     window.location.href = "login.html";

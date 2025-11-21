@@ -533,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 function checkLogin_EN() {
-  if (!sessionStorage.getItem("currentUser_EN")) {
+  if (!localStorage.getItem("currentUser_EN")) {
     alert("You need to log in to access this service.");
     window.location.href = "login_EN.html";
     return false;
@@ -543,7 +543,7 @@ function checkLogin_EN() {
 </script>
 
 <script>
-const user = sessionStorage.getItem("currentUser");
+const user = localStorage.getItem("currentUser");
 
 if (user) {
   // 로그인/회원가입 버튼 숨기기
@@ -562,7 +562,7 @@ if (user) {
   logoutBtn.href = "#";
   logoutBtn.textContent = "LOGOUT";
   logoutBtn.onclick = function() {
-    sessionStorage.removeItem("currentUser");
+    localStorage.removeItem("currentUser");
     alert("LOGOUT COMPLETE.");
     location.reload();
   };
@@ -574,7 +574,7 @@ if (user) {
 
 <script>
 function requireLoginForCertificate() {
-  const userEN = sessionStorage.getItem("currentUser_EN");
+  const userEN = localStorage.getItem("currentUser_EN");
   if (!userEN) {
     alert("Please log in to access your completion certificate.");
     window.location.href = "login_EN.html";

@@ -490,24 +490,20 @@
 </footer>
 
 <script>
-// ================================
-// 한국어 로그인 여부 체크 (1개만!)
-// ================================
 document.addEventListener("DOMContentLoaded", () => {
-  const userKR = localStorage.getItem("currentUser");
 
-  if (!userKR) {
-    alert("나의 강의실은 로그인 후 이용 가능합니다.");
+  const user = localStorage.getItem("currentUser");
+
+  // 로그인 체크
+  if (!user) {
+    alert("로그인 후 이용 가능합니다.");
     window.location.href = "login.html";
     return;
   }
 
-  // ================================
-  // 헤더: 로그인 상태라면 버튼 교체
-  // ================================
-  document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
-    a.style.display = "none";
-  });
+  // 헤더 변환
+  const loginLinks = document.querySelectorAll('a[href="login.html"], a[href="join.html"]');
+  loginLinks.forEach(a => a.style.display = "none");
 
   const navRight = document.querySelector(".nav-right");
 
@@ -518,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.createElement("a");
   logoutBtn.href = "#";
   logoutBtn.textContent = "로그아웃";
-  logoutBtn.onclick = function () {
+  logoutBtn.onclick = () => {
     localStorage.removeItem("currentUser");
     alert("로그아웃되었습니다.");
     location.href = "index.html";
@@ -526,9 +522,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   navRight.appendChild(myPageBtn);
   navRight.appendChild(logoutBtn);
+
 });
 </script>
-
 
 
 </body>
