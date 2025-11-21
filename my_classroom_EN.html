@@ -490,37 +490,26 @@
 </footer>
 
 <script>
-// ================================
-// English login check
-// ================================
-const userEN = ㅣlocalStorage.getItem("currentUser_EN");
+document.addEventListener("DOMContentLoaded", () => {
 
-// ❗ Block access if not logged in
-if (!userEN) {
-  alert("My Classroom is available after login.");
-  window.location.href = "login_EN.html";
-}
+  const userEN = localStorage.getItem("currentUser_EN");
 
+  if (!userEN) {
+    alert("My Classroom is available after login.");
+    window.location.href = "login_EN.html";
+    return;
+  }
 
-// ================================
-// Header change when logged in
-// ================================
-if (userEN) {
-  // Hide Login / Sign Up buttons
-  document.querySelectorAll(
-    'a[href="login_EN.html"], a[href="join_EN.html"]'
-  ).forEach(a => {
+  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
     a.style.display = "none";
   });
 
   const navRight = document.querySelector(".nav-right");
 
-  // Create MY PAGE button
   const myPageBtn = document.createElement("a");
-  myPageBtn.href = "Mypage_EN.html";  // ✔ 영어 마이페이지 파일명
+  myPageBtn.href = "Mypage_EN.html";
   myPageBtn.textContent = "MY PAGE";
 
-  // Create LOGOUT button
   const logoutBtn = document.createElement("a");
   logoutBtn.href = "#";
   logoutBtn.textContent = "LOGOUT";
@@ -530,11 +519,11 @@ if (userEN) {
     location.href = "index_EN.html";
   };
 
-  // Append
   navRight.appendChild(myPageBtn);
   navRight.appendChild(logoutBtn);
-}
+});
 </script>
+
 
 
 

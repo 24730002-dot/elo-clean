@@ -490,20 +490,22 @@
 </footer>
 
 <script>
+// localStorage 기반 로그인 체크
 document.addEventListener("DOMContentLoaded", () => {
 
   const user = localStorage.getItem("currentUser");
 
-  // 로그인 체크
+  // 로그인 안 했으면 접근 불가
   if (!user) {
-    alert("로그인 후 이용 가능합니다.");
+    alert("나의 강의실은 로그인 후 이용 가능합니다.");
     window.location.href = "login.html";
     return;
   }
 
-  // 헤더 변환
-  const loginLinks = document.querySelectorAll('a[href="login.html"], a[href="join.html"]');
-  loginLinks.forEach(a => a.style.display = "none");
+  // 로그인 됐으면 헤더 수정
+  document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
+    a.style.display = "none";
+  });
 
   const navRight = document.querySelector(".nav-right");
 
@@ -514,7 +516,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.createElement("a");
   logoutBtn.href = "#";
   logoutBtn.textContent = "로그아웃";
-  logoutBtn.onclick = () => {
+  logoutBtn.onclick = function () {
     localStorage.removeItem("currentUser");
     alert("로그아웃되었습니다.");
     location.href = "index.html";
@@ -522,9 +524,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   navRight.appendChild(myPageBtn);
   navRight.appendChild(logoutBtn);
-
 });
 </script>
+
 
 
 </body>
