@@ -201,7 +201,7 @@
 // 로그인 여부 확인 (영문 버전)
 <script>
 // Check English login session
-const userEN = sessionStorage.getItem("currentUser_EN");
+const userEN = localStorage.getItem("currentUser_EN");
 
 // If not logged in → block access
 if (!userEN) {
@@ -227,7 +227,7 @@ if (!userEN) {
   logoutBtn.href = "#";
   logoutBtn.textContent = "LOGOUT";
   logoutBtn.onclick = function () {
-    sessionStorage.removeItem("currentUser_EN");
+    localStorage.removeItem("currentUser_EN");
     alert("Logged out successfully.");
     location.href = "index_EN.html";
   };

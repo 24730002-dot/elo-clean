@@ -275,7 +275,7 @@
   </div>
 </footer>
 <script>
-const userKR = sessionStorage.getItem("currentUser");
+const userKR = localStorage.getItem("currentUser");
 
 // 로그인 여부 먼저 확인
 if (!userKR) {
@@ -299,7 +299,7 @@ if (!userKR) {
   logoutBtn.href = "#";
   logoutBtn.textContent = "로그아웃";
   logoutBtn.onclick = function () {
-    sessionStorage.removeItem("currentUser");
+    localStorage.removeItem("currentUser");
     alert("로그아웃되었습니다.");
     location.href = "index.html";
   };
