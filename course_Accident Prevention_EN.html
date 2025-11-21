@@ -6,6 +6,8 @@
 <title>Accident Prevention - ELO Safety Education Platform</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
+<!-- 너가 준 style 전체 복붙 -->
+
 <style>
   /* === [1] 공통 스타일 === */
   * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
@@ -164,7 +166,6 @@
     .card-title { font-size: 1rem; }
   }
 </style>
-
 </head>
 <body>
 
@@ -173,7 +174,7 @@
   <nav>
     <div class="nav-center">
       <a href="intro_EN.html">Introduction</a>
-      <a href="course_application_EN.html">Online Training</a>
+      <a href="course_application_EN.html">Online Courses</a>
       <a href="my_classroom_EN.html">My Classroom</a>
       <a href="notice_EN.html">Support</a>
     </div>
@@ -187,135 +188,47 @@
 <div class="page-wrapper">
   <div class="content-container">
 
-    <h1 class="page-title">Worker Training</h1>
-
-    <!-- Search Bar -->
-    <div class="simple-search-bar">
-      <input id="course-search-input" type="text" placeholder="Enter video title">
-      <button onclick="filterCourses()">Search</button>
+    <div class="category-header">
+      <a href="course_application.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+      <h1 class="page-title">Accident Prevention</h1>
     </div>
 
-    <!-- Categories -->
-    <div class="topic-grid-wrapper">
-      <h2>Training by Topic</h2>
-      <div class="topic-grid">
+    <div class="shorts-grid">
 
-        <!-- READY CATEGORY -->
-        <a href="course_fire_en.html" class="topic-box" data-status="ready">
-          <i class="topic-icon fa-solid fa-fire-extinguisher"></i>
-          <span>Fire & Explosion</span>
-        </a>
-
-        <a href="course_safety_en.html" class="topic-box" data-status="ready">
-          <i class="topic-icon fa-solid fa-person-falling-burst"></i>
-          <span>Accident Prevention<br>(Fall, Entrapment)</span>
-        </a>
-
-        <!-- PENDING CATEGORY -->
-        <a href="#" class="topic-box" data-status="pending">
-          <i class="topic-icon fa-solid fa-briefcase-medical"></i>
-          <span>Occupational Health</span>
-        </a>
-
-        <a href="course_chemical_en.html" class="topic-box" data-status="ready">
-          <i class="topic-icon fa-solid fa-flask-vial"></i>
-          <span>Chemical Safety</span>
-        </a>
-
-        <!-- PENDING CATEGORY -->
-        <a href="#" class="topic-box" data-status="pending">
-          <i class="topic-icon fa-solid fa-gear"></i>
-          <span>Machinery & Equipment</span>
-        </a>
-
-        <a href="#" class="topic-box" data-status="pending">
-          <i class="topic-icon fa-solid fa-kit-medical"></i>
-          <span>First Aid</span>
-        </a>
-
-        <a href="#" class="topic-box" data-status="pending">
-          <i class="topic-icon fa-solid fa-bolt"></i>
-          <span>Electrical Safety</span>
-        </a>
-
-        <a href="course_ppe_en.html" class="topic-box" data-status="ready">
-          <i class="topic-icon fa-solid fa-helmet-safety"></i>
-          <span>PPE</span>
-        </a>
-
-      </div>
+<a href="SHORT2_EN.html" class="shorts-card">
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763704513/%EC%95%88%EC%A0%84%EA%B5%90%EC%9C%A1_%EC%98%81%EC%96%B4%EB%B2%84%EC%A0%84-%EC%9E%91%EC%97%85%EC%A4%91_%EC%9E%A1%EB%8B%B4_%EA%B8%88%EC%A7%80_%EC%95%88%EC%A0%95%EB%90%9C_%EC%9E%90%EC%84%B8_%EC%9C%A0%EC%A7%80_dyx1sp.mp4">
+    </video>
+  </div>
+  <div class="card-info">
+    <div class="card-title">Proper Attire</div>
+    <div class="card-meta">
+      <span><i class="fa-regular fa-clock"></i> 1 min</span>
+      <i class="fa-solid fa-circle-play play-icon"></i>
     </div>
+  </div>
+</a>
 
-    <hr><br><br>
 
-    <!-- Results -->
-    <div class="results-section">
-      <p class="results-count"><span></span></p>
+<!-- Proper Attire -->
+<a href="SHORT6_EN.html" class="shorts-card">
+  <div class="video-wrapper">
+    <video autoplay muted loop playsinline>
+      <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763711327/preventing-collapse-accidents-during-demolition-work-1_xRM6LcEP_m9pgqt.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="card-info">
+    <div class="card-title">Proper Attire</div>
+    <div class="card-meta">
+      <span><i class="fa-regular fa-clock"></i> 1 min</span>
+      <i class="fa-solid fa-circle-play play-icon"></i>
+    </div>
+  </div>
+</a>
 
-      <table class="course-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Video Title</th>
-            <th>Go</th>
-          </tr>
-        </thead>
-
-        <tbody id="course-table-body">
-   <tr>
-  <td>1</td>
-  <td class="course-title" style="text-align:center;">Proper Attire</td>
-  <td><a href="SHORT1_EN.html" class="go-btn">Go</a></td>
-</tr>
-
-<tr>
-  <td>2</td>
-  <td class="course-title" style="text-align:center;">No Chatting & Stable Posture</td>
-  <td><a href="SHORT2_EN.html" class="go-btn">Go</a></td>
-</tr>
-
-<tr>
-  <td>3</td>
-  <td class="course-title" style="text-align:center;">A Spark Lasts Longer...</td>
-  <td><a href="SHORT3_EN.html" class="go-btn">Go</a></td>
-</tr>
-
-<tr>
-  <td>4</td>
-  <td class="course-title" style="text-align:center;">Gas Exposure</td>
-  <td><a href="SHORT4_EN.html" class="go-btn">Go</a></td>
-</tr>
-
-<tr>
-  <td>5</td>
-  <td class="course-title" style="text-align:center;">Protective Gear</td>
-  <td><a href="SHORT5_EN.html" class="go-btn">Go</a></td>
-</tr>
-
-<tr>
-  <td>6</td>
-  <td class="course-title" style="text-align:center;">Preventing collapse accidents during demolition work</td>
-  <td><a href="SHORT6_EN.html" class="go-btn">Go</a></td>
-</tr>
-
-<tr>
-  <td>7</td>
-  <td class="course-title" style="text-align:center;">Cutting and welding operations</td>
-  <td><a href="SHORT7_EN.html" class="go-btn">Go</a></td>
-</tr>
-
-      </table>
-
-      <div class="pagination">
-        <a href="#">&lt;&lt;</a>
-        <a href="#">&lt;</a>
-        <span class="active">1</span>
-        <a href="#">&gt;</a>
-        <a href="#">&gt;&gt;</a>
-      </div>
 
     </div>
-
   </div>
 </div>
 
@@ -326,46 +239,14 @@
     <a href="#">Related Sites</a>
   </div>
   <div class="footer-info">
-    <p>Address: 10, Sofa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Address: 10 Sopa-ro 2-gil, Jung-gu, Seoul</p>
     <p>Tel: 02-1234-5678</p>
-    <p>Customer Support: <a href="#">Contact Info</a> (Weekdays 09:00~18:00)</p>
+    <p>Customer Support: <a href="#">Contact Support</a> (Mon–Fri 09:00–18:00)</p>
   </div>
   <div class="footer-copy">
     COPYRIGHT 2025 © KOSHA ALL RIGHTS RESERVED.
   </div>
 </footer>
-
-<script>
-function filterCourses() {
-  const keyword = document.getElementById("course-search-input").value.trim().toLowerCase();
-  const rows = document.querySelectorAll("#course-table-body tr");
-
-  rows.forEach(row => {
-    const title = row.querySelector(".course-title").innerText.toLowerCase();
-    row.style.display = title.includes(keyword) ? "" : "none";
-  });
-
-  const count = [...rows].filter(r => r.style.display !== "none").length;
-  document.querySelector(".results-count span").innerText = count;
-}
-
-// 준비중 자동 처리
-document.querySelectorAll('.topic-box').forEach(box => {
-  box.addEventListener('click', function(event) {
-    if (this.dataset.status === 'pending') {
-      event.preventDefault();
-      alert('This course is under preparation.');
-    }
-  });
-});
-
-document.getElementById("course-search-input").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filterCourses();
-  }
-});
-</script>
 
 </body>
 </html>
