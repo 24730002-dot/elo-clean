@@ -235,7 +235,7 @@
   }
 
   // 임시 로그인 저장
-  sessionStorage.setItem("currentUser", id);
+  localStorage.setItem("currentUser", id);
 
   alert("Login successful!");
   window.location.href = "index_EN.html"; // 또는 index_EN.html
@@ -244,7 +244,7 @@
 </script>
 
 <script>
-  const user = sessionStorage.getItem("currentUser");
+  const user = localStorage.getItem("currentUser");
 
   if (user) {
     // 로그인 상태
@@ -256,7 +256,7 @@
     logoutBtn.href = "#";
     logoutBtn.textContent = "Logout";
     logoutBtn.onclick = () => {
-      sessionStorage.removeItem("currentUser");
+      localStorage.removeItem("currentUser");
       alert("Logged out!");
       location.reload();
     };
@@ -274,7 +274,7 @@ function login_EN() {
   const savedPw = localStorage.getItem("user_pw_en");
 
   if (id === savedId && pw === savedPw) {
-    sessionStorage.setItem("currentUser_EN", id);
+    localStorage.setItem("currentUser_EN", id);
     alert("Login successful!");
     window.location.href = "index_EN.html";
   } else {
