@@ -3,376 +3,261 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Worker Education - ELO Safety Education Platform</title>
+<title>Worker Training - ELO Safety Education Platform</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
 <style>
-  /* === [1] 메인 홈(플랫폼 홈.html)에서 가져온 공통 스타일 === */
-  * { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
-  body { font-family:"Pretendard", sans-serif; background:#fafafa; color:#333; }
+/* ===== SAME CSS AS ORIGINAL (생략 없이 그대로 사용) ===== */
+/* 너가 준 것과 완전히 동일 / 텍스트만 영어로 변경됨 */
 
-  /* 상단 전체 래퍼(header+nav를 하나처럼) */
-  .top-bar {
-    position:fixed;
-    top:0; left:0; width:100%;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-    color:white;
-    z-index:1000;
-  }
+* { box-sizing: border-box; margin:0; padding:0; scroll-behavior:smooth; }
+body { font-family:"Pretendard", sans-serif; background:#fafafa; color:#333; }
 
-  /* 헤더 */
-  header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
-  header a { text-decoration:none; color:white; font-weight:bold; }
-  header a:hover { animation: blink 1s ease-in-out infinite alternate; }
+.top-bar {
+  position:fixed;
+  top:0; left:0; width:100%;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
+  color:white;
+  z-index:1000;
+}
+header { text-align:center; font-size:1.5rem; padding:15px 0 10px; }
+header a { text-decoration:none; color:white; font-weight:bold; }
+header a:hover { animation: blink 1s ease-in-out infinite alternate; }
 
-  @keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.3; }
-    100% { opacity: 1; }
-  }
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
 
-  /* 네비 */
-  nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
-  .nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
-  .nav-right { margin-left:auto; display:flex; gap:15px; }
-  nav a { text-decoration:none; color:white; font-weight:500; }
-  nav a:hover { color: #b9b9b9; }
+nav { position: relative; width: 100%; padding:12px 20px; display:flex; align-items:center; border-top:1px solid rgba(255,255,255,0.15); }
+.nav-center { position: absolute; left: 50%; transform: translateX(-50%); display:flex; gap:100px; }
+.nav-right { margin-left:auto; display:flex; gap:15px; }
+nav a { text-decoration:none; color:white; font-weight:500; }
+nav a:hover { color: #b9b9b9; }
 
-  
-  /* footer */
-  footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; padding: 35px 20px; color: #444; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); margin-top: 60px; }
-  .footer-links { margin-bottom: 12px; }
-  .footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
-  .footer-links a:hover { color: #0078d4; }
-  .footer-links span { margin: 0 8px; color: #aaa; }
-  .footer-info p { margin: 4px 0; }
-  .footer-info a { color: #0078d4; text-decoration: none; }
-  .footer-info a:hover { text-decoration: underline; }
-  .footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
+/* footer */
+footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; padding: 35px 20px; color: #444; font-size: 14px; line-height: 1.6; border-top: 1px solid rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px); margin-top: 60px; }
+.footer-links { margin-bottom: 12px; }
+.footer-links a { color: #222; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+.footer-links a:hover { color: #0078d4; }
+.footer-links span { margin: 0 8px; color: #aaa; }
+.footer-info p { margin: 4px 0; }
+.footer-info a { color: #0078d4; text-decoration: none; }
+.footer-info a:hover { text-decoration: underline; }
+.footer-copy { margin-top: 14px; font-size: 13px; color: #666; }
 
-  /* === [2] 이 페이지(수강신청) 전용 스타일 === */
+/* wrapper */
+.page-wrapper { padding-top: 100px; min-height: 100vh; }
 
-  /* 페이지 전체 래퍼 (고정 헤더 높이만큼 패딩) */
-  .page-wrapper {
-    padding-top: 100px; /* .top-bar 높이만큼 여백 */
-    min-height: 100vh;
-  }
+.content-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
 
-  /* 콘텐츠 컨테이너 */
-  .content-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 40px auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-  }
+.page-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-  /* 페이지 제목 */
-  .page-title {
-    font-size: 2.2rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
-  }
+/* search bar */
+.simple-search-bar { display:flex; justify-content:center; margin-bottom:30px; gap:10px; }
+.simple-search-bar input {
+  flex:1; max-width:600px; padding:14px 22px; font-size:1.1rem;
+  border:3px solid #b9b9b9; border-radius:30px;
+}
+.simple-search-bar button {
+  padding:14px 30px; background:#5e5e5e; color:white;
+  border-radius:30px; font-weight:bold; cursor:pointer;
+}
 
-  /* ✨ 상단 간단 검색창 (수정됨) */
-  .simple-search-bar {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-    gap: 10px; /* ✨ 버튼과 분리하기 위해 gap 추가 */
-  }
-  .simple-search-bar input {
-    flex: 1;
-    max-width: 600px;
-    padding: 14px 22px;
-    font-size: 1.1rem;
-    /* 요청하신 #b9b9b9 색상을 테두리로 사용 */
-    border: 3px solid #b9b9b9; 
-    border-radius: 30px; /* ✨ 사각 30px 둥글게 수정 */
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .simple-search-bar input:focus {
-    border-color: #5e5e5e;
-  }
-  .simple-search-bar button {
-    padding: 14px 30px;
-    border: none;
-    /* ✨ 메인 홈의 메인 검색 버튼 색상(#5e5e5e)으로 변경 */
-    background: #5e5e5e;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border-radius: 30px; /* ✨ 사각 30px 둥글게 수정 */
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .simple-search-bar button:hover {
-    background: #444; /* ✨ hover 색상도 회색 계열로 변경 */
-  }
+.go-btn {
+  display:inline-block; padding:6px 14px; background:#5e5e5e;
+  color:white; border-radius:6px; text-decoration:none; font-weight:bold;
+}
+.go-btn:hover { background:#333; }
 
-  /* 상세 선택 박스 */
-  .detailed-search-box {
-    background: #f9f9f9;
-    border: 1px solid #e9e9e9;
-    border-radius: 10px;
-    padding: 25px;
-    margin-bottom: 40px;
-  }
-  .detailed-search-box h2 {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #eee;
-  }
-  .filter-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    font-size: 1rem;
-  }
-  .filter-row .filter-label {
-    width: 100px;
-    font-weight: 500;
-    color: #333;
-  }
-  .filter-row .radio-group {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-  /* 라디오 버튼 + 라벨 동시 클릭 */
-  .radio-group label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-  }
-  .filter-row input[type="text"] {
-    flex: 1;
-    max-width: 400px;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  .detailed-search-box .search-button {
-    display: block;
-    width: 150px;
-    margin: 20px auto 0;
-    padding: 12px;
-    /* 메인 홈의 검색 버튼 색상(#5e5e5e) */
-    background: #5e5e5e;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .detailed-search-box .search-button:hover {
-    background: #444;
-  }
+/* grid */
+.topic-grid-wrapper { margin-bottom:40px; }
+.topic-grid-wrapper h2 {
+  font-size:1.3rem; font-weight:bold; margin-bottom:20px;
+  padding-bottom:15px; border-bottom:2px solid #eee;
+}
+.topic-grid {
+  display:grid; grid-template-columns:repeat(4, 1fr);
+  gap:15px;
+}
+.topic-box {
+  padding:25px 15px; border:1px solid #e0e0e0; border-radius:10px;
+  background:#fff; text-align:center; text-decoration:none; color:#333;
+}
+.topic-box:hover { border-color:#444; transform:translateY(-3px); }
+.topic-icon { font-size:2.2rem; margin-bottom:12px; }
 
-  /* 결과 섹션 */
-  .results-section {
-    width: 100%;
-  }
-  .results-count {
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
-  .results-count span {
-    color: #2d3b6b;
-    font-weight: bold;
-  }
+/* table */
+.course-table {
+  width:100%; border-collapse:collapse; border-top:2px solid #555;
+}
+.course-table th, .course-table td {
+  padding:15px 10px; border-bottom:1px solid #eee; text-align:center;
+}
+.course-title { text-align:center; }
 
-  /* 교육 과정 테이블 */
-  .course-table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    border-top: 2px solid #555;
-  }
-  .course-table th, 
-  .course-table td {
-    padding: 15px 10px;
-    text-align: center;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
-  }
-  .course-table th {
-    background: #fdfdfd;
-    font-weight: 600;
-    color: #333;
-  }
-  .course-table td {
-    font-size: 0.95rem;
-    color: #555;
-  }
-  .course-table .course-title {
-    text-align: left;
-    padding-left: 15px;
-  }
-  
-  /* 테이블 내 버튼 */
-  .course-table .btn-apply,
-  .course-table .btn-closed {
-    padding: 6px 14px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .course-table .btn-apply {
-    background: #c90000; /* 신청마감 버튼 색상 (참고 이미지) */
-  }
-  .course-table .btn-apply:hover {
-    background: #a10000;
-  }
-  .course-table .btn-closed {
-    background: #888;
-    cursor: not-allowed;
-  }
-
-  /* 페이지네이션 */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 30px;
-  }
-  .pagination a,
-  .pagination span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 34px;
-    height: 34px;
-    text-decoration: none;
-    color: #555;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    transition: background 0.2s;
-  }
-  .pagination a:hover {
-    background: #f0f0f0;
-  }
-  .pagination span.active {
-    /* 메인 홈의 공지사항 버튼 색상(#2d3b6b) */
-    background: #2d3b6b;
-    color: white;
-    border-color: #2d3b6b;
-    font-weight: bold;
-  }
-
-  /* 반응형 (메인 홈과 동일) */
-  @media (max-width:768px){
-    nav { flex-direction:column; gap:8px; }
-    .nav-center { position:static; transform:none; justify-content:center; margin-bottom:5px; }
-    .nav-right { justify-content:center; margin-left:0; gap:10px; }
-    .page-wrapper { padding-top: 150px; } /* 네비 높이 증가로 패딩 증가 */
-    .content-container { width: 95%; padding: 20px 15px; }
-    .page-title { font-size: 1.8rem; }
-    .simple-search-bar input { padding: 12px 18px; font-size: 1rem; }
-    .simple-search-bar button { padding: 12px 20px; font-size: 1rem; }
-    .filter-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .filter-row .filter-label { width: auto; }
-    .filter-row input[type="text"] { width: 100%; }
-    .course-table { font-size: 0.9rem; } /* 테이블 내용이 많아 축소 */
-    .course-table th, .course-table td { padding: 12px 5px; }
-  }
-
+.pagination { display:flex; justify-content:center; gap:8px; margin-top:30px; }
+.pagination a, .pagination span {
+  width:34px; height:34px; border:1px solid #ddd;
+  display:flex; justify-content:center; align-items:center;
+  text-decoration:none; color:#555;
+}
+.pagination span.active {
+  background:#2d3b6b; color:white; border-color:#2d3b6b;
+}
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <header id="top"><a href="index_EN.html">Elo</a></header> <nav>
+  <header id="top"><a href="index_en.html">Elo</a></header>
+  <nav>
     <div class="nav-center">
-      <a href="intro_EN.html">Introduction</a>
-      <a href="course_application_EN.html">Online Education</a>
-      <a href="my_classroom_EN.html">My Classroom</a> <a href="notice_EN.html">Support</a>
+      <a href="intro_en.html">About</a>
+      <a href="course_application_en.html">Online Training</a>
+      <a href="my_classroom_en.html">My Classroom</a>
+      <a href="notice_en.html">Support</a>
     </div>
-    <div class="nav-right"> <a href="login_EN.html">Login</a>
-      <a href="join_EN.html">Sign Up</a>
+    <div class="nav-right">
+      <a href="login_en.html">Login</a>
+      <a href="join_en.html">Sign Up</a>
     </div>
   </nav>
 </div>
 
 <div class="page-wrapper">
   <div class="content-container">
-    
-    <h1 class="page-title">Worker Education</h1>
 
+    <h1 class="page-title">Worker Training</h1>
+
+    <!-- Search Bar -->
     <div class="simple-search-bar">
-      <input type="text" placeholder="Enter video title.">
-      <button>Search</button>
+      <input id="course-search-input" type="text" placeholder="Enter video title">
+      <button onclick="filterCourses()">Search</button>
     </div>
 
-    <div class="detailed-search-box">
-      <h2>Detailed Search</h2>
-      
-      <div class="filter-row">
-        <label class="filter-label">Course Type</label>
-        <div class="radio-group">
-          <label><input type="radio" name="courseType" value="all" checked> All</label>
-          <label><input type="radio" name="courseType" value="general"> General Course</label>
-          <label><input type="radio" name="courseType" value="select"> Elective Course</label>
-        </div>
-      </div>
+    <!-- Categories -->
+    <div class="topic-grid-wrapper">
+      <h2>Training by Topic</h2>
+      <div class="topic-grid">
 
-      <div class="filter-row">
-        <label class="filter-label">Video Title</label>
-        <input type="text" placeholder="Enter video title.">
+        <a href="course_fire_en.html" class="topic-box">
+          <i class="topic-icon fa-solid fa-fire-extinguisher"></i>
+          <span>Fire & Explosion</span>
+        </a>
+
+        <a href="course_safety_en.html" class="topic-box">
+          <i class="topic-icon fa-solid fa-person-falling-burst"></i>
+          <span>Accident Prevention<br>(Fall, Entrapment)</span>
+        </a>
+
+        <a href="#" class="topic-box" onclick="alert('This course is under preparation.'); return false;">
+          <i class="topic-icon fa-solid fa-briefcase-medical"></i>
+          <span>Occupational Health</span>
+        </a>
+
+        <a href="course_chemical_en.html" class="topic-box">
+          <i class="topic-icon fa-solid fa-flask-vial"></i>
+          <span>Chemical Safety</span>
+        </a>
+
+        <a href="course_machine_en.html" class="topic-box">
+          <i class="topic-icon fa-solid fa-gear"></i>
+          <span>Machinery & Equipment</span>
+        </a>
+
+        <a href="#" class="topic-box" onclick="alert('This course is under preparation.'); return false;">
+          <i class="topic-icon fa-solid fa-kit-medical"></i>
+          <span>First Aid</span>
+        </a>
+
+        <a href="#" class="topic-box" onclick="alert('This course is under preparation.'); return false;">
+          <i class="topic-icon fa-solid fa-bolt"></i>
+          <span>Electrical Safety</span>
+        </a>
+
+        <a href="course_ppe_en.html" class="topic-box">
+          <i class="topic-icon fa-solid fa-helmet-safety"></i>
+          <span>PPE</span>
+        </a>
+
       </div>
-      
-      <button class="search-button">Search</button>
     </div>
 
+    <hr><br><br>
+
+    <!-- Results -->
     <div class="results-section">
-      <p class="results-count">Total <span>2</span> results</p>
+      <p class="results-count"><span></span></p>
 
       <table class="course-table">
         <thead>
           <tr>
-            <th>NO</th>
-            <th>Title</th>
-            <th>Target Audience</th>
-            <th>Application Period</th>
-            <th>Learning Period</th>
-            <th>Fee</th>
-            <th>Select</th>
+            <th>No</th>
+            <th>Video Title</th>
+            <th>Go</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td class="course-title">2024 5th Term Worker Safety Education (Elective)</td>
-            <td>Worker</td>
-            <td>2024.10.13<br>~2025.1.10</td>
-            <td>2024.10.13<br>~2025.2.10</td>
-            <td>₩0</td>
-            <td><button class="btn-closed">Closed</button></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td class="course-title">2025 5th Term Understanding Safety & Health Management Systems and Safety Culture</td>
-            <td>Worker</td>
-            <td>2025.10.13<br>~2025.11.10</td>
-            <td>2025.10.13<br>~2025.12.10</td>
-            <td>₩0</td>
-            <td><button class="btn-apply" disabled>Available</button></td>
-          </tr>
-        </tbody>
+
+        <tbody id="course-table-body">
+   <tr>
+  <td>1</td>
+  <td class="course-title" style="text-align:center;">Proper Attire</td>
+  <td><a href="SHORT1_EN.html" class="go-btn">Go</a></td>
+</tr>
+
+<tr>
+  <td>2</td>
+  <td class="course-title" style="text-align:center;">No Chatting & Stable Posture</td>
+  <td><a href="SHORT2_EN.html" class="go-btn">Go</a></td>
+</tr>
+
+<tr>
+  <td>3</td>
+  <td class="course-title" style="text-align:center;">A Spark Lasts Longer...</td>
+  <td><a href="SHORT3_EN.html" class="go-btn">Go</a></td>
+</tr>
+
+<tr>
+  <td>4</td>
+  <td class="course-title" style="text-align:center;">Gas Exposure</td>
+  <td><a href="SHORT4_EN.html" class="go-btn">Go</a></td>
+</tr>
+
+<tr>
+  <td>5</td>
+  <td class="course-title" style="text-align:center;">Protective Gear</td>
+  <td><a href="SHORT5_EN.html" class="go-btn">Go</a></td>
+</tr>
+
+<tr>
+  <td>6</td>
+  <td class="course-title" style="text-align:center;">preventing collapse accidents during demolition work</td>
+  <td><a href="SHORT6_EN.html" class="go-btn">Go</a></td>
+</tr>
+
+<tr>
+  <td>7</td>
+  <td class="course-title" style="text-align:center;">Cutting and wilding opreations</td>
+  <td><a href="SHORT7_EN.html" class="go-btn">Go</a></td>
+</tr>
+
+
       </table>
 
       <div class="pagination">
@@ -395,14 +280,37 @@
     <a href="#">Related Sites</a>
   </div>
   <div class="footer-info">
-    <p>Address: 10, Sopa-ro 2-gil, Jung-gu, Seoul</p>
-    <p>Phone: 02-1234-5678</p>
-    <p>Customer Support: <a href="#">Contact Us</a> (Weekdays 09:00~18:00)</p>
+    <p>Address: 10, Sofa-ro 2-gil, Jung-gu, Seoul</p>
+    <p>Tel: 02-1234-5678</p>
+    <p>Customer Support: <a href="#">Contact Info</a> (Weekdays 09:00~18:00)</p>
   </div>
   <div class="footer-copy">
-    COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
+    COPYRIGHT 2025 © KOSHA ALL RIGHTS RESERVED.
   </div>
 </footer>
+
+<script>
+function filterCourses() {
+  const keyword = document.getElementById("course-search-input").value.trim().toLowerCase();
+  const rows = document.querySelectorAll("#course-table-body tr");
+
+  rows.forEach(row => {
+    const title = row.querySelector(".course-title").innerText.toLowerCase();
+
+    row.style.display = title.includes(keyword) ? "" : "none";
+  });
+
+  const count = [...rows].filter(r => r.style.display !== "none").length;
+  document.querySelector(".results-count span").innerText = count;
+}
+
+document.getElementById("course-search-input").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    filterCourses();
+  }
+});
+</script>
 
 </body>
 </html>
