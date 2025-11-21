@@ -148,20 +148,26 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="안전교육-용접 시 눈 보호의 중요성.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763704537/%EC%95%88%EC%A0%84%EA%B5%90%EC%9C%A1-%EC%9A%A9%EC%A0%91_%EC%8B%9C_%EB%88%88_%EB%B3%B4%ED%98%B8%EC%9D%98_%EC%A4%91%EC%9A%94%EC%84%B1_fxjgxm.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
+
     <div class="progress-area">
-  <p id="status">이수율: 0%</p>
-  <button id="completeBtn" disabled>이수 완료</button>
-</div>
+      <p id="status">이수율: 0%</p>
+      <button id="completeBtn" disabled>이수 완료</button>
+    </div>
+
+  </div>
+</main>
+
 
   </div>
 </main>

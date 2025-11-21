@@ -146,24 +146,26 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="보호구 영상.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763704507/%EB%B3%B4%ED%98%B8%EA%B5%AC_%EC%98%81%EC%83%81_qqnbbg.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
 
-        <div class="progress-area">
+    <div class="progress-area">
       <p id="status">이수율: 0%</p>
       <button id="completeBtn" disabled>이수 완료</button>
     </div>
 
   </div>
 </main>
+
 
 <!-- ✅ 푸터 고정 -->
 <footer class="footer">

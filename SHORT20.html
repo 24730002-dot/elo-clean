@@ -148,23 +148,26 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="장갑의 중요성.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763711552/%EC%9E%A5%EA%B0%91%EC%9D%98%EC%A4%91%EC%9A%94%EC%84%B1_ftczh6.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
+
     <div class="progress-area">
-  <p id="status">이수율: 0%</p>
-  <button id="completeBtn" disabled>이수 완료</button>
-</div>
+      <p id="status">이수율: 0%</p>
+      <button id="completeBtn" disabled>이수 완료</button>
+    </div>
 
   </div>
 </main>
+
 
 <!-- ✅ 푸터 고정 -->
 <footer class="footer">

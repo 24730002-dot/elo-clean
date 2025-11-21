@@ -148,23 +148,26 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="AI가 위험을 피하는 방법.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763704539/AI%EA%B0%80_%EC%9C%84%ED%97%98%EC%9D%84_%ED%94%BC%ED%95%98%EB%8A%94_%EB%B0%A9%EB%B2%95_x8y14f.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
+
     <div class="progress-area">
-  <p id="status">이수율: 0%</p>
-  <button id="completeBtn" disabled>이수 완료</button>
-</div>
+      <p id="status">이수율: 0%</p>
+      <button id="completeBtn" disabled>이수 완료</button>
+    </div>
 
   </div>
 </main>
+
 
 <!-- ✅ 푸터 고정 -->
 <footer class="footer">

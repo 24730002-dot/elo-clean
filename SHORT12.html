@@ -148,23 +148,26 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="안전교육-손가락절단.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763706838/%EC%86%90%EA%B0%80%EB%9D%BD%EC%A0%88%EB%8B%A8_c8j5k0.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
+
     <div class="progress-area">
-  <p id="status">이수율: 0%</p>
-  <button id="completeBtn" disabled>이수 완료</button>
-</div>
+      <p id="status">이수율: 0%</p>
+      <button id="completeBtn" disabled>이수 완료</button>
+    </div>
 
   </div>
 </main>
+
 
 <!-- ✅ 푸터 고정 -->
 <footer class="footer">

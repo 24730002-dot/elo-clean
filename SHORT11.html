@@ -150,18 +150,18 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="안전교육-미끄럼 방지 예방 및 즉시 조치.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763706844/%EC%95%88%EC%A0%84%EA%B5%90%EC%9C%A1-%EB%AF%B8%EB%81%84%EB%9F%BC_%EB%B0%A9%EC%A7%80_%EC%98%88%EB%B0%A9_%EB%B0%8F_%EC%A6%89%EC%8B%9C_%EC%A1%B0%EC%B9%98_yc0apw.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
 
-    
     <div class="progress-area">
       <p id="status">이수율: 0%</p>
       <button id="completeBtn" disabled>이수 완료</button>
@@ -169,6 +169,7 @@
 
   </div>
 </main>
+
 
 <!-- ✅ 푸터 고정 -->
 <footer class="footer">

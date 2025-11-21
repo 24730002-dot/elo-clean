@@ -149,24 +149,26 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="심안전교육 영어버전-옷차림 방지.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763704509/%EC%8B%AC%EC%95%88%EC%A0%84%EA%B5%90%EC%9C%A1_%EC%98%81%EC%96%B4%EB%B2%84%EC%A0%84-%EC%98%B7%EC%B0%A8%EB%A6%BC_%EB%B0%A9%EC%A7%80_waafrm.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
 
-        <div class="progress-area">
+    <div class="progress-area">
       <p id="status">이수율: 0%</p>
       <button id="completeBtn" disabled>이수 완료</button>
     </div>
-    
+
   </div>
 </main>
+
 
 <!-- ✅ 푸터 고정 -->
 <footer class="footer">

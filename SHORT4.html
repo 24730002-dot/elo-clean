@@ -146,24 +146,26 @@
 <!-- ✅ 메인 (쇼츠 영상) -->
 <main>
   <div class="shorts-container">
+
     <div class="shorts-video">
-      <!-- autoplay 제거 → 수동 재생 -->
-      <video controls muted playsinline>
-        <source src="끼임사고.mp4" type="video/mp4">
+      <video id="lectureVideo" controls muted playsinline>
+        <source src="https://res.cloudinary.com/dr6fvp0qs/video/upload/v1763706829/%EC%95%88%EC%A0%84%EA%B5%90%EC%9C%A1-%EB%81%BC%EC%9E%84%EC%82%AC%EA%B3%A0_%EC%98%88%EB%B0%A9%EC%9D%84_%EC%9C%84%ED%95%9C_%EC%98%B7%EC%B0%A8%EB%A6%BC%EA%B7%9C%EC%A0%95_rhyat0.mp4" type="video/mp4">
         브라우저가 동영상을 지원하지 않습니다.
       </video>
     </div>
+
     <div class="shorts-caption">
       <b>[ELO Shorts]</b><br><br> 당신의 안전을 위해! 🎥
     </div>
-    
+
     <div class="progress-area">
       <p id="status">이수율: 0%</p>
       <button id="completeBtn" disabled>이수 완료</button>
     </div>
-    
+
   </div>
 </main>
+
 
 <!-- ✅ 푸터 고정 -->
 <footer class="footer">
