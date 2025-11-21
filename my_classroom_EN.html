@@ -495,6 +495,42 @@ if (!sessionStorage.getItem("currentUser")) {
   window.location.href = "login_EN.html"; // 영어면 login_EN.html
 }
 </script>
+<script>
+// English login check
+const userEN = sessionStorage.getItem("currentUser_EN");
+
+if (userEN) {
+  // Hide Login / Sign Up
+  document.querySelectorAll('a[href="login_EN.html"], a[href="join_EN.html"]').forEach(a => {
+    a.style.display = "none";
+  });
+
+  const navRight = document.querySelector(".nav-right");
+
+  // MY PAGE
+  const myPageBtn = document.createElement("a");
+  myPageBtn.href = "Mypage_EN.html";
+  myPageBtn.textContent = "MY PAGE";
+
+  // LOGOUT
+  const logoutBtn = document.createElement("a");
+  logoutBtn.href = "#";
+  logoutBtn.textContent = "LOGOUT";
+  logoutBtn.onclick = function () {
+    sessionStorage.removeItem("currentUser_EN");
+    alert("Logged out successfully.");
+    location.href = "index_EN.html";
+  };
+
+  navRight.appendChild(myPageBtn);
+  navRight.appendChild(logoutBtn);
+
+} else {
+  // Block unauthenticated access
+  alert("Please log in to access your classroom.");
+  window.location.href = "login_EN.html";
+}
+</script>
 
 
 </body>

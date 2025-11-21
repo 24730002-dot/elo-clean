@@ -495,6 +495,42 @@ if (!sessionStorage.getItem("currentUser")) {
   window.location.href = "login.html"; // 영어면 login_EN.html
 }
 </script>
+<script>
+// 한국어 로그인 여부 확인
+const userKR = sessionStorage.getItem("currentUser");
+
+if (userKR) {
+  // 로그인/회원가입 숨기기
+  document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
+    a.style.display = "none";
+  });
+
+  const navRight = document.querySelector(".nav-right");
+
+  // 마이페이지
+  const myPageBtn = document.createElement("a");
+  myPageBtn.href = "Mypage.html";
+  myPageBtn.textContent = "마이페이지";
+
+  // 로그아웃
+  const logoutBtn = document.createElement("a");
+  logoutBtn.href = "#";
+  logoutBtn.textContent = "로그아웃";
+  logoutBtn.onclick = function () {
+    sessionStorage.removeItem("currentUser");
+    alert("로그아웃되었습니다.");
+    location.href = "index.html";
+  };
+
+  navRight.appendChild(myPageBtn);
+  navRight.appendChild(logoutBtn);
+
+} else {
+  // 비로그인 접근 차단
+  alert("로그인 후 이용 가능합니다.");
+  window.location.href = "login.html";
+}
+</script>
 
 
 </body>
