@@ -495,45 +495,48 @@ nav a:hover {
 </footer>
 
 <script>
-  const container = document.getElementById("shorts-container");
-  const leftBtn = document.getElementById("scroll-left");
-  const rightBtn = document.getElementById("scroll-right");
-
-  // 👉 한 번 클릭할 때 이동할 픽셀 (short 카드 크기 + gap)
-  const scrollAmount = 260;
-
-  leftBtn.addEventListener("click", () => {
-    container.scrollBy({
-      left: -scrollAmount,
-      behavior: "smooth"
-    });
-  });
-
-  rightBtn.addEventListener("click", () => {
-    container.scrollBy({
-      left: scrollAmount,
-      behavior: "smooth"
-    });
-  });
-</script>
-
-<script>
   document.addEventListener("DOMContentLoaded", () => {
-    const checkLinks = document.querySelectorAll('a[href="print.html"]');
+    /* ====================== 쇼츠 슬라이더 ====================== */
+    const container = document.getElementById("shorts-container");
+    const leftBtn = document.getElementById("scroll-left");
+    const rightBtn = document.getElementById("scroll-right");
+
+    if (leftBtn && rightBtn && container) {
+      const scrollAmount = 260;
+
+      leftBtn.addEventListener("click", () => {
+        container.scrollBy({
+          left: -scrollAmount,
+          behavior: "smooth"
+        });
+      });
+
+      rightBtn.addEventListener("click", () => {
+        container.scrollBy({
+          left: scrollAmount,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    /* =================== 로그인 안 했을 때 접근 제한 =================== */
+    const checkLinks = document.querySelectorAll('a[href="print.html"], a[href="/print.html"]');
 
     checkLinks.forEach(link => {
       link.addEventListener("click", function (e) {
         const userId = localStorage.getItem("user_id");
 
         if (!userId) {
-          e.preventDefault(); // 이동 막기
+          e.preventDefault();
           alert("로그인 후 이용 가능한 서비스입니다.");
           window.location.href = "login.html";
         }
       });
     });
+
   });
 </script>
+
 
 
 </body>

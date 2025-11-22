@@ -470,27 +470,48 @@
 
 
 <script>
-  const container = document.getElementById("shorts-container");
-  const leftBtn = document.getElementById("scroll-left");
-  const rightBtn = document.getElementById("scroll-right");
+  document.addEventListener("DOMContentLoaded", () => {
+    /* ====================== Shorts Slider ====================== */
+    const container = document.getElementById("shorts-container");
+    const leftBtn = document.getElementById("scroll-left");
+    const rightBtn = document.getElementById("scroll-right");
 
-  // 👉 한 번 클릭할 때 이동할 픽셀 (short 카드 크기 + gap)
-  const scrollAmount = 260;
+    if (leftBtn && rightBtn && container) {
+      const scrollAmount = 260;
 
-  leftBtn.addEventListener("click", () => {
-    container.scrollBy({
-      left: -scrollAmount,
-      behavior: "smooth"
+      leftBtn.addEventListener("click", () => {
+        container.scrollBy({
+          left: -scrollAmount,
+          behavior: "smooth"
+        });
+      });
+
+      rightBtn.addEventListener("click", () => {
+        container.scrollBy({
+          left: scrollAmount,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    /* =================== Access Control: Print Certificate =================== */
+    const checkLinks = document.querySelectorAll('a[href="print_EN.html"], a[href="/print_EM.html"]');
+
+    checkLinks.forEach(link => {
+      link.addEventListener("click", function (e) {
+        const userId = localStorage.getItem("user_id");
+
+        if (!userId) {
+          e.preventDefault();
+          alert("Please log in to access this service.");
+          window.location.href = "login_EN.html";
+        }
+      });
     });
-  });
 
-  rightBtn.addEventListener("click", () => {
-    container.scrollBy({
-      left: scrollAmount,
-      behavior: "smooth"
-    });
   });
 </script>
+
 
 
 </body>
