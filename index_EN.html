@@ -469,7 +469,28 @@
 </footer>
 
 
+<script>
+  const container = document.getElementById("shorts-container");
+  const leftBtn = document.getElementById("scroll-left");
+  const rightBtn = document.getElementById("scroll-right");
 
+  // 👉 한 번 클릭할 때 이동할 픽셀 (short 카드 크기 + gap)
+  const scrollAmount = 260;
+
+  leftBtn.addEventListener("click", () => {
+    container.scrollBy({
+      left: -scrollAmount,
+      behavior: "smooth"
+    });
+  });
+
+  rightBtn.addEventListener("click", () => {
+    container.scrollBy({
+      left: scrollAmount,
+      behavior: "smooth"
+    });
+  });
+</script>
 
 
 </body>
