@@ -495,35 +495,36 @@ nav a:hover {
 </footer>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    /* ====================== 쇼츠 슬라이더 ====================== */
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* === Shorts Slider === */
+  try {
     const container = document.getElementById("shorts-container");
     const leftBtn = document.getElementById("scroll-left");
     const rightBtn = document.getElementById("scroll-right");
 
-    if (leftBtn && rightBtn && container) {
+    if (container && leftBtn && rightBtn) {
       const scrollAmount = 260;
 
       leftBtn.addEventListener("click", () => {
-        container.scrollBy({
-          left: -scrollAmount,
-          behavior: "smooth"
-        });
+        container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
       });
 
       rightBtn.addEventListener("click", () => {
-        container.scrollBy({
-          left: scrollAmount,
-          behavior: "smooth"
-        });
+        container.scrollBy({ left: scrollAmount, behavior: "smooth" });
       });
     }
+  } catch (e) {
+    console.log("슬라이더 오류:", e);
+  }
 
-    /* =================== 로그인 안 했을 때 접근 제한 =================== */
-    const checkLinks = document.querySelectorAll('a[href="print.html"], a[href="/print.html"]');
+  /* === Print Certificate Access Control === */
+  try {
+    // "print.html로 끝나는" 모든 링크 선택
+    const checkLinks = document.querySelectorAll('a[href$="print.html"]');
 
     checkLinks.forEach(link => {
-      link.addEventListener("click", function (e) {
+      link.addEventListener("click", (e) => {
         const userId = localStorage.getItem("user_id");
 
         if (!userId) {
@@ -533,9 +534,13 @@ nav a:hover {
         }
       });
     });
+  } catch (e) {
+    console.log("접근제한 오류:", e);
+  }
 
-  });
+});
 </script>
+
 
 
 
