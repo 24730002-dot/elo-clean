@@ -206,6 +206,24 @@
     COPYRIGHT 2025 © KOSHA ALL RIGHTS RESERVED.
   </div>
 </footer>
+<script>
+// Toggle menu items based on English login state
+document.addEventListener("DOMContentLoaded", () => {
+  const userEN = localStorage.getItem("currentUser_EN");
+
+  if (userEN) {
+    document.getElementById("loginMenu_EN").style.display = "none";
+    document.getElementById("joinMenu_EN").style.display = "none";
+    document.getElementById("mypageMenu_EN").style.display = "block";
+    document.getElementById("logoutMenu_EN").style.display = "block";
+  } else {
+    document.getElementById("loginMenu_EN").style.display = "block";
+    document.getElementById("joinMenu_EN").style.display = "block";
+    document.getElementById("mypageMenu_EN").style.display = "none";
+    document.getElementById("logoutMenu_EN").style.display = "none";
+  }
+});
+</script>
 
 </body>
 </html>
