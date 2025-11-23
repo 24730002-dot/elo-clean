@@ -498,39 +498,37 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 0) Login check
   const user = localStorage.getItem("currentUser_EN");
   if (!user) {
-    alert("Please log in first.");
+    alert("Login is required.");
     location.href = "login_EN.html";
     return;
   }
 
   const courseList = document.getElementById("courseList");
 
-  // 1) Fetch user progress from backend
+  // 1) Load progress from backend
   try {
     const res = await fetch(`https://elo-backend-5r5z.onrender.com/progress/${user}`);
     const data = await res.json();
 
-    // No data → show empty state
     if (!data || data.length === 0) {
       courseList.innerHTML = `
         <p style="text-align:center; padding:40px 0; color:#666; font-size:1.1rem;">
-          You have no enrolled courses.
+          No courses in progress.
         </p>
       `;
       return;
     }
 
-    // 2) Dashboard numbers
+    // 2) Update dashboard counts
     const total = data.length;
     const completed = data.filter(c => c.progress >= 100).length;
     const ing = data.filter(c => c.progress > 0 && c.progress < 100).length;
     const none = data.filter(c => c.progress === 0).length;
 
-document.getElementById("count-total").textContent = total;
-document.getElementById("count-ing").textContent = ing;
-document.getElementById("count-completed").textContent = completed;
-document.getElementById("count-none").textContent = none;
-
+    document.getElementById("count-total").textContent = total;
+    document.getElementById("count-ing").textContent = ing;
+    document.getElementById("count-completed").textContent = completed;
+    document.getElementById("count-none").textContent = none;
 
     // 3) Render course cards
     let html = "";
@@ -557,9 +555,7 @@ document.getElementById("count-none").textContent = none;
                 <li>
                   <span class="label">Progress</span>
                   <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${item.progress}%;">
-                      ${item.progress}%
-                    </div>
+                    <div class="progress-bar-fill" style="width: ${item.progress}%;">${item.progress}%</div>
                   </div>
                 </li>
               </ul>
@@ -568,8 +564,8 @@ document.getElementById("count-none").textContent = none;
             <div class="details-right">
               <ul>
                 <li>
-                  <span class="label">Completion Rule</span>
-                  <span class="value">100% Required</span>
+                  <span class="label">Completion Requirement</span>
+                  <span class="value">100% progress</span>
                 </li>
               </ul>
             </div>
@@ -579,8 +575,8 @@ document.getElementById("count-none").textContent = none;
                 Enter Course
               </button>
               ${item.progress >= 100 
-                ? `<button class="btn-secondary">Download Certificate</button>`
-                : `<button class="btn-secondary" disabled style="opacity:0.4;">Download Certificate</button>`}
+                ? `<button class="btn-secondary">Print Certificate</button>`
+                : `<button class="btn-secondary" disabled style="opacity:0.4;">Print Certificate</button>`}
             </div>
           </div>
         </div>
@@ -592,19 +588,12 @@ document.getElementById("count-none").textContent = none;
   } catch (err) {
     console.error(err);
     courseList.innerHTML = `<p style="padding:40px; text-align:center; color:red;">
-      There are no lectures in progress
+      No courses in progress.
     </p>`;
   }
 });
-
-// Logout
-function logout_EN() {
-  localStorage.removeItem("currentUser_EN");
-  alert("You have been logged out.");
-  location.reload();
-}
-
 </script>
+
 
 <script>
 // Toggle menu items based on English login state

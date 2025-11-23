@@ -420,7 +420,6 @@
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
-  // 0) 로그인 확인
   const user = localStorage.getItem("currentUser");
   if (!user) {
     alert("로그인이 필요합니다.");
@@ -430,13 +429,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const courseList = document.getElementById("courseList");
 
-  // 1) 백엔드에서 사용자 진행률 데이터 불러오기
   try {
-    const res = await fetch(`https://elo-backend-5r5z.onrender.com/progress/${user}`);
-    const data = await res.json();
+    // 🔥 올바른 엔드포인트로 변경
+    const res = await fetch(`https://elo-backend-5r5z.onrender.com/progress/list?userId=${user}`);
+    const result = await res.json();
 
-    // 데이터 없음 === 텅 빈 상태 유지
-    if (!data || data.length === 0) {
+    if (!result.success || result.courses.length === 0) {
       courseList.innerHTML = `
         <p style="text-align:center; padding:40px 0; color:#666; font-size:1.1rem;">
           현재 수강 중인 강의가 없습니다.
@@ -445,19 +443,21 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // 2) 대시보드 숫자 계산
+    const data = result.courses;
+
+    // === 대시보드 숫자 계산 ===
     const total = data.length;
     const completed = data.filter(c => c.progress >= 100).length;
     const ing = data.filter(c => c.progress > 0 && c.progress < 100).length;
     const none = data.filter(c => c.progress === 0).length;
 
- document.getElementById("count-total").textContent = total;
-document.getElementById("count-ing").textContent = ing;
-document.getElementById("count-completed").textContent = completed;
-document.getElementById("count-none").textContent = none;
+    // 🔥 id가 없었음 → 추가 필요!
+    document.querySelectorAll(".status-count")[0].textContent = total;
+    document.querySelectorAll(".status-count")[1].textContent = ing;
+    document.querySelectorAll(".status-count")[2].textContent = completed;
+    document.querySelectorAll(".status-count")[3].textContent = none;
 
-
-    // 3) 강의 카드 렌더링
+    // === 강의 리스트 렌더링 ===
     let html = "";
 
     data.forEach(item => {
@@ -482,7 +482,9 @@ document.getElementById("count-none").textContent = none;
                 <li>
                   <span class="label">나의진도율</span>
                   <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${item.progress}%;">${item.progress}%</div>
+                    <div class="progress-bar-fill" style="width: ${item.progress}%;">
+                      ${item.progress}%
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -503,7 +505,8 @@ document.getElementById("count-none").textContent = none;
               </button>
               ${item.progress >= 100 
                 ? `<button class="btn-secondary">수료증 출력</button>`
-                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`}
+                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`
+              }
             </div>
           </div>
         </div>
@@ -519,12 +522,6 @@ document.getElementById("count-none").textContent = none;
     </p>`;
   }
 });
-
-function logout() {
-  localStorage.removeItem("currentUser");
-  alert("로그아웃 되었습니다.");
-  location.reload();
-}
 </script>
 
 
