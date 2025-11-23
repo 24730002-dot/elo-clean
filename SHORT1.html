@@ -217,30 +217,28 @@
 completeBtn.addEventListener('click', async () => {
   alert("이수 완료로 기록되었습니다!");
 
-  let file = window.location.pathname.split("/").pop();
-  if (!file.endsWith(".html")) file += ".html";
-
-  await updateProgress(file);
+  await updateProgress("개구부와 맨홀");  // ★ 이 페이지의 title 그대로 send
 });
+
 
 </script>
 
 <script>
-async function updateProgress(link) {
+async function updateProgress(title) {
   const userId = localStorage.getItem("currentUser");
   if (!userId) return;
 
-await fetch("https://elo-backend-5r5z.onrender.com/progress/update", {
-  method: "POST",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({
-    id: userId,
-    courseId: link,
-    progress: 100
-  })
-});
-
+  await fetch("https://elo-backend-5r5z.onrender.com/progress/update", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      userId: userId,  
+      title: title,     // ★ 서버는 title 로만 찾는다!
+      progress: 100
+    })
+  });
 }
+
 </script>
 
 <script>
