@@ -261,23 +261,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 로그인 함수 (DOM 로드 후 안전하게 정의)
-window.login = function () {
-  const id = document.getElementById("userid").value;  // ← 수정
-  const password = document.getElementById("password").value;
+  window.login = async function () {
+    const id = document.getElementById("userid").value.trim();
+    const pw = document.getElementById("password").value.trim();
 
-  if (id === "user" && password === "1234") {
-    localStorage.setItem("currentUser", id);
-    alert("로그인이 완료되었습니다.");
-    location.href = "index.html";
-  } else {
-    alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-  }
-};
+    if (!id || !pw) {
+      alert("아이디와 비밀번호를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://elo-backend-5r5z.onrender.com/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, pw })
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+        return;
+      }
+
+      // 로그인 성공
+      alert("로그인 성공!");
+      localStorage.setItem("currentUser", id);
+      location.href = "index.html";
+
+    } catch (error) {
+      console.error("login error:", error);
+      alert("서버 연결에 실패했습니다. 잠시 후 다시 시도해주세요.");
+    }
+  };
 
 });
 </script>
-
 
 
 

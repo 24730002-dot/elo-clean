@@ -184,7 +184,7 @@
         <label for="remember">　</label>
       </div>
 
-      <button type="submit">Login</button>
+      <button type="button" onclick="login()">Login</button>
     </form>
 
     <div class="login-links">
@@ -210,38 +210,56 @@
   </div>
 </footer>
 
-<script>
-  function login() {
-    var id = document.getElementById("id").value;
-    var password = document.getElementById("password").value;
-
-    // Example User: id='user', password='1234'
-    if (id === "user" && password === "1234") {
-      // ✅ [추가] 영어 키로 사용자 ID 저장
-      localStorage.setItem("currentUser_EN", id); 
-      
-      alert("Login successful");
-      location.href = "index_EN.html";
-    } else {
-      alert("Invalid ID or Password.");
-    }
-  }
-</script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const togglePasswordEN = document.getElementById("togglePassword");
-  const passwordFieldEN = document.getElementById("password");
 
-  if (togglePasswordEN && passwordFieldEN) {
-    togglePasswordEN.addEventListener("click", () => {
-      const type = passwordFieldEN.type === "password" ? "text" : "password";
-      passwordFieldEN.type = type;
+  // 🔒 Password toggle
+  const togglePassword = document.getElementById("togglePassword");
+  const pwField = document.getElementById("password");
 
-      togglePasswordEN.textContent =
-        type === "password" ? "🔒" : "🔓";
+  if (togglePassword && pwField) {
+    togglePassword.addEventListener("click", () => {
+      const type = pwField.type === "password" ? "text" : "password";
+      pwField.type = type;
+      togglePassword.textContent = type === "password" ? "🔒" : "🔓";
     });
   }
+
+  // ⭐ Backend-connected login()
+  window.login = async function () {
+    const id = document.getElementById("userid").value.trim();
+    const pw = document.getElementById("password").value.trim();
+
+    if (!id || !pw) {
+      alert("Please enter both username and password.");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://elo-backend-5r5z.onrender.com/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, pw })
+      });
+
+      const data = await res.json();
+
+      if (!data.success) {
+        alert("Invalid username or password.");
+        return;
+      }
+
+      alert("Login successful!");
+      localStorage.setItem("currentUser_EN", id);
+      location.href = "index_EN.html";
+
+    } catch (error) {
+      console.error("login error:", error);
+      alert("Unable to connect to the server. Please try again later.");
+    }
+  };
+
 });
 </script>
 
