@@ -235,7 +235,7 @@ await fetch("https://elo-backend-5r5z.onrender.com/progress/update", {
   headers: {"Content-Type": "application/json"},
   body: JSON.stringify({
     id: userId,
-    link: link,   // ✔ 정답
+    courseId: link,
     progress: 100
   })
 });
