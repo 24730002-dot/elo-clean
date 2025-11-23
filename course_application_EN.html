@@ -120,6 +120,24 @@ footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; 
 .pagination span.active {
   background:#2d3b6b; color:white; border-color:#2d3b6b;
 }
+
+
+.add-btn {
+  padding: 6px 14px;
+  margin-left: 6px;
+  background: #2d3b6b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.add-btn:hover {
+  background: #1b2541;
+}
+</style>
+
+
 </style>
 </head>
 <body>
@@ -222,44 +240,72 @@ footer.footer { background-color: rgba(255, 255, 255, 0.7); text-align: center; 
    <tr>
   <td>1</td>
   <td class="course-title" style="text-align:center;">Proper Attire</td>
-  <td><a href="SHORT1_EN.html" class="go-btn">Go</a></td>
-</tr>
+<td>
+  <a href="SHORT1_EN.html" class="go-btn">Go</a>
+  <button class="add-btn" onclick="addCourse('Proper Attire', 'SHORT1_EN.html')">
+    Add
+  </button>
+</td>
+
 
 <tr>
   <td>2</td>
   <td class="course-title" style="text-align:center;">No Chatting & Stable Posture</td>
-  <td><a href="SHORT2_EN.html" class="go-btn">Go</a></td>
+  <td>
+    <a href="SHORT2_EN.html" class="go-btn">Go</a>
+    <button class="add-btn" onclick="addCourse('No Chatting & Stable Posture', 'SHORT2_EN.html')">Add</button>
+  </td>
 </tr>
+
 
 <tr>
   <td>3</td>
   <td class="course-title" style="text-align:center;">A Spark Lasts Longer...</td>
-  <td><a href="SHORT3_EN.html" class="go-btn">Go</a></td>
+  <td>
+    <a href="SHORT3_EN.html" class="go-btn">Go</a>
+    <button class="add-btn" onclick="addCourse('A Spark Lasts Longer...', 'SHORT3_EN.html')">Add</button>
+  </td>
 </tr>
+
 
 <tr>
   <td>4</td>
   <td class="course-title" style="text-align:center;">Gas Exposure</td>
-  <td><a href="SHORT4_EN.html" class="go-btn">Go</a></td>
+  <td>
+    <a href="SHORT4_EN.html" class="go-btn">Go</a>
+    <button class="add-btn" onclick="addCourse('Gas Exposure', 'SHORT4_EN.html')">Add</button>
+  </td>
 </tr>
 
 <tr>
   <td>5</td>
   <td class="course-title" style="text-align:center;">Protective Gear</td>
-  <td><a href="SHORT5_EN.html" class="go-btn">Go</a></td>
+  <td>
+    <a href="SHORT5_EN.html" class="go-btn">Go</a>
+    <button class="add-btn" onclick="addCourse('Protective Gear', 'SHORT5_EN.html')">Add</button>
+  </td>
 </tr>
+
 
 <tr>
   <td>6</td>
-  <td class="course-title" style="text-align:center;">preventing collapse accidents during demolition work</td>
-  <td><a href="SHORT6_EN.html" class="go-btn">Go</a></td>
+  <td class="course-title" style="text-align:center;">Preventing Collapse Accidents During Demolition Work</td>
+  <td>
+    <a href="SHORT6_EN.html" class="go-btn">Go</a>
+    <button class="add-btn" onclick="addCourse('Preventing Collapse Accidents During Demolition Work', 'SHORT6_EN.html')">Add</button>
+  </td>
 </tr>
+
 
 <tr>
   <td>7</td>
-  <td class="course-title" style="text-align:center;">Cutting and wilding opreations</td>
-  <td><a href="SHORT7_EN.html" class="go-btn">Go</a></td>
+  <td class="course-title" style="text-align:center;">Cutting and Welding Operations</td>
+  <td>
+    <a href="SHORT7_EN.html" class="go-btn">Go</a>
+    <button class="add-btn" onclick="addCourse('Cutting and Welding Operations', 'SHORT7_EN.html')">Add</button>
+  </td>
 </tr>
+
 
 
       </table>
@@ -333,6 +379,44 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("logoutMenu_EN").style.display = "none";
   }
 });
+</script>
+
+<script>
+async function addCourse(title, link) {
+  const user = localStorage.getItem("currentUser_EN");
+
+  if (!user) {
+    alert("Please log in first.");
+    location.href = "login_EN.html";
+    return;
+  }
+
+  try {
+    const res = await fetch("https://elo-backend-5r5z.onrender.com/addCourse", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user,
+        title,
+        link,
+        progress: 0
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Course has been added to My Classroom!");
+      location.href = "my_classroom_EN.html";
+    } else {
+      alert(data.message || "Failed to add course.");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Server connection error.");
+  }
+}
 </script>
 
 
