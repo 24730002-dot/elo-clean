@@ -420,17 +420,32 @@
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
+  // 로그인 메뉴 처리
   const user = localStorage.getItem("currentUser");
-  if (!user) {
+
+  if (user) {
+    document.getElementById("loginMenu").style.display = "none";
+    document.getElementById("joinMenu").style.display = "none";
+    document.getElementById("mypageMenu").style.display = "block";
+    document.getElementById("logoutMenu").style.display = "block";
+  } else {
+    document.getElementById("loginMenu").style.display = "block";
+    document.getElementById("joinMenu").style.display = "block";
+    document.getElementById("mypageMenu").style.display = "none";
+    document.getElementById("logoutMenu").style.display = "none";
+    
     alert("로그인이 필요합니다.");
     location.href = "login.html";
     return;
   }
 
+  // =============================
+  // 🔥 여기부터는 나의강의실 데이터 로드
+  // =============================
+
   const courseList = document.getElementById("courseList");
 
   try {
-    // 🔥 올바른 엔드포인트로 변경
     const res = await fetch(`https://elo-backend-5r5z.onrender.com/progress/list?userId=${user}`);
     const result = await res.json();
 
@@ -438,26 +453,22 @@ document.addEventListener("DOMContentLoaded", async () => {
       courseList.innerHTML = `
         <p style="text-align:center; padding:40px 0; color:#666; font-size:1.1rem;">
           현재 수강 중인 강의가 없습니다.
-        </p>
-      `;
+        </p>`;
       return;
     }
 
     const data = result.courses;
 
-    // === 대시보드 숫자 계산 ===
     const total = data.length;
     const completed = data.filter(c => c.progress >= 100).length;
     const ing = data.filter(c => c.progress > 0 && c.progress < 100).length;
     const none = data.filter(c => c.progress === 0).length;
 
-    // 🔥 id가 없었음 → 추가 필요!
     document.querySelectorAll(".status-count")[0].textContent = total;
     document.querySelectorAll(".status-count")[1].textContent = ing;
     document.querySelectorAll(".status-count")[2].textContent = completed;
     document.querySelectorAll(".status-count")[3].textContent = none;
 
-    // === 강의 리스트 렌더링 ===
     let html = "";
 
     data.forEach(item => {
@@ -471,7 +482,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       html += `
         <div class="course-item-box">
           <h3 class="course-item-title">📘 ${item.title}</h3>
-
           <div class="course-item-content">
             <div class="details-left">
               <ul>
@@ -482,14 +492,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <li>
                   <span class="label">나의진도율</span>
                   <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${item.progress}%;">
+                    <div class="progress-bar-fill" style="width: ${item.progress}%; ">
                       ${item.progress}%
                     </div>
                   </div>
                 </li>
               </ul>
             </div>
-
             <div class="details-right">
               <ul>
                 <li>
@@ -498,19 +507,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </li>
               </ul>
             </div>
-
             <div class="course-item-actions">
               <button class="btn-primary" onclick="location.href='${item.link}'">
                 강의실입장
               </button>
               ${item.progress >= 100 
                 ? `<button class="btn-secondary">수료증 출력</button>`
-                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`
-              }
+                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`}
             </div>
           </div>
-        </div>
-      `;
+        </div>`;
     });
 
     courseList.innerHTML = html;
@@ -522,28 +528,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     </p>`;
   }
 });
+
 </script>
 
-
-<script>
-// 로그인 상태에 따라 메뉴 표시 변경
-document.addEventListener("DOMContentLoaded", () => {
-  const user = localStorage.getItem("currentUser");
-
-  if (user) {
-    document.getElementById("loginMenu").style.display = "none";
-    document.getElementById("joinMenu").style.display = "none";
-    document.getElementById("mypageMenu").style.display = "block";
-    document.getElementById("logoutMenu").style.display = "block";
-  } else {
-    // 비로그인 상태일 경우 기본값 유지
-    document.getElementById("loginMenu").style.display = "block";
-    document.getElementById("joinMenu").style.display = "block";
-    document.getElementById("mypageMenu").style.display = "none";
-    document.getElementById("logoutMenu").style.display = "none";
-  }
-});
-</script>
 
 
 </body>

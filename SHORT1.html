@@ -214,10 +214,14 @@
   });
 
   // ⭐ 버튼 클릭 시 백엔드에 100% 저장
-  completeBtn.addEventListener('click', async () => {
-    alert("이수 완료로 기록되었습니다!");
-    await updateProgress("SHORT1.html");
-  });
+completeBtn.addEventListener('click', async () => {
+  alert("이수 완료로 기록되었습니다!");
+
+  const link = location.pathname.split("/").pop(); 
+  await updateProgress(link);
+});
+
+
 </script>
 
 <script>
