@@ -371,11 +371,14 @@ nav a:hover {
       <a href="my_classroom.html">나의 강의실</a>
       <a href="notice.html">교육지원</a>
     </div>
-    <div class="nav-right">
-      <a href="login.html">로그인</a>
-      <a href="join.html">회원가입</a>
-      
-    </div>
+<div class="nav-right">
+  <a id="loginMenu" href="login.html">로그인</a>
+  <a id="joinMenu" href="join.html">회원가입</a>
+  
+  <a id="mypageMenu" href="my_classroom.html" style="display:none;">마이페이지</a>
+  <a id="logoutMenu" href="#" style="display:none;" onclick="logout()">로그아웃</a>
+</div>
+
   </nav>
 </div>
 
@@ -554,6 +557,38 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const currentUser = localStorage.getItem("currentUser");
+
+  const loginMenu = document.getElementById("loginMenu");
+  const joinMenu = document.getElementById("joinMenu");
+  const mypageMenu = document.getElementById("mypageMenu");
+  const logoutMenu = document.getElementById("logoutMenu");
+
+  if (currentUser) {
+    // 로그인 상태
+    loginMenu.style.display = "none";
+    joinMenu.style.display = "none";
+
+    mypageMenu.style.display = "block";
+    logoutMenu.style.display = "block";
+  } else {
+    // 비로그인 상태
+    loginMenu.style.display = "block";
+    joinMenu.style.display = "block";
+
+    mypageMenu.style.display = "none";
+    logoutMenu.style.display = "none";
+  }
+});
+
+function logout() {
+  localStorage.removeItem("currentUser");
+  alert("로그아웃 되었습니다.");
+  location.reload();
+}
+</script>
 
 
 
