@@ -233,9 +233,32 @@ completeBtn.addEventListener('click', () => {
   // ▶ 다시 저장
   localStorage.setItem("completedLectures", JSON.stringify(completedList));
 });
-
   
 </script>
+
+<script>
+// 강의 시작 시 자동으로 진도율 저장 (예: 100%)
+async function updateProgress(courseId) {
+  const userId = localStorage.getItem("currentUser");
+  if (!userId) return;
+
+  await fetch("https://elo-backend-5r5z.onrender.com/progress/update", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      id: userId,
+      courseId: courseId,
+      progress: 100   // 지금은 테스트를 위해 바로 100%
+    })
+  });
+}
+</script>
+
+<script>
+// 페이지 로드시 자동 실행 (courseId = SHORT 파일 이름으로 맞춰!)
+updateProgress("SHORT1");
+</script>
+
 
 </body>
 </html>
