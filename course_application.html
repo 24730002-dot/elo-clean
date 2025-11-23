@@ -725,26 +725,19 @@ function filterCourses() {
 
   rows.forEach(row => {
     const title = row.querySelector(".course-title").innerText;
-
-    if (title.includes(keyword)) {
-      row.style.display = "";
-    } else {
-      row.style.display = "none";
-    }
+    row.style.display = title.includes(keyword) ? "" : "none";
   });
 
-  // 결과 개수 업데이트
   const count = [...rows].filter(r => r.style.display !== "none").length;
   document.querySelector(".results-count span").innerText = count;
+}
 
- 
-// ⬇️ 엔터키로 검색 되게 하기
-document.getElementById("course-search-input").addEventListener("keyup", function(e) {
-  if (e.key === "Enter") {
+document.getElementById("course-search-input").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
     filterCourses();
   }
 });
-}
 </script>
 
 <script>
@@ -788,12 +781,13 @@ async function addCourse(title, link) {
   const response = await fetch("https://elo-backend-5r5z.onrender.com/addCourse", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      user,
+body: JSON.stringify({
+      userId: user,
       title,
       link,
       progress: 0
-    })
+})
+
   });
 
   const data = await response.json();
