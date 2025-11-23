@@ -331,10 +331,14 @@
       <a href="my_classroom.html">나의 강의실</a>
       <a href="notice.html">교육지원</a>
     </div>
-    <div class="nav-right">
-      <a href="login.html">로그인</a>
-      <a href="join.html">회원가입</a>
-    </div>
+<div class="nav-right">
+  <a id="loginMenu" href="login.html">로그인</a>
+  <a id="joinMenu" href="join.html">회원가입</a>
+
+  <a id="mypageMenu" href="my_classroom.html" style="display:none;">마이페이지</a>
+  <a id="logoutMenu" href="#" style="display:none;" onclick="logout()">로그아웃</a>
+</div>
+
   </nav>
 </div>
 
@@ -376,89 +380,12 @@
         <a href="#">진도율순</a> |
         <a href="#">제목순</a>
       </div>
+      
     </div>
+    <div class="course-list" id="courseList"></div>
 
-    <div class="course-list">
 
-      <div class="course-item-box">
-        <h3 class="course-item-title">2025년 5기 근로자 안전교육 (과목 선택형)</h3>
-        <div class="course-item-content">
-          <div class="details-left">
-            <ul>
-              <li>
-                <span class="label">학습기간</span>
-                <span class="value">2025.10.13 ~ 2025.12.10</span>
-              </li>
-              <li>
-                <span class="label">수료여부</span>
-                <span class="value status-ing">미수료</span>
-              </li>
-              <li>
-                <span class="label">나의진도율</span>
-                <div class="progress-bar-container">
-                  <div class="progress-bar-fill" style="width: 40%;">40%</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="details-right">
-            <ul>
-              <li>
-                <span class="label">이수기준</span>
-                <span class="value">진도율 80% 이상</span>
-              </li>
-              <li>
-                <span class="label">총점</span>
-                <span class="value">총점 : 0점 (시험 : 0점)</span>
-              </li>
-            </ul>
-          </div>
-          <div class="course-item-actions">
-            <button class="btn-primary">강의실입장</button>
-            <button class="btn-secondary">교육소개</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="course-item-box">
-        <h3 class="course-item-title">2024년 3기 안전보건관리체제 및 안전문화의 이해</h3>
-        <div class="course-item-content">
-          <div class="details-left">
-            <ul>
-              <li>
-                <span class="label">학습기간</span>
-                <span class="value">2024.08.01 ~ 2024.09.30</span>
-              </li>
-              <li>
-                <span class="label">수료여부</span>
-                <span class="value status-done">수료 완료</span>
-              </li>
-              <li>
-                <span class="label">나의진도율</span>
-                <div class="progress-bar-container">
-                  <div class="progress-bar-fill" style="width: 100%;">100%</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <div class="details-right">
-            <ul>
-              <li>
-                <span class="label">이수기준</span>
-                <span class="value">진도율 80% 이상, 시험 60점</span>
-              </li>
-              <li>
-                <span class="label">총점</span>
-                <span class="value">총점 : 85점 (시험 : 85점)</span>
-              </li>
-            </ul>
-          </div>
-          <div class="course-item-actions">
-            <button class="btn-primary">복습하기</button>
-            <button class="btn-secondary">수료증 출력</button>
-          </div>
-        </div>
-      </div>
+    
 
     </div>
 
@@ -490,11 +417,114 @@
 </footer>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  // 더 이상 로그인 체크 없음
+document.addEventListener("DOMContentLoaded", async () => {
+
+  // 0) 로그인 확인
+  const user = localStorage.getItem("currentUser");
+  if (!user) {
+    alert("로그인이 필요합니다.");
+    location.href = "login.html";
+    return;
+  }
+
+  const courseList = document.getElementById("courseList");
+
+  // 1) 백엔드에서 사용자 진행률 데이터 불러오기
+  try {
+    const res = await fetch(`https://elo-backend-5r5z.onrender.com/progress/${user}`);
+    const data = await res.json();
+
+    // 데이터 없음 === 텅 빈 상태 유지
+    if (!data || data.length === 0) {
+      courseList.innerHTML = `
+        <p style="text-align:center; padding:40px 0; color:#666; font-size:1.1rem;">
+          현재 수강 중인 강의가 없습니다.
+        </p>
+      `;
+      return;
+    }
+
+    // 2) 대시보드 숫자 계산
+    const total = data.length;
+    const completed = data.filter(c => c.progress >= 100).length;
+    const ing = data.filter(c => c.progress > 0 && c.progress < 100).length;
+    const none = data.filter(c => c.progress === 0).length;
+
+    document.querySelectorAll(".status-count")[0].textContent = total;
+    document.querySelectorAll(".status-count")[1].textContent = ing;
+    document.querySelectorAll(".status-count")[2].textContent = completed;
+    document.querySelectorAll(".status-count")[3].textContent = none;
+
+    // 3) 강의 카드 렌더링
+    let html = "";
+
+    data.forEach(item => {
+      const statusText =
+        item.progress >= 100 ? "수료 완료" :
+        item.progress > 0 ? "수강중" : "미수료";
+
+      const statusClass =
+        item.progress >= 100 ? "status-done" : "status-ing";
+
+      html += `
+        <div class="course-item-box">
+          <h3 class="course-item-title">📘 ${item.title}</h3>
+
+          <div class="course-item-content">
+            <div class="details-left">
+              <ul>
+                <li>
+                  <span class="label">수료여부</span>
+                  <span class="value ${statusClass}">${statusText}</span>
+                </li>
+                <li>
+                  <span class="label">나의진도율</span>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: ${item.progress}%;">${item.progress}%</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="details-right">
+              <ul>
+                <li>
+                  <span class="label">이수기준</span>
+                  <span class="value">진도율 100% 완료</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="course-item-actions">
+              <button class="btn-primary" onclick="location.href='${item.link}'">
+                강의실입장
+              </button>
+              ${item.progress >= 100 
+                ? `<button class="btn-secondary">수료증 출력</button>`
+                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    courseList.innerHTML = html;
+
+  } catch (err) {
+    console.error(err);
+    courseList.innerHTML = `<p style="padding:40px; text-align:center; color:red;">
+      서버 연결 오류가 발생했습니다.
+    </p>`;
+  }
 });
 
+function logout() {
+  localStorage.removeItem("currentUser");
+  alert("로그아웃 되었습니다.");
+  location.reload();
+}
 </script>
+
 
 
 

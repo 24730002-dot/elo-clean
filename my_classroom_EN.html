@@ -331,10 +331,13 @@
       <a href="my_classroom_EN.html">My Classroom</a>
       <a href="notice_EN.html">Support</a>
     </div>
-    <div class="nav-right">
-      <a href="login_EN.html">Login</a>
-      <a href="join_EN.html">Sign Up</a>
-    </div>
+<div class="nav-right">
+  <a id="loginMenu_EN" href="login_EN.html">Login</a>
+  <a id="joinMenu_EN" href="join_EN.html">Sign Up</a>
+
+  <a id="mypageMenu_EN" href="Mypage_EN.html" style="display:none;">My Page</a>
+  <a id="logoutMenu_EN" href="#" style="display:none;" onclick="logout_EN()">Logout</a>
+</div>
   </nav>
 </div>
 
@@ -489,6 +492,118 @@
   </div>
 </footer>
 
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  // 0) Login check
+  const user = localStorage.getItem("currentUser_EN");
+  if (!user) {
+    alert("Please log in first.");
+    location.href = "login_EN.html";
+    return;
+  }
+
+  const courseList = document.getElementById("courseList");
+
+  // 1) Fetch user progress from backend
+  try {
+    const res = await fetch(`https://elo-backend-5r5z.onrender.com/progress/${user}`);
+    const data = await res.json();
+
+    // No data → show empty state
+    if (!data || data.length === 0) {
+      courseList.innerHTML = `
+        <p style="text-align:center; padding:40px 0; color:#666; font-size:1.1rem;">
+          You have no enrolled courses.
+        </p>
+      `;
+      return;
+    }
+
+    // 2) Dashboard numbers
+    const total = data.length;
+    const completed = data.filter(c => c.progress >= 100).length;
+    const ing = data.filter(c => c.progress > 0 && c.progress < 100).length;
+    const none = data.filter(c => c.progress === 0).length;
+
+    document.querySelectorAll(".status-count")[0].textContent = total;
+    document.querySelectorAll(".status-count")[1].textContent = ing;
+    document.querySelectorAll(".status-count")[2].textContent = completed;
+    document.querySelectorAll(".status-count")[3].textContent = none;
+
+    // 3) Render course cards
+    let html = "";
+
+    data.forEach(item => {
+      const statusText =
+        item.progress >= 100 ? "Completed" :
+        item.progress > 0 ? "In Progress" : "Not Started";
+
+      const statusClass =
+        item.progress >= 100 ? "status-done" : "status-ing";
+
+      html += `
+        <div class="course-item-box">
+          <h3 class="course-item-title">📘 ${item.title}</h3>
+
+          <div class="course-item-content">
+            <div class="details-left">
+              <ul>
+                <li>
+                  <span class="label">Status</span>
+                  <span class="value ${statusClass}">${statusText}</span>
+                </li>
+                <li>
+                  <span class="label">Progress</span>
+                  <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: ${item.progress}%;">
+                      ${item.progress}%
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="details-right">
+              <ul>
+                <li>
+                  <span class="label">Completion Rule</span>
+                  <span class="value">100% Required</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="course-item-actions">
+              <button class="btn-primary" onclick="location.href='${item.link}'">
+                Enter Course
+              </button>
+              ${item.progress >= 100 
+                ? `<button class="btn-secondary">Download Certificate</button>`
+                : `<button class="btn-secondary" disabled style="opacity:0.4;">Download Certificate</button>`}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    courseList.innerHTML = html;
+
+  } catch (err) {
+    console.error(err);
+    courseList.innerHTML = `<p style="padding:40px; text-align:center; color:red;">
+      Failed to connect to the server.
+    </p>`;
+  }
+});
+
+// Logout
+function logout_EN() {
+  localStorage.removeItem("currentUser_EN");
+  alert("You have been logged out.");
+  location.reload();
+}
+
+</script>
 
 
 
