@@ -217,10 +217,25 @@
 completeBtn.addEventListener('click', async () => {
   alert("이수 완료로 기록되었습니다!");
 
-  const link = location.pathname.split("/").pop(); 
+  const fullUrl = window.location.href;
+
+  // 1) html 포함된 경우
+  let match = fullUrl.match(/SHORT\d+\.html/i);
+
+  // 2) html 없는 경우 (Vercel 환경)
+  if (!match) {
+    match = fullUrl.match(/SHORT\d+/i);
+  }
+
+  const link = match ? (match[0].includes(".html") ? match[0] : match[0] + ".html") : null;
+
+  if (!link) {
+    alert("courseId를 찾지 못했습니다. 경로를 확인해주세요.");
+    return;
+  }
+
   await updateProgress(link);
 });
-
 
 </script>
 
