@@ -347,24 +347,25 @@
     
     <h1 class="page-title">나의 강의실</h1>
 
-    <div class="status-dashboard">
-      <div class="status-box">
-        <div class="status-title">수강신청</div>
-        <div class="status-count">2</div>
-      </div>
-      <div class="status-box"> 
-        <div class="status-title">수강중</div>
-        <div class="status-count">1</div>
-      </div>
-      <div class="status-box">
-        <div class="status-title">수료</div>
-        <div class="status-count">1</div>
-      </div>
-      <div class="status-box">
-        <div class="status-title">미수료</div>
-        <div class="status-count">0</div>
-      </div>
-    </div>
+<div class="status-dashboard">
+  <div class="status-box">
+    <div class="status-title">수강신청</div>
+    <div class="status-count">0</div>
+  </div>
+  <div class="status-box"> 
+    <div class="status-title">수강중</div>
+    <div class="status-count">0</div>
+  </div>
+  <div class="status-box">
+    <div class="status-title">수료</div>
+    <div class="status-count">0</div>
+  </div>
+  <div class="status-box">
+    <div class="status-title">미수료</div>
+    <div class="status-count">0</div>
+  </div>
+</div>
+
 
     <div class="list-controls">
       <div class="course-search-bar">
@@ -450,10 +451,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const ing = data.filter(c => c.progress > 0 && c.progress < 100).length;
     const none = data.filter(c => c.progress === 0).length;
 
-    document.querySelectorAll(".status-count")[0].textContent = total;
-    document.querySelectorAll(".status-count")[1].textContent = ing;
-    document.querySelectorAll(".status-count")[2].textContent = completed;
-    document.querySelectorAll(".status-count")[3].textContent = none;
+ document.getElementById("count-total").textContent = total;
+document.getElementById("count-ing").textContent = ing;
+document.getElementById("count-completed").textContent = completed;
+document.getElementById("count-none").textContent = none;
+
 
     // 3) 강의 카드 렌더링
     let html = "";

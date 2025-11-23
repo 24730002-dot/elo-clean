@@ -349,15 +349,15 @@
     <div class="status-dashboard">
       <div class="status-box">
         <div class="status-title">Enrolled</div>
-        <div class="status-count">2</div>
+        <div class="status-count">0</div>
       </div>
       <div class="status-box"> 
         <div class="status-title">In Progress</div>
-        <div class="status-count">1</div>
+        <div class="status-count">0</div>
       </div>
       <div class="status-box">
         <div class="status-title">Completed</div>
-        <div class="status-count">1</div>
+        <div class="status-count">0</div>
       </div>
       <div class="status-box">
         <div class="status-title">Incomplete</div>
@@ -526,10 +526,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const ing = data.filter(c => c.progress > 0 && c.progress < 100).length;
     const none = data.filter(c => c.progress === 0).length;
 
-    document.querySelectorAll(".status-count")[0].textContent = total;
-    document.querySelectorAll(".status-count")[1].textContent = ing;
-    document.querySelectorAll(".status-count")[2].textContent = completed;
-    document.querySelectorAll(".status-count")[3].textContent = none;
+document.getElementById("count-total").textContent = total;
+document.getElementById("count-ing").textContent = ing;
+document.getElementById("count-completed").textContent = completed;
+document.getElementById("count-none").textContent = none;
+
 
     // 3) Render course cards
     let html = "";
