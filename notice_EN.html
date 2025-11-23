@@ -165,5 +165,75 @@
   </div>
   <div class="footer-copy">COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.</div>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const searchSelect = document.querySelector(".notice-search-bar select");
+  const searchInput = document.querySelector(".notice-search-bar input");
+  const searchBtn = document.querySelector(".notice-search-bar button");
+  const noticeItems = document.querySelectorAll(".notice-item");
+  const totalCountEl = document.querySelector(".total-count");
+
+  function filterNotices() {
+    const type = searchSelect.value;     // All / Title / Content
+    const keyword = searchInput.value.trim().toLowerCase(); // 소문자로 변환 (대소문자 무시)
+
+    let count = 0;
+
+    noticeItems.forEach(item => {
+      const titleEl = item.querySelector(".notice-title");
+      const metaEl = item.querySelector(".notice-meta");
+
+      const titleText = titleEl ? titleEl.textContent.toLowerCase() : "";
+      const metaText = metaEl ? metaEl.textContent.toLowerCase() : "";
+
+      let isMatch = false;
+
+      // 빈칸이면 전체
+      if (keyword === "") {
+        isMatch = true;
+      } else {
+        if (type === "All") {
+          if (titleText.includes(keyword) || metaText.includes(keyword)) {
+            isMatch = true;
+          }
+        } 
+        else if (type === "Title") {
+          if (titleText.includes(keyword)) {
+            isMatch = true;
+          }
+        } 
+        else if (type === "Content") {
+          // 실제 내용 없으므로 meta text 기준
+          if (metaText.includes(keyword)) {
+            isMatch = true;
+          }
+        }
+      }
+
+      if (isMatch) {
+        item.style.display = "flex";
+        count++;
+      } else {
+        item.style.display = "none";
+      }
+    });
+
+    // 총 개수 업데이트
+    totalCountEl.textContent = `Total ${count} items`;
+  }
+
+  // 버튼 클릭
+  searchBtn.addEventListener("click", filterNotices);
+
+  // 엔터 검색
+  searchInput.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") filterNotices();
+  });
+});
+</script>
+
+
+
 </body>
 </html>
