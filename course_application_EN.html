@@ -383,9 +383,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script>
 async function addCourse(title, link) {
-  const user = localStorage.getItem("currentUser_EN");
+  const userId = localStorage.getItem("currentUser_EN");
 
-  if (!user) {
+  if (!userId) {
     alert("Please log in first.");
     location.href = "login_EN.html";
     return;
@@ -396,7 +396,7 @@ async function addCourse(title, link) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        user,
+        userId,        // ⭐ 중요: userId로 보내야 저장됨!
         title,
         link,
         progress: 0
@@ -405,7 +405,7 @@ async function addCourse(title, link) {
 
     const data = await res.json();
 
-    if (data.success) {
+   if (data.success) {
       alert("Course has been added to My Classroom!");
       location.href = "my_classroom_EN.html";
     } else {
