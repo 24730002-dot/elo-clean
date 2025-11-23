@@ -751,25 +751,6 @@ document.getElementById("course-search-input")
 </script>
 
 <script>
-// 로그인 상태에 따라 메뉴 표시 변경
-document.addEventListener("DOMContentLoaded", () => {
-  const user = localStorage.getItem("currentUser");
-
-  if (user) {
-    document.getElementById("loginMenu").style.display = "none";
-    document.getElementById("joinMenu").style.display = "none";
-    document.getElementById("mypageMenu").style.display = "block";
-    document.getElementById("logoutMenu").style.display = "block";
-  } else {
-    // 비로그인 상태일 경우 기본값 유지
-    document.getElementById("loginMenu").style.display = "block";
-    document.getElementById("joinMenu").style.display = "block";
-    document.getElementById("mypageMenu").style.display = "none";
-    document.getElementById("logoutMenu").style.display = "none";
-  }
-});
-</script>
-<script>
 async function addCourse(title, link) {
   const user = localStorage.getItem("currentUser");
 
@@ -781,13 +762,12 @@ async function addCourse(title, link) {
   const response = await fetch("https://elo-backend-5r5z.onrender.com/addCourse", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-body: JSON.stringify({
-      userId: user,
+    body: JSON.stringify({
+      id: user,        // ✅ 여기 수정!
       title,
       link,
       progress: 0
-})
-
+    })
   });
 
   const data = await response.json();
@@ -795,10 +775,11 @@ body: JSON.stringify({
   if (data.success) {
     alert("나의 강의실에 추가되었습니다!");
   } else {
-    alert(data.message); // "이미 추가된 강의입니다" 등
+    alert(data.message);
   }
 }
 </script>
+
 
 
 </body>
