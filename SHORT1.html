@@ -230,15 +230,16 @@ async function updateProgress(link) {
   const userId = localStorage.getItem("currentUser");
   if (!userId) return;
 
-  await fetch("https://elo-backend-5r5z.onrender.com/progress/update", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      userId: userId,
-      courseId: link,
-      progress: 100
-    })
-  });
+await fetch("https://elo-backend-5r5z.onrender.com/progress/update", {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({
+    id: userId,
+    link: link,   // ✔ 정답
+    progress: 100
+  })
+});
+
 }
 </script>
 
