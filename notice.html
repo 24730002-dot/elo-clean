@@ -240,6 +240,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+<script>
+// 로그인 상태에 따라 메뉴 표시 변경
+document.addEventListener("DOMContentLoaded", () => {
+  const user = localStorage.getItem("currentUser");
+
+  if (user) {
+    document.getElementById("loginMenu").style.display = "none";
+    document.getElementById("joinMenu").style.display = "none";
+    document.getElementById("mypageMenu").style.display = "block";
+    document.getElementById("logoutMenu").style.display = "block";
+  } else {
+    // 비로그인 상태일 경우 기본값 유지
+    document.getElementById("loginMenu").style.display = "block";
+    document.getElementById("joinMenu").style.display = "block";
+    document.getElementById("mypageMenu").style.display = "none";
+    document.getElementById("logoutMenu").style.display = "none";
+  }
+});
+</script>
 
 
 </body>
