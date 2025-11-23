@@ -133,18 +133,45 @@
   </div>
 </footer>
 <script>
-  const video = document.querySelector("video");
-  const status = document.getElementById("status");
-  const completeBtn = document.getElementById("completeBtn");
+  const video = document.getElementById('lectureVideo');
+  const status = document.getElementById('status');
+  const completeBtn = document.getElementById('completeBtn');
 
+  /* ⭐ 영어 제목 매핑 (파일명 → 제목) */
+  const titleMapEN = {
+    "SHORT1_EN.html": "Opening & Manhole Safety",
+    "SHORT2_EN.html": "Fall Prevention",
+    "SHORT3_EN.html": "Gas Leak Response",
+    "SHORT4_EN.html": "Clothing Safety to Prevent Entanglement",
+    "SHORT5_EN.html": "PPE Importance",
+    "SHORT6_EN.html": "Before Hot Work",
+    "SHORT7_EN.html": "Fire Extinguisher Importance",
+    "SHORT8_EN.html": "Preventing Clothing Hazards",
+    "SHORT10_EN.html": "Earplug Importance",
+    "SHORT11_EN.html": "Slip Prevention & Immediate Actions",
+    "SHORT12_EN.html": "Finger Injury Prevention",
+    "SHORT13_EN.html": "Eye Protection During Welding",
+    "SHORT14_EN.html": "Forklift Safety Zone",
+    "SHORT15_EN.html": "Why Helmets May Fail",
+    "SHORT16_EN.html": "Emergency Evacuation",
+    "SHORT17_EN.html": "Machine Operation Safety",
+    "SHORT18_EN.html": "Safety Shoes Importance",
+    "SHORT19_EN.html": "No Inspection During Operation",
+    "SHORT20_EN.html": "Importance of Safety Gloves",
+    "SHORT22_EN.html": "How AI Detects Danger",
+    "SHORT23_EN.html": "Proper PPE Emphasis"
+  };
+
+  /* 현재 파일명 → 영어 제목 매칭 */
+  let file = window.location.pathname.split("/").pop();
+  const titleEN = titleMapEN[file];
+
+  /* 건너뛰기 방지 */
   let lastTime = 0;
-
-  // Update completion percentage + prevent skipping
   video.addEventListener("timeupdate", () => {
     const percent = (video.currentTime / video.duration) * 100;
-    status.textContent = `Completion Rate: ${percent.toFixed(1)}%`;
+    status.textContent = `Progress: ${percent.toFixed(1)}%`;
 
-    // Prevent skipping more than 5 seconds
     if (video.currentTime - lastTime > 5) {
       video.currentTime = lastTime;
     } else {
@@ -152,25 +179,33 @@
     }
   });
 
-  // When video ends → allow completion
+  /* 완료 시 버튼 활성화 */
   video.addEventListener("ended", () => {
     completeBtn.disabled = false;
-    completeBtn.textContent = "Completion Available";
-    status.textContent = "Completion Rate: 100% (Completed)";
+    completeBtn.textContent = "Ready to Complete";
+    status.textContent = "Progress: 100% (Completed)";
   });
 
-  // Save completion to localStorage
-  completeBtn.addEventListener("click", () => {
+  /* ⭐ 서버에 100% 저장 */
+  completeBtn.addEventListener("click", async () => {
+    const userId = localStorage.getItem("currentUser");
+
+    if (!titleEN) {
+      alert("Error: Failed to match course title. Please check titleMapEN.");
+      return;
+    }
+
     alert("This course has been marked as completed!");
 
-    const completedList = JSON.parse(localStorage.getItem("completedLectures_en")) || [];
-
-    completedList.push({
-      title: document.title || "ELO Shorts Course",
-      date: new Date().toLocaleString()
+    await fetch("https://elo-backend-5r5z.onrender.com/progress/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: userId,
+        title: titleEN,   // 서버가 요구하는 영어 제목
+        progress: 100
+      })
     });
-
-    localStorage.setItem("completedLectures_en", JSON.stringify(completedList));
   });
 </script>
 
