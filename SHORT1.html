@@ -217,24 +217,10 @@
 completeBtn.addEventListener('click', async () => {
   alert("이수 완료로 기록되었습니다!");
 
-  const fullUrl = window.location.href;
+  let file = window.location.pathname.split("/").pop();
+  if (!file.endsWith(".html")) file += ".html";
 
-  // 1) html 포함된 경우
-  let match = fullUrl.match(/SHORT\d+\.html/i);
-
-  // 2) html 없는 경우 (Vercel 환경)
-  if (!match) {
-    match = fullUrl.match(/SHORT\d+/i);
-  }
-
-  const link = match ? (match[0].includes(".html") ? match[0] : match[0] + ".html") : null;
-
-  if (!link) {
-    alert("courseId를 찾지 못했습니다. 경로를 확인해주세요.");
-    return;
-  }
-
-  await updateProgress(link);
+  await updateProgress(file);
 });
 
 </script>
@@ -248,13 +234,32 @@ async function updateProgress(link) {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
-      id: userId,
+      userId: userId,
       courseId: link,
       progress: 100
     })
   });
 }
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const user = localStorage.getItem("currentUser");
+
+  if (user) {
+    document.getElementById("loginMenu").style.display = "none";
+    document.getElementById("joinMenu").style.display = "none";
+    document.getElementById("mypageMenu").style.display = "block";
+    document.getElementById("logoutMenu").style.display = "block";
+  } else {
+    document.getElementById("loginMenu").style.display = "block";
+    document.getElementById("joinMenu").style.display = "block";
+    document.getElementById("mypageMenu").style.display = "none";
+    document.getElementById("logoutMenu").style.display = "none";
+  }
+});
+</script>
+
 
 
 
