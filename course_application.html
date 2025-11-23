@@ -719,6 +719,9 @@
 </footer>
 
 <script>
+// ===========================
+// 1) 검색 기능
+// ===========================
 function filterCourses() {
   const keyword = document.getElementById("course-search-input").value.trim();
   const rows = document.querySelectorAll("#course-table-body tr");
@@ -732,25 +735,18 @@ function filterCourses() {
   document.querySelector(".results-count span").innerText = count;
 }
 
-document.getElementById("course-search-input").addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    filterCourses();
-  }
-});
-</script>
-
-<script>
 document.getElementById("course-search-input")
   .addEventListener("keypress", function(event) {
     if (event.key === "Enter") {
-      event.preventDefault(); 
+      event.preventDefault();
       filterCourses();
     }
   });
-</script>
 
-<script>
+
+// ===========================
+// 2) 강의 추가(addCourse)
+// ===========================
 async function addCourse(title, link) {
   const user = localStorage.getItem("currentUser");
 
@@ -763,10 +759,9 @@ async function addCourse(title, link) {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
-      userId: user,
-        // ✅ 여기 수정!
-      title,
-      link,
+      userId: user,     // ⭐ 백엔드 요구 필드
+      title: title,
+      link: link,
       progress: 0
     })
   });
@@ -779,8 +774,39 @@ async function addCourse(title, link) {
     alert(data.message);
   }
 }
-</script>
 
+
+// ===========================
+// 3) 로그인 상태 반영 (네비게이션)
+// ===========================
+document.addEventListener("DOMContentLoaded", () => {
+  const user = localStorage.getItem("currentUser");
+
+  console.log("currentUser =", user); // 디버깅용
+
+  if (user) {
+    document.getElementById("loginMenu").style.display = "none";
+    document.getElementById("joinMenu").style.display = "none";
+    document.getElementById("mypageMenu").style.display = "block";
+    document.getElementById("logoutMenu").style.display = "block";
+  } else {
+    document.getElementById("loginMenu").style.display = "block";
+    document.getElementById("joinMenu").style.display = "block";
+    document.getElementById("mypageMenu").style.display = "none";
+    document.getElementById("logoutMenu").style.display = "none";
+  }
+});
+
+
+// ===========================
+// 4) 로그아웃
+// ===========================
+function logout() {
+  localStorage.removeItem("currentUser");
+  alert("로그아웃되었습니다.");
+  location.href = "index.html";
+}
+</script>
 
 
 </body>
