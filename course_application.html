@@ -763,7 +763,8 @@ async function addCourse(title, link) {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
-      id: user,        // ✅ 여기 수정!
+      userId: user,
+        // ✅ 여기 수정!
       title,
       link,
       progress: 0
