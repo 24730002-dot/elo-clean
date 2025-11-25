@@ -359,11 +359,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             ).join('');
         } else {
             // 강의를 찾았으나 모듈 목록이 없거나 (메시지 삭제)
-            moduleListElement.innerHTML = `<li>해당 과정의 학습 모듈 목록을 찾을 수 없습니다.</li>`;
+            moduleListElement.innerHTML = `<li> </li>`;
         }
         
         // 5-1. 모듈 제목이 비어있었으므로 채워줍니다.
-        document.querySelector('.modules h3').textContent = '📘 이수한 학습 모듈';
+        document.querySelector('.modules h3').textContent = '📘 수고하셨습니다.';
 
 
     } catch (error) {
