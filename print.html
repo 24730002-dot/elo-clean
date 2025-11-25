@@ -287,23 +287,7 @@ if (!userKR) {
 
   const navRight = document.querySelector(".nav-right");
 
-  // 마이페이지 링크 추가
-  const myPageBtn = document.createElement("a");
-  myPageBtn.href = "mypage.html";
-  myPageBtn.textContent = "마이페이지";
 
-  // 로그아웃 추가
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.textContent = "로그아웃";
-  logoutBtn.onclick = function () {
-    localStorage.removeItem("currentUser");
-    alert("로그아웃되었습니다.");
-    location.href = "index.html";
-  };
-
-  navRight.appendChild(myPageBtn);
-  navRight.appendChild(logoutBtn);
 }
 </script>
 
