@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `<li>${index + 1}️⃣ ${module.title || module}</li>` 
             ).join('');
         } else {
-            moduleListElement.innerHTML = `<li>해당 과정의 학습 모듈 목록을 찾을 수 없습니다.</li>`;
+            moduleListElement.innerHTML = `<li> </li>`;
         }
 
     } catch (error) {
