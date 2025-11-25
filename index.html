@@ -500,46 +500,47 @@ nav a:hover {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* === Shorts Slider === */
-  try {
-    const container = document.getElementById("shorts-container");
-    const leftBtn = document.getElementById("scroll-left");
-    const rightBtn = document.getElementById("scroll-right");
+  /* === Shorts Slider === */
+  try {
+    const container = document.getElementById("shorts-container");
+    const leftBtn = document.getElementById("scroll-left");
+    const rightBtn = document.getElementById("scroll-right");
 
-    if (container && leftBtn && rightBtn) {
-      const scrollAmount = 260;
+    if (container && leftBtn && rightBtn) {
+      const scrollAmount = 260;
 
-      leftBtn.addEventListener("click", () => {
-        container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-      });
+      leftBtn.addEventListener("click", () => {
+        container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      });
 
-      rightBtn.addEventListener("click", () => {
-        container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-      });
-    }
-  } catch (e) {
-    console.log("슬라이더 오류:", e);
-  }
+      rightBtn.addEventListener("click", () => {
+        container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      });
+    }
+  } catch (e) {
+    console.log("슬라이더 오류:", e);
+  }
 
-  /* === Print Certificate Access Control === */
-  try {
-    // "print.html로 끝나는" 모든 링크 선택
-    const checkLinks = document.querySelectorAll('a[href$="print.html"]');
+  /* === Print Certificate Access Control === */
+  try {
+    // "print.html로 끝나는" 모든 링크 선택
+    const checkLinks = document.querySelectorAll('a[href$="print.html"]');
 
-    checkLinks.forEach(link => {
-      link.addEventListener("click", (e) => {
-        const userId = localStorage.getItem("user_id");
+    checkLinks.forEach(link => {
+      link.addEventListener("click", (e) => {
+        // ⭐ [수정된 부분] user_id 대신 currentUser 키를 사용하도록 통일
+        const currentUser = localStorage.getItem("currentUser"); 
 
-        if (!userId) {
-          e.preventDefault();
-          alert("로그인 후 이용 가능한 서비스입니다.");
-          window.location.href = "login.html";
-        }
-      });
-    });
-  } catch (e) {
-    console.log("접근제한 오류:", e);
-  }
+        if (!currentUser) { // currentUser 값이 없으면 (즉, 로그인 상태가 아니면)
+          e.preventDefault();
+          alert("로그인 후 이용 가능한 서비스입니다.");
+          window.location.href = "login.html";
+        }
+      });
+    });
+  } catch (e) {
+    console.log("접근제한 오류:", e);
+  }
 
 });
 </script>
