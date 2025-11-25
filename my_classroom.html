@@ -189,12 +189,9 @@
     display: flex;
     padding: 25px;
     gap: 20px;
-    
-    /* 1. 교차축 정렬을 '늘리기'로 설정 */
-    align-items: stretch; 
-    
-    /* 2. 요소들이 수직으로 정렬되도록 명확히 설정 */
-    justify-content: space-between; 
+
+    align-items: flex-start;  /* ← 요거로 변경 */
+    justify-content: space-between;
 }
   .details-left, .details-right {
     flex: 1;
@@ -242,16 +239,14 @@
 
   /* 강의실 버튼 (이미지 3) */
 .course-item-actions {
-flex-basis: 180px; /* 버튼 영역 너비 고정 */
-display: flex;
-flex-direction: column;
-
-    /* 🚀 수정: 내부 아이템(버튼)들이 컨테이너 너비를 꽉 채우도록 stretch 적용 */
-justify-content: center; /* 버튼 묶음 전체를 수직 중앙 정렬 */
-    align-items: stretch; /* ⭐ 다시 stretch로 변경: 내부 버튼들이 가로로 늘어나도록 */
-
+    flex-basis: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* ← center → flex-start */
+    align-items: stretch;
     gap: 10px;
 }
+
 .course-item-actions button {
 padding: 12px;
 font-size: 1rem;
