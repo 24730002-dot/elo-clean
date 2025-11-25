@@ -233,22 +233,14 @@
       숏폼 학습 콘텐츠를 모두 이수하였음을 확인합니다.
     </p>
 
-    <div class="record-info">
-      <p><b>이름:</b> 홍길동</p>
-      <p><b>소속:</b> ELO</p>
-      <p><b>이수 과정:</b> 제조안전 기초 숏폼 시리즈</p>
-      <p><b>이수 일자:</b> 2025년 3월 15일</p>
-    </div>
+<div class="record-info" id="user-info">
+  </div>
 
-    <div class="modules">
-      <h3>📘 이수한 학습 모듈</h3>
-      <ul>
-        <li>1️⃣ 보호구 착용 기본 원칙</li>
-        <li>2️⃣ 안전 표지와 신호 이해하기</li>
-        <li>3️⃣ 작업 전 점검 절차</li>
-        <li>4️⃣ 비상 상황 대처 요령</li>
-      </ul>
-    </div>
+<div class="modules">
+  <h3>📘 이수한 학습 모듈</h3>
+  <ul id="completed-modules-list">
+    </ul>
+</div>
 
     <p style="font-size:0.95rem; color:#555;">
       ※ 본 확인서는 숏폼 학습 이수 내역을 증명하기 위한 자료이며,  
@@ -278,6 +270,8 @@
     COPYRIGHT 2025 © KOSHA ALL RIGHT RESERVED.
   </div>
 </footer>
+
+
 <script>
 const userKR = localStorage.getItem("currentUser");
 
@@ -313,8 +307,74 @@ if (!userKR) {
 }
 </script>
 
+<script>
+  // print.html 파일의 모든 기존 <script> 태그를 아래 코드로 대체합니다.
+
+// =========================================================================
+// 🚀 print.html 데이터 로드 및 렌더링
+// =========================================================================
+
+document.addEventListener("DOMContentLoaded", async () => {
+    // 1. 로그인 상태 확인 (currentUser 사용)
+    const user = localStorage.getItem("currentUser");
+    if (!user) {
+        alert("이수증은 로그인 후 이용 가능합니다.");
+        window.location.href = "login.html";
+        return;
+    }
+    
+    // 로그인 상태라면 헤더 메뉴 토글
+    document.getElementById("loginMenu").style.display = "none";
+    document.getElementById("joinMenu").style.display = "none";
+    document.getElementById("mypageMenu").style.display = "block";
+    document.getElementById("logoutMenu").style.display = "block";
 
 
+    // 2. my_classroom에서 전달받은 printData 로드
+    const printDataJSON = localStorage.getItem("currentPrintData");
+    const printData = printDataJSON ? JSON.parse(printDataJSON) : null;
+
+    if (!printData) {
+        alert("출력할 이수 내역 정보가 없습니다. 나의 강의실에서 다시 시도해주세요.");
+        window.location.href = "my_classroom.html";
+        return;
+    }
+
+    // 3. 백엔드에서 상세 모듈 목록 가져오기 (printData.title을 기준으로 조회)
+    // ⚠️ 백엔드 API URL을 여기에 넣어주세요. (강의 제목(title)을 매개변수로 받아 해당 강의의 모든 숏폼 모듈 목록을 반환해야 합니다.)
+    const MODULE_API_URL = 'https://elo-backend-5r5z.onrender.com/course/modules'; 
+
+    try {
+        const res = await fetch(`${MODULE_API_URL}?title=${printData.title}`);
+        const result = await res.json();
+        
+        const moduleListElement = document.getElementById('completed-modules-list');
+        const userInfoElement = document.getElementById('user-info');
+        
+        // 4. 사용자 정보 표시
+        userInfoElement.innerHTML = `
+            <p><b>이름:</b> ${printData.userName || '정보 없음'}</p>
+            <p><b>소속:</b> ELO</p>
+            <p><b>이수 과정:</b> ${printData.title}</p>
+            <p><b>이수 일자:</b> ${printData.completionDate}</p>
+        `;
+
+        // 5. 모듈 목록 표시
+        if (result.success && result.modules && result.modules.length > 0) {
+            moduleListElement.innerHTML = result.modules.map((module, index) => 
+                // 백엔드에서 받은 모듈 객체의 title 속성 사용
+                `<li>${index + 1}️⃣ ${module.title}</li>` 
+            ).join('');
+        } else {
+            moduleListElement.innerHTML = `<li>해당 과정의 학습 모듈 목록을 찾을 수 없습니다.</li>`;
+        }
+
+    } catch (error) {
+        console.error("이수 내역(모듈) 로드 중 오류 발생:", error);
+        document.getElementById('completed-modules-list').innerHTML = `<li style="color:red;">모듈 목록 로드 오류: ${error.message}</li>`;
+    }
+});
+</script>
 
 </body>
 </html>

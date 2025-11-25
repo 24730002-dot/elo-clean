@@ -507,14 +507,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </li>
               </ul>
             </div>
-            <div class="course-item-actions">
-              <button class="btn-primary" onclick="location.href='${item.link}'">
-                강의실입장
-              </button>
-              ${item.progress >= 100 
-                ? `<button class="btn-secondary">수료증 출력</button>`
-                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`}
-            </div>
+<div class="course-item-actions">
+              <button class="btn-primary" onclick="location.href='${item.link}'">
+                강의실입장
+              </button>
+              ${item.progress >= 100 
+// ⭐ 여기에 '?'를 추가하여 문법을 완성합니다.
+                ? `<button class="btn-secondary" onclick="printCertificate('${item.title}', '${item.completionDate || 'N/A'}')">수료증 출력</button>`
+                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`}
+            </div>
           </div>
         </div>`;
     });
@@ -531,7 +532,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 </script>
 
+<script>
+  // my_classroom.html 파일의 <script> 블록 외부에 추가
+function printCertificate(courseTitle, completionDate) {
+    const user = localStorage.getItem("currentUser");
+    if (!user) {
+        alert("로그인 정보가 필요합니다.");
+        return;
+    }
 
+    // ⭐ 1. 이수증에 표시할 데이터를 localStorage에 임시 저장
+    const printData = {
+        title: courseTitle,
+        completionDate: completionDate,
+        // (필요하다면) 백엔드에서 받은 사용자 정보 (예: 이름, 소속)를 여기에 추가
+        // 현재 my_classroom에서는 사용자 이름/소속을 받지 않으므로 임시로 'currentUser' 사용
+        userName: user // 로그인 ID가 이름이라고 가정
+    };
+    
+    // JSON 문자열로 저장
+    localStorage.setItem("currentPrintData", JSON.stringify(printData));
+
+    // ⭐ 2. 이수증 페이지로 이동
+    location.href = "print.html";
+}
+</script>
 
 </body>
 </html>
