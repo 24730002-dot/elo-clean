@@ -199,10 +199,10 @@
   .details-left, .details-right {
     flex: 1;
   }
-  .details-left ul, .details-right ul {
+.details-left ul, .details-right ul {
     list-style: none;
     line-height: 2.2;
-    /* 🚀 수정: 최소 높이를 강제하여 두 줄 반 이상 공간 확보 */
+    /* 🚀 수정: 최소 높이를 더 확실하게 확보 (2.2em * 2.5줄 = 5.5em) */
     min-height: 5.5em; 
 }
   .details-left li, .details-right li {
@@ -246,25 +246,25 @@ flex-basis: 180px; /* 버튼 영역 너비 고정 */
 display: flex;
 flex-direction: column;
 
-    /* 🚀 핵심 수정: 수직 중앙 정렬 강화 */
+    /* 🚀 수정: 내부 아이템(버튼)들이 컨테이너 너비를 꽉 채우도록 stretch 적용 */
 justify-content: center; /* 버튼 묶음 전체를 수직 중앙 정렬 */
-    align-items: center; /* 버튼 묶음 전체를 수평 중앙 정렬 (큰 영향은 없지만 안전하게 추가) */
+    align-items: stretch; /* ⭐ 다시 stretch로 변경: 내부 버튼들이 가로로 늘어나도록 */
 
     gap: 10px;
 }
-
 .course-item-actions button {
 padding: 12px;
 font-size: 1rem;
 font-weight: bold;
 border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background 0.2s;
-text-align: center; 
+ border-radius: 5px;
+ cursor: pointer;
+ transition: background 0.2s;
+ text-align: center; 
 line-height: 1.2; 
-    /* 버튼이 flex-basis: 180px 안에서 꽉 차도록 너비 설정 */
-    width: 100%; /* 버튼이 course-item-actions 너비를 꽉 채우도록 설정 */
+    
+    /* 🚀 수정: 버튼이 항상 부모 너비를 100% 사용하도록 명시적으로 설정 */
+    width: 100%; 
 }
 
   /* 강의실 입장 (주요 버튼) */
