@@ -190,7 +190,7 @@
     padding: 25px;
     gap: 20px;
 
-    align-items: flex-start;  /* ← 요거로 변경 */
+    align-items: stretch;  /* ← 요거로 변경 */
     justify-content: space-between;
 }
   .details-left, .details-right {
@@ -239,13 +239,14 @@
 
   /* 강의실 버튼 (이미지 3) */
 .course-item-actions {
-    flex-basis: 180px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* ← center → flex-start */
-    align-items: stretch;
-    gap: 10px;
+  width: 180px; /* flex-basis 대신 width로 고정 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
 }
+
 
 .course-item-actions button {
 padding: 12px;
