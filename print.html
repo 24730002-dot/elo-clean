@@ -308,71 +308,79 @@ if (!userKR) {
 </script>
 
 <script>
-  // print.html 파일의 모든 기존 <script> 태그를 아래 코드로 대체합니다.
+// =========================================================================
+// 🚀 공통 기능 (로그아웃 함수)
+// =========================================================================
+function logout() {
+    localStorage.removeItem("currentUser");
+    alert("로그아웃되었습니다.");
+    location.href = "index.html";
+}
+
 
 // =========================================================================
 // 🚀 print.html 데이터 로드 및 렌더링
 // =========================================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // 1. 로그인 상태 확인 (currentUser 사용)
-    const user = localStorage.getItem("currentUser");
-    if (!user) {
-        alert("이수증은 로그인 후 이용 가능합니다.");
-        window.location.href = "login.html";
-        return;
-    }
-    
-    // 로그인 상태라면 헤더 메뉴 토글
-    document.getElementById("loginMenu").style.display = "none";
-    document.getElementById("joinMenu").style.display = "none";
-    document.getElementById("mypageMenu").style.display = "block";
-    document.getElementById("logoutMenu").style.display = "block";
+    // 1. 로그인 상태 확인 및 메뉴 토글 (중복 생성 방지)
+    const user = localStorage.getItem("currentUser");
+    
+    if (!user) {
+        // 로그인되지 않은 경우
+        alert("이수증은 로그인 후 이용 가능합니다.");
+        window.location.href = "login.html";
+        return;
+    } else {
+        // 로그인된 경우 메뉴 토글
+        document.getElementById("loginMenu").style.display = "none";
+        document.getElementById("joinMenu").style.display = "none";
+        document.getElementById("mypageMenu").style.display = "block";
+        document.getElementById("logoutMenu").style.display = "block";
+    }
 
+    // 2. my_classroom에서 전달받은 printData 로드
+    const printDataJSON = localStorage.getItem("currentPrintData");
+    const printData = printDataJSON ? JSON.parse(printDataJSON) : null;
 
-    // 2. my_classroom에서 전달받은 printData 로드
-    const printDataJSON = localStorage.getItem("currentPrintData");
-    const printData = printDataJSON ? JSON.parse(printDataJSON) : null;
+    if (!printData) {
+        alert("출력할 이수 내역 정보가 없습니다. 나의 강의실에서 다시 시도해주세요.");
+        window.location.href = "my_classroom.html";
+        return;
+    }
 
-    if (!printData) {
-        alert("출력할 이수 내역 정보가 없습니다. 나의 강의실에서 다시 시도해주세요.");
-        window.location.href = "my_classroom.html";
-        return;
-    }
+    // 3. 백엔드에서 상세 모듈 목록 가져오기 (printData.title을 기준으로 조회)
+    const MODULE_API_URL = 'https://elo-backend-5r5z.onrender.com/course/modules'; 
 
-    // 3. 백엔드에서 상세 모듈 목록 가져오기 (printData.title을 기준으로 조회)
-    // ⚠️ 백엔드 API URL을 여기에 넣어주세요. (강의 제목(title)을 매개변수로 받아 해당 강의의 모든 숏폼 모듈 목록을 반환해야 합니다.)
-    const MODULE_API_URL = 'https://elo-backend-5r5z.onrender.com/course/modules'; 
+    try {
+        const res = await fetch(`${MODULE_API_URL}?title=${encodeURIComponent(printData.title)}`);
+        const result = await res.json();
+        
+        const moduleListElement = document.getElementById('completed-modules-list');
+        const userInfoElement = document.getElementById('user-info');
+        
+        // 4. 사용자 정보 표시
+        userInfoElement.innerHTML = `
+            <p><b>이름:</b> ${printData.userName || user}</p>
+            <p><b>소속:</b> ELO</p>
+            <p><b>이수 과정:</b> ${printData.title}</p>
+            <p><b>이수 일자:</b> ${printData.completionDate}</p>
+        `;
 
-    try {
-        const res = await fetch(`${MODULE_API_URL}?title=${printData.title}`);
-        const result = await res.json();
-        
-        const moduleListElement = document.getElementById('completed-modules-list');
-        const userInfoElement = document.getElementById('user-info');
-        
-        // 4. 사용자 정보 표시
-        userInfoElement.innerHTML = `
-            <p><b>이름:</b> ${printData.userName || '정보 없음'}</p>
-            <p><b>소속:</b> ELO</p>
-            <p><b>이수 과정:</b> ${printData.title}</p>
-            <p><b>이수 일자:</b> ${printData.completionDate}</p>
-        `;
+        // 5. 모듈 목록 표시
+        if (result.success && result.modules && result.modules.length > 0) {
+            moduleListElement.innerHTML = result.modules.map((module, index) => 
+                // 백엔드에서 받은 모듈 객체의 title 속성 사용
+                `<li>${index + 1}️⃣ ${module.title || module}</li>` // 모듈이 문자열일 수도 있어 안전하게 처리
+            ).join('');
+        } else {
+            moduleListElement.innerHTML = `<li>해당 과정의 학습 모듈 목록을 찾을 수 없습니다.</li>`;
+        }
 
-        // 5. 모듈 목록 표시
-        if (result.success && result.modules && result.modules.length > 0) {
-            moduleListElement.innerHTML = result.modules.map((module, index) => 
-                // 백엔드에서 받은 모듈 객체의 title 속성 사용
-                `<li>${index + 1}️⃣ ${module.title}</li>` 
-            ).join('');
-        } else {
-            moduleListElement.innerHTML = `<li>해당 과정의 학습 모듈 목록을 찾을 수 없습니다.</li>`;
-        }
-
-    } catch (error) {
-        console.error("이수 내역(모듈) 로드 중 오류 발생:", error);
-        document.getElementById('completed-modules-list').innerHTML = `<li style="color:red;">모듈 목록 로드 오류: ${error.message}</li>`;
-    }
+    } catch (error) {
+        console.error("이수 내역(모듈) 로드 중 오류 발생:", error);
+        document.getElementById('completed-modules-list').innerHTML = `<li style="color:red;">모듈 목록 로드 오류: ${error.message}</li>`;
+    }
 });
 </script>
 
