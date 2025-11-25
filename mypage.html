@@ -381,115 +381,95 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  
-  /* --- 1. 탭 기능 로직 --- */
-  const tabButtons = document.querySelectorAll('.tab-nav-item');
-  const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    /* --- 1. 탭 기능 로직 --- */
+    const tabButtons = document.querySelectorAll('.tab-nav-item');
+    const tabPanes = document.querySelectorAll('.tab-pane');
 
-  tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      // 클릭한 탭의 data-tab 속성값 (예: "info")
-      const targetTab = button.getAttribute('data-tab'); 
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 클릭한 탭의 data-tab 속성값 (예: "info")
+            const targetTab = button.getAttribute('data-tab'); 
 
-      // 1. 모든 탭 버튼에서 active 클래스 제거
-      tabButtons.forEach(btn => btn.classList.remove('active'));
-      // 2. 클릭한 탭 버튼에 active 클래스 추가
-      button.classList.add('active');
+            // 1. 모든 탭 버튼에서 active 클래스 제거
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            // 2. 클릭한 탭 버튼에 active 클래스 추가
+            button.classList.add('active');
 
-      // 3. 모든 탭 콘텐츠에서 active 클래스 제거 (숨기기)
-      tabPanes.forEach(pane => pane.classList.remove('active'));
-      // 4. 타겟 탭 콘텐츠에 active 클래스 추가 (보여주기)
-      document.getElementById(targetTab + '-pane').classList.add('active');
+            // 3. 모든 탭 콘텐츠에서 active 클래스 제거 (숨기기)
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            // 4. 타겟 탭 콘텐츠에 active 클래스 추가 (보여주기)
+            document.getElementById(targetTab + '-pane').classList.add('active');
+        });
     });
-  });
 
-  /* --- 2. ✨ 회원탈퇴 확인창 로직 추가 --- */
-  const withdrawalButton = document.getElementById('withdrawal-button');
+    /* --- 2. ✨ 회원탈퇴 확인창 로직 추가 --- */
+    const withdrawalButton = document.getElementById('withdrawal-button');
 
-  withdrawalButton.addEventListener('click', function() {
-    // 사용자에게 확인창을 띄웁니다.
-    const confirmed = window.confirm("정말 탈퇴하시겠습니까?");
+    withdrawalButton.addEventListener('click', function() {
+        // 사용자에게 확인창을 띄웁니다.
+        const confirmed = window.confirm("정말 탈퇴하시겠습니까?");
 
-    // '확인'을 눌렀을 경우 (confirmed 변수가 true가 됨)
-    if (confirmed) {
-      // 실제로는 여기서 fetch() 등을 이용해 백엔드 API를 호출합니다.
-      alert("탈퇴 처리를 진행합니다. (백엔드 API 호출)");
-      
-      // (예시) 탈퇴 성공 후 홈으로 이동
-      // window.location.href = "플랫폼 홈.html"; 
-    } 
-    // '취소'를 눌렀을 경우 (confirmed 변수가 false가 됨)
-    else {
-      console.log("회원탈퇴가 취소되었습니다.");
-    }
-  });
-
+        // '확인'을 눌렀을 경우 (confirmed 변수가 true가 됨)
+        if (confirmed) {
+            // 실제로는 여기서 fetch() 등을 이용해 백엔드 API를 호출합니다.
+            alert("탈퇴 처리를 진행합니다. (백엔드 API 호출)");
+            
+            // (예시) 탈퇴 성공 후 홈으로 이동
+            // window.location.href = "플랫폼 홈.html"; 
+        } 
+        // '취소'를 눌렀을 경우 (confirmed 변수가 false가 됨)
+        else {
+            console.log("회원탈퇴가 취소되었습니다.");
+        }
+    });
 });
-
 </script>
 
 <script>
 // ================================
-// 한국어 로그인 여부 체크
+// 로그아웃 함수 정의
+// (HTML 마크업 <a id="logoutMenu" ... onclick="logout()">에 사용됨)
+// ================================
+function logout() {
+    localStorage.removeItem("currentUser");
+    alert("로그아웃되었습니다.");
+    // 로그아웃 후 인덱스 페이지로 이동
+    location.href = "index.html";
+}
+
+
+// ================================
+// 로그인 여부 체크 및 페이지 접근 제어
 // ================================
 const userKR = localStorage.getItem("currentUser");
 
-// ❗ 로그인 안 한 상태면 접근 차단
+// ❗ 로그인 안 한 상태면 접근 차단 (이 페이지는 '마이페이지'이므로 접근 제어 유지)
 if (!userKR) {
-  alert("나의 강의실은 로그인 후 이용 가능합니다.");
-  window.location.href = "login.html";
+    alert("마이 페이지는 로그인 후 이용 가능합니다.");
+    window.location.href = "login.html";
 }
 
-
 // ================================
-// 헤더: 로그인 상태라면 버튼 교체
+// 헤더: 로그인 상태에 따라 메뉴 표시 변경 (중복 해결)
+// 이 로직은 기존 HTML 요소의 display 속성을 제어합니다.
 // ================================
-if (userKR) {
-  // 로그인, 회원가입 숨기기
-  document.querySelectorAll('a[href="login.html"], a[href="join.html"]').forEach(a => {
-    a.style.display = "none";
-  });
-
-  const navRight = document.querySelector(".nav-right");
-
-  // 마이페이지 버튼
-  const myPageBtn = document.createElement("a");
-  myPageBtn.href = "mypage.html";   // ✔ 파일명 정확
-  myPageBtn.textContent = "마이페이지";
-
-  // 로그아웃 버튼
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.textContent = "로그아웃";
-  logoutBtn.onclick = function () {
-    localStorage.removeItem("currentUser");
-    alert("로그아웃되었습니다.");
-    location.href = "index.html";
-  };
-
-  navRight.appendChild(myPageBtn);
-  navRight.appendChild(logoutBtn);
-}
-</script>
-
-
-<script>
-// 로그인 상태에 따라 메뉴 표시 변경
 document.addEventListener("DOMContentLoaded", () => {
-  const user = localStorage.getItem("currentUser");
-
-  if (user) {
-    document.getElementById("loginMenu").style.display = "none";
-    document.getElementById("joinMenu").style.display = "none";
-    document.getElementById("mypageMenu").style.display = "block";
-    document.getElementById("logoutMenu").style.display = "block";
-  } else {
-    // 비로그인 상태일 경우 기본값 유지
-    document.getElementById("loginMenu").style.display = "block";
-    document.getElementById("joinMenu").style.display = "block";
-    document.getElementById("mypageMenu").style.display = "none";
-    document.getElementById("logoutMenu").style.display = "none";
-  }
+    // userKR (전역에서 선언된 변수)를 재사용
+    if (userKR) {
+        // 로그인 상태일 때: 로그인, 회원가입 숨기고 마이페이지, 로그아웃 표시
+        document.getElementById("loginMenu").style.display = "none";
+        document.getElementById("joinMenu").style.display = "none";
+        document.getElementById("mypageMenu").style.display = "block";
+        document.getElementById("logoutMenu").style.display = "block";
+    } else {
+        // 비로그인 상태일 때: 로그인, 회원가입 표시하고 마이페이지, 로그아웃 숨김
+        // (페이지 상단에서 이미 리다이렉트되므로, 사실상 이 else 블록은 실행되지 않음)
+        document.getElementById("loginMenu").style.display = "block";
+        document.getElementById("joinMenu").style.display = "block";
+        document.getElementById("mypageMenu").style.display = "none";
+        document.getElementById("logoutMenu").style.display = "none";
+    }
 });
 </script>
 
