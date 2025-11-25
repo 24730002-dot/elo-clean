@@ -522,14 +522,14 @@ document.addEventListener("DOMContentLoaded", async () => {
               </ul>
             </div>
 <div class="course-item-actions">
-              <button class="btn-primary" onclick="location.href='${item.link}'">
-                강의실입장
-              </button>
-              ${item.progress >= 100 
+<button class="btn-primary" onclick="location.href='${item.link}'">
+ 강의실입장
+ </button>
+${item.progress >= 100 
 // ⭐ 여기에 '?'를 추가하여 문법을 완성합니다.
-                ? `<button class="btn-secondary" onclick="printCertificate('${item.title}', '${item.completionDate || 'N/A'}')">수료증 출력</button>`
-                : `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`}
-            </div>
+? `<button class="btn-secondary" onclick="printCertificate('${item.title}', '${item.completionDate || 'N/A'}')">수료증 출력</button>`
+: `<button class="btn-secondary" disabled style="opacity:0.4;">수료증 출력</button>`}
+ </div>
           </div>
         </div>`;
     });
