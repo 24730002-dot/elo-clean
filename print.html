@@ -319,20 +319,23 @@ function logout() {
 
 
 // =========================================================================
-// 🚀 print.html 데이터 로드 및 렌더링
+// 🚀 print.html 데이터 로드 및 렌더링 (메뉴 토글 로직 포함)
 // =========================================================================
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // 1. 로그인 상태 확인 및 메뉴 토글 (중복 생성 방지)
+    // 1. 로그인 상태 확인 및 메뉴 토글 (HTML에 정의된 ID 요소 사용)
     const user = localStorage.getItem("currentUser");
     
+    // 기존 마이페이지/로그아웃 링크를 다시 만드는 로직을 제거하고,
+    // HTML에 있는 ID를 가진 요소를 토글합니다.
+    
     if (!user) {
-        // 로그인되지 않은 경우
+        // 로그인되지 않은 경우: 로그인/회원가입만 표시
         alert("이수증은 로그인 후 이용 가능합니다.");
         window.location.href = "login.html";
         return;
     } else {
-        // 로그인된 경우 메뉴 토글
+        // 로그인된 경우: 마이페이지/로그아웃만 표시
         document.getElementById("loginMenu").style.display = "none";
         document.getElementById("joinMenu").style.display = "none";
         document.getElementById("mypageMenu").style.display = "block";
@@ -358,7 +361,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         
         const moduleListElement = document.getElementById('completed-modules-list');
         const userInfoElement = document.getElementById('user-info');
-        
+
         // 4. 사용자 정보 표시
         userInfoElement.innerHTML = `
             <p><b>이름:</b> ${printData.userName || user}</p>
@@ -370,8 +373,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         // 5. 모듈 목록 표시
         if (result.success && result.modules && result.modules.length > 0) {
             moduleListElement.innerHTML = result.modules.map((module, index) => 
-                // 백엔드에서 받은 모듈 객체의 title 속성 사용
-                `<li>${index + 1}️⃣ ${module.title || module}</li>` // 모듈이 문자열일 수도 있어 안전하게 처리
+                // 모듈이 객체일 경우 module.title, 문자열일 경우 module 사용
+                `<li>${index + 1}️⃣ ${module.title || module}</li>` 
             ).join('');
         } else {
             moduleListElement.innerHTML = `<li>해당 과정의 학습 모듈 목록을 찾을 수 없습니다.</li>`;
